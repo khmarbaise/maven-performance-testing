@@ -49,6 +49,8 @@ Different
 . `mvn verify`
 
 Different JDK versions
+ - Maybe we should also make different JVM options?
+
 Different Maven versions
 
 
