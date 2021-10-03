@@ -3,3 +3,4 @@ reactor
 apache-maven-*/
 lib/*
 .idea/*
+target
