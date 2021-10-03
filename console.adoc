@@ -2,218 +2,218 @@
 ----
 Running with JDK: 8.0.302-tem
 
-    Using java version 8.0.302-tem in this shell.
-    Benchmark #1: ../apache-maven-3.0.5/bin/mvn clean
-    Time (mean ± σ):      4.438 s ±  0.058 s    [User: 6.580 s, System: 1.203 s]
-    Range (min … max):    4.353 s …  4.530 s    10 runs
+Using java version 8.0.302-tem in this shell.
+Benchmark #1: ../apache-maven-3.0.5/bin/mvn clean
+Time (mean ± σ):      4.438 s ±  0.058 s    [User: 6.580 s, System: 1.203 s]
+Range (min … max):    4.353 s …  4.530 s    10 runs
 
-    Benchmark #2: ../apache-maven-3.1.1/bin/mvn clean
-    Time (mean ± σ):      6.988 s ±  0.084 s    [User: 11.523 s, System: 3.329 s]
-    Range (min … max):    6.904 s …  7.182 s    10 runs
+Benchmark #2: ../apache-maven-3.1.1/bin/mvn clean
+Time (mean ± σ):      6.988 s ±  0.084 s    [User: 11.523 s, System: 3.329 s]
+Range (min … max):    6.904 s …  7.182 s    10 runs
 
-    Benchmark #3: ../apache-maven-3.2.5/bin/mvn clean
-    Time (mean ± σ):      7.297 s ±  0.113 s    [User: 11.998 s, System: 3.363 s]
-    Range (min … max):    7.119 s …  7.468 s    10 runs
+Benchmark #3: ../apache-maven-3.2.5/bin/mvn clean
+Time (mean ± σ):      7.297 s ±  0.113 s    [User: 11.998 s, System: 3.363 s]
+Range (min … max):    7.119 s …  7.468 s    10 runs
 
-    Benchmark #4: ../apache-maven-3.3.9/bin/mvn clean
-    Time (mean ± σ):      7.872 s ±  0.053 s    [User: 12.695 s, System: 3.429 s]
-    Range (min … max):    7.806 s …  7.978 s    10 runs
+Benchmark #4: ../apache-maven-3.3.9/bin/mvn clean
+Time (mean ± σ):      7.872 s ±  0.053 s    [User: 12.695 s, System: 3.429 s]
+Range (min … max):    7.806 s …  7.978 s    10 runs
 
-    Benchmark #5: ../apache-maven-3.5.4/bin/mvn clean
-    Time (mean ± σ):      6.599 s ±  0.149 s    [User: 7.827 s, System: 1.654 s]
-    Range (min … max):    6.424 s …  6.853 s    10 runs
+Benchmark #5: ../apache-maven-3.5.4/bin/mvn clean
+Time (mean ± σ):      6.599 s ±  0.149 s    [User: 7.827 s, System: 1.654 s]
+Range (min … max):    6.424 s …  6.853 s    10 runs
 
-    Benchmark #6: ../apache-maven-3.6.3/bin/mvn clean
-    Time (mean ± σ):      5.895 s ±  0.082 s    [User: 6.973 s, System: 1.493 s]
-    Range (min … max):    5.774 s …  6.011 s    10 runs
+Benchmark #6: ../apache-maven-3.6.3/bin/mvn clean
+Time (mean ± σ):      5.895 s ±  0.082 s    [User: 6.973 s, System: 1.493 s]
+Range (min … max):    5.774 s …  6.011 s    10 runs
 
-    Benchmark #7: ../apache-maven-3.8.1/bin/mvn clean
-    Time (mean ± σ):      5.917 s ±  0.106 s    [User: 7.059 s, System: 1.518 s]
-    Range (min … max):    5.761 s …  6.086 s    10 runs
+Benchmark #7: ../apache-maven-3.8.1/bin/mvn clean
+Time (mean ± σ):      5.917 s ±  0.106 s    [User: 7.059 s, System: 1.518 s]
+Range (min … max):    5.761 s …  6.086 s    10 runs
 
-    Benchmark #8: ../apache-maven-3.8.2/bin/mvn clean
-    Time (mean ± σ):      5.658 s ±  0.165 s    [User: 6.884 s, System: 1.467 s]
-    Range (min … max):    5.427 s …  6.053 s    10 runs
+Benchmark #8: ../apache-maven-3.8.2/bin/mvn clean
+Time (mean ± σ):      5.658 s ±  0.165 s    [User: 6.884 s, System: 1.467 s]
+Range (min … max):    5.427 s …  6.053 s    10 runs
 
-    Benchmark #9: ../apache-maven-3.8.3/bin/mvn clean
-    Time (mean ± σ):      3.407 s ±  0.087 s    [User: 4.544 s, System: 0.766 s]
-    Range (min … max):    3.266 s …  3.519 s    10 runs
+Benchmark #9: ../apache-maven-3.8.3/bin/mvn clean
+Time (mean ± σ):      3.407 s ±  0.087 s    [User: 4.544 s, System: 0.766 s]
+Range (min … max):    3.266 s …  3.519 s    10 runs
 
-    Benchmark #10: ../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean
-    Time (mean ± σ):      4.777 s ±  0.090 s    [User: 7.684 s, System: 1.698 s]
-    Range (min … max):    4.644 s …  4.942 s    10 runs
+Benchmark #10: ../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean
+Time (mean ± σ):      4.777 s ±  0.090 s    [User: 7.684 s, System: 1.698 s]
+Range (min … max):    4.644 s …  4.942 s    10 runs
 
-    Summary
-    '../apache-maven-3.8.3/bin/mvn clean' ran
-    1.30 ± 0.04 times faster than '../apache-maven-3.0.5/bin/mvn clean'
-    1.40 ± 0.04 times faster than '../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean'
-    1.66 ± 0.06 times faster than '../apache-maven-3.8.2/bin/mvn clean'
-    1.73 ± 0.05 times faster than '../apache-maven-3.6.3/bin/mvn clean'
-    1.74 ± 0.05 times faster than '../apache-maven-3.8.1/bin/mvn clean'
-    1.94 ± 0.07 times faster than '../apache-maven-3.5.4/bin/mvn clean'
-    2.05 ± 0.06 times faster than '../apache-maven-3.1.1/bin/mvn clean'
-    2.14 ± 0.06 times faster than '../apache-maven-3.2.5/bin/mvn clean'
-    2.31 ± 0.06 times faster than '../apache-maven-3.3.9/bin/mvn clean'
-    Running with JDK: 11.0.12-tem
+Summary
+'../apache-maven-3.8.3/bin/mvn clean' ran
+1.30 ± 0.04 times faster than '../apache-maven-3.0.5/bin/mvn clean'
+1.40 ± 0.04 times faster than '../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean'
+1.66 ± 0.06 times faster than '../apache-maven-3.8.2/bin/mvn clean'
+1.73 ± 0.05 times faster than '../apache-maven-3.6.3/bin/mvn clean'
+1.74 ± 0.05 times faster than '../apache-maven-3.8.1/bin/mvn clean'
+1.94 ± 0.07 times faster than '../apache-maven-3.5.4/bin/mvn clean'
+2.05 ± 0.06 times faster than '../apache-maven-3.1.1/bin/mvn clean'
+2.14 ± 0.06 times faster than '../apache-maven-3.2.5/bin/mvn clean'
+2.31 ± 0.06 times faster than '../apache-maven-3.3.9/bin/mvn clean'
+Running with JDK: 11.0.12-tem
 
-    Using java version 11.0.12-tem in this shell.
-    Benchmark #1: ../apache-maven-3.0.5/bin/mvn clean
-    Time (mean ± σ):      4.741 s ±  0.119 s    [User: 6.645 s, System: 1.202 s]
-    Range (min … max):    4.622 s …  5.032 s    10 runs
+Using java version 11.0.12-tem in this shell.
+Benchmark #1: ../apache-maven-3.0.5/bin/mvn clean
+Time (mean ± σ):      4.741 s ±  0.119 s    [User: 6.645 s, System: 1.202 s]
+Range (min … max):    4.622 s …  5.032 s    10 runs
 
-    Benchmark #2: ../apache-maven-3.1.1/bin/mvn clean
-    Time (mean ± σ):      7.145 s ±  0.059 s    [User: 11.946 s, System: 2.442 s]
-    Range (min … max):    7.066 s …  7.251 s    10 runs
+Benchmark #2: ../apache-maven-3.1.1/bin/mvn clean
+Time (mean ± σ):      7.145 s ±  0.059 s    [User: 11.946 s, System: 2.442 s]
+Range (min … max):    7.066 s …  7.251 s    10 runs
 
-    Benchmark #3: ../apache-maven-3.2.5/bin/mvn clean
-    Time (mean ± σ):      7.402 s ±  0.119 s    [User: 12.319 s, System: 2.599 s]
-    Range (min … max):    7.268 s …  7.690 s    10 runs
+Benchmark #3: ../apache-maven-3.2.5/bin/mvn clean
+Time (mean ± σ):      7.402 s ±  0.119 s    [User: 12.319 s, System: 2.599 s]
+Range (min … max):    7.268 s …  7.690 s    10 runs
 
-    Benchmark #4: ../apache-maven-3.3.9/bin/mvn clean
-    Time (mean ± σ):      8.063 s ±  0.097 s    [User: 13.112 s, System: 2.583 s]
-    Range (min … max):    7.927 s …  8.195 s    10 runs
+Benchmark #4: ../apache-maven-3.3.9/bin/mvn clean
+Time (mean ± σ):      8.063 s ±  0.097 s    [User: 13.112 s, System: 2.583 s]
+Range (min … max):    7.927 s …  8.195 s    10 runs
 
-    Benchmark #5: ../apache-maven-3.5.4/bin/mvn clean
-    Time (mean ± σ):      6.591 s ±  0.069 s    [User: 7.668 s, System: 1.153 s]
-    Range (min … max):    6.486 s …  6.709 s    10 runs
+Benchmark #5: ../apache-maven-3.5.4/bin/mvn clean
+Time (mean ± σ):      6.591 s ±  0.069 s    [User: 7.668 s, System: 1.153 s]
+Range (min … max):    6.486 s …  6.709 s    10 runs
 
-    Benchmark #6: ../apache-maven-3.6.3/bin/mvn clean
-    Time (mean ± σ):      5.938 s ±  0.065 s    [User: 7.132 s, System: 1.253 s]
-    Range (min … max):    5.884 s …  6.041 s    10 runs
+Benchmark #6: ../apache-maven-3.6.3/bin/mvn clean
+Time (mean ± σ):      5.938 s ±  0.065 s    [User: 7.132 s, System: 1.253 s]
+Range (min … max):    5.884 s …  6.041 s    10 runs
 
-    Benchmark #7: ../apache-maven-3.8.1/bin/mvn clean
-    Time (mean ± σ):      5.947 s ±  0.093 s    [User: 7.147 s, System: 1.269 s]
-    Range (min … max):    5.851 s …  6.135 s    10 runs
+Benchmark #7: ../apache-maven-3.8.1/bin/mvn clean
+Time (mean ± σ):      5.947 s ±  0.093 s    [User: 7.147 s, System: 1.269 s]
+Range (min … max):    5.851 s …  6.135 s    10 runs
 
-    Benchmark #8: ../apache-maven-3.8.2/bin/mvn clean
-    Time (mean ± σ):      5.480 s ±  0.100 s    [User: 6.702 s, System: 1.099 s]
-    Range (min … max):    5.378 s …  5.699 s    10 runs
+Benchmark #8: ../apache-maven-3.8.2/bin/mvn clean
+Time (mean ± σ):      5.480 s ±  0.100 s    [User: 6.702 s, System: 1.099 s]
+Range (min … max):    5.378 s …  5.699 s    10 runs
 
-    Benchmark #9: ../apache-maven-3.8.3/bin/mvn clean
-    Time (mean ± σ):      3.416 s ±  0.119 s    [User: 4.451 s, System: 0.595 s]
-    Range (min … max):    3.322 s …  3.601 s    10 runs
+Benchmark #9: ../apache-maven-3.8.3/bin/mvn clean
+Time (mean ± σ):      3.416 s ±  0.119 s    [User: 4.451 s, System: 0.595 s]
+Range (min … max):    3.322 s …  3.601 s    10 runs
 
-    Benchmark #10: ../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean
-    Time (mean ± σ):      5.352 s ±  0.057 s    [User: 7.821 s, System: 1.160 s]
-    Range (min … max):    5.272 s …  5.436 s    10 runs
+Benchmark #10: ../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean
+Time (mean ± σ):      5.352 s ±  0.057 s    [User: 7.821 s, System: 1.160 s]
+Range (min … max):    5.272 s …  5.436 s    10 runs
 
-    Summary
-    '../apache-maven-3.8.3/bin/mvn clean' ran
-    1.39 ± 0.06 times faster than '../apache-maven-3.0.5/bin/mvn clean'
-    1.57 ± 0.06 times faster than '../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean'
-    1.60 ± 0.06 times faster than '../apache-maven-3.8.2/bin/mvn clean'
-    1.74 ± 0.06 times faster than '../apache-maven-3.6.3/bin/mvn clean'
-    1.74 ± 0.07 times faster than '../apache-maven-3.8.1/bin/mvn clean'
-    1.93 ± 0.07 times faster than '../apache-maven-3.5.4/bin/mvn clean'
-    2.09 ± 0.08 times faster than '../apache-maven-3.1.1/bin/mvn clean'
-    2.17 ± 0.08 times faster than '../apache-maven-3.2.5/bin/mvn clean'
-    2.36 ± 0.09 times faster than '../apache-maven-3.3.9/bin/mvn clean'
-    Running with JDK: 16.0.2-tem
+Summary
+'../apache-maven-3.8.3/bin/mvn clean' ran
+1.39 ± 0.06 times faster than '../apache-maven-3.0.5/bin/mvn clean'
+1.57 ± 0.06 times faster than '../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean'
+1.60 ± 0.06 times faster than '../apache-maven-3.8.2/bin/mvn clean'
+1.74 ± 0.06 times faster than '../apache-maven-3.6.3/bin/mvn clean'
+1.74 ± 0.07 times faster than '../apache-maven-3.8.1/bin/mvn clean'
+1.93 ± 0.07 times faster than '../apache-maven-3.5.4/bin/mvn clean'
+2.09 ± 0.08 times faster than '../apache-maven-3.1.1/bin/mvn clean'
+2.17 ± 0.08 times faster than '../apache-maven-3.2.5/bin/mvn clean'
+2.36 ± 0.09 times faster than '../apache-maven-3.3.9/bin/mvn clean'
+Running with JDK: 16.0.2-tem
 
-    Using java version 16.0.2-tem in this shell.
-    Benchmark #1: ../apache-maven-3.0.5/bin/mvn clean
-    Time (mean ± σ):      5.147 s ±  0.111 s    [User: 6.705 s, System: 1.570 s]
-    Range (min … max):    5.040 s …  5.332 s    10 runs
+Using java version 16.0.2-tem in this shell.
+Benchmark #1: ../apache-maven-3.0.5/bin/mvn clean
+Time (mean ± σ):      5.147 s ±  0.111 s    [User: 6.705 s, System: 1.570 s]
+Range (min … max):    5.040 s …  5.332 s    10 runs
 
-    Benchmark #2: ../apache-maven-3.1.1/bin/mvn clean
-    Time (mean ± σ):      7.673 s ±  0.094 s    [User: 12.582 s, System: 2.874 s]
-    Range (min … max):    7.539 s …  7.813 s    10 runs
+Benchmark #2: ../apache-maven-3.1.1/bin/mvn clean
+Time (mean ± σ):      7.673 s ±  0.094 s    [User: 12.582 s, System: 2.874 s]
+Range (min … max):    7.539 s …  7.813 s    10 runs
 
-    Benchmark #3: ../apache-maven-3.2.5/bin/mvn clean
-    Time (mean ± σ):      7.977 s ±  0.102 s    [User: 12.747 s, System: 3.112 s]
-    Range (min … max):    7.796 s …  8.121 s    10 runs
+Benchmark #3: ../apache-maven-3.2.5/bin/mvn clean
+Time (mean ± σ):      7.977 s ±  0.102 s    [User: 12.747 s, System: 3.112 s]
+Range (min … max):    7.796 s …  8.121 s    10 runs
 
-    Benchmark #4: ../apache-maven-3.3.9/bin/mvn clean
-    Time (mean ± σ):      8.583 s ±  0.062 s    [User: 13.344 s, System: 3.181 s]
-    Range (min … max):    8.481 s …  8.676 s    10 runs
+Benchmark #4: ../apache-maven-3.3.9/bin/mvn clean
+Time (mean ± σ):      8.583 s ±  0.062 s    [User: 13.344 s, System: 3.181 s]
+Range (min … max):    8.481 s …  8.676 s    10 runs
 
-    Benchmark #5: ../apache-maven-3.5.4/bin/mvn clean
-    Time (mean ± σ):      7.035 s ±  0.082 s    [User: 8.037 s, System: 1.661 s]
-    Range (min … max):    6.907 s …  7.186 s    10 runs
+Benchmark #5: ../apache-maven-3.5.4/bin/mvn clean
+Time (mean ± σ):      7.035 s ±  0.082 s    [User: 8.037 s, System: 1.661 s]
+Range (min … max):    6.907 s …  7.186 s    10 runs
 
-    Benchmark #6: ../apache-maven-3.6.3/bin/mvn clean
-    Time (mean ± σ):      5.946 s ±  0.080 s    [User: 7.103 s, System: 1.521 s]
-    Range (min … max):    5.844 s …  6.068 s    10 runs
+Benchmark #6: ../apache-maven-3.6.3/bin/mvn clean
+Time (mean ± σ):      5.946 s ±  0.080 s    [User: 7.103 s, System: 1.521 s]
+Range (min … max):    5.844 s …  6.068 s    10 runs
 
-    Benchmark #7: ../apache-maven-3.8.1/bin/mvn clean
-    Time (mean ± σ):      5.933 s ±  0.067 s    [User: 7.102 s, System: 1.531 s]
-    Range (min … max):    5.854 s …  6.033 s    10 runs
+Benchmark #7: ../apache-maven-3.8.1/bin/mvn clean
+Time (mean ± σ):      5.933 s ±  0.067 s    [User: 7.102 s, System: 1.531 s]
+Range (min … max):    5.854 s …  6.033 s    10 runs
 
-    Benchmark #8: ../apache-maven-3.8.2/bin/mvn clean
-    Time (mean ± σ):      5.562 s ±  0.058 s    [User: 6.638 s, System: 1.416 s]
-    Range (min … max):    5.500 s …  5.670 s    10 runs
+Benchmark #8: ../apache-maven-3.8.2/bin/mvn clean
+Time (mean ± σ):      5.562 s ±  0.058 s    [User: 6.638 s, System: 1.416 s]
+Range (min … max):    5.500 s …  5.670 s    10 runs
 
-    Benchmark #9: ../apache-maven-3.8.3/bin/mvn clean
-    Time (mean ± σ):      3.269 s ±  0.067 s    [User: 4.195 s, System: 0.688 s]
-    Range (min … max):    3.222 s …  3.448 s    10 runs
+Benchmark #9: ../apache-maven-3.8.3/bin/mvn clean
+Time (mean ± σ):      3.269 s ±  0.067 s    [User: 4.195 s, System: 0.688 s]
+Range (min … max):    3.222 s …  3.448 s    10 runs
 
-    Benchmark #10: ../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean
-    Time (mean ± σ):      5.140 s ±  0.131 s    [User: 7.356 s, System: 1.576 s]
-    Range (min … max):    5.025 s …  5.393 s    10 runs
+Benchmark #10: ../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean
+Time (mean ± σ):      5.140 s ±  0.131 s    [User: 7.356 s, System: 1.576 s]
+Range (min … max):    5.025 s …  5.393 s    10 runs
 
-    Summary
-    '../apache-maven-3.8.3/bin/mvn clean' ran
-    1.57 ± 0.05 times faster than '../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean'
-    1.57 ± 0.05 times faster than '../apache-maven-3.0.5/bin/mvn clean'
-    1.70 ± 0.04 times faster than '../apache-maven-3.8.2/bin/mvn clean'
-    1.81 ± 0.04 times faster than '../apache-maven-3.8.1/bin/mvn clean'
-    1.82 ± 0.04 times faster than '../apache-maven-3.6.3/bin/mvn clean'
-    2.15 ± 0.05 times faster than '../apache-maven-3.5.4/bin/mvn clean'
-    2.35 ± 0.06 times faster than '../apache-maven-3.1.1/bin/mvn clean'
-    2.44 ± 0.06 times faster than '../apache-maven-3.2.5/bin/mvn clean'
-    2.63 ± 0.06 times faster than '../apache-maven-3.3.9/bin/mvn clean'
-    Running with JDK: 17.0.0-tem
+Summary
+'../apache-maven-3.8.3/bin/mvn clean' ran
+1.57 ± 0.05 times faster than '../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean'
+1.57 ± 0.05 times faster than '../apache-maven-3.0.5/bin/mvn clean'
+1.70 ± 0.04 times faster than '../apache-maven-3.8.2/bin/mvn clean'
+1.81 ± 0.04 times faster than '../apache-maven-3.8.1/bin/mvn clean'
+1.82 ± 0.04 times faster than '../apache-maven-3.6.3/bin/mvn clean'
+2.15 ± 0.05 times faster than '../apache-maven-3.5.4/bin/mvn clean'
+2.35 ± 0.06 times faster than '../apache-maven-3.1.1/bin/mvn clean'
+2.44 ± 0.06 times faster than '../apache-maven-3.2.5/bin/mvn clean'
+2.63 ± 0.06 times faster than '../apache-maven-3.3.9/bin/mvn clean'
+Running with JDK: 17.0.0-tem
 
-    Using java version 17.0.0-tem in this shell.
-    Benchmark #1: ../apache-maven-3.0.5/bin/mvn clean
-    Time (mean ± σ):      5.120 s ±  0.107 s    [User: 6.839 s, System: 1.566 s]
-    Range (min … max):    4.933 s …  5.333 s    10 runs
+Using java version 17.0.0-tem in this shell.
+Benchmark #1: ../apache-maven-3.0.5/bin/mvn clean
+Time (mean ± σ):      5.120 s ±  0.107 s    [User: 6.839 s, System: 1.566 s]
+Range (min … max):    4.933 s …  5.333 s    10 runs
 
-    Benchmark #2: ../apache-maven-3.1.1/bin/mvn clean
-    Time (mean ± σ):      7.752 s ±  0.087 s    [User: 12.547 s, System: 3.084 s]
-    Range (min … max):    7.645 s …  7.934 s    10 runs
+Benchmark #2: ../apache-maven-3.1.1/bin/mvn clean
+Time (mean ± σ):      7.752 s ±  0.087 s    [User: 12.547 s, System: 3.084 s]
+Range (min … max):    7.645 s …  7.934 s    10 runs
 
-    Benchmark #3: ../apache-maven-3.2.5/bin/mvn clean
-    Time (mean ± σ):      8.062 s ±  0.131 s    [User: 12.919 s, System: 3.379 s]
-    Range (min … max):    7.922 s …  8.353 s    10 runs
+Benchmark #3: ../apache-maven-3.2.5/bin/mvn clean
+Time (mean ± σ):      8.062 s ±  0.131 s    [User: 12.919 s, System: 3.379 s]
+Range (min … max):    7.922 s …  8.353 s    10 runs
 
-    Benchmark #4: ../apache-maven-3.3.9/bin/mvn clean
-    Time (mean ± σ):      8.794 s ±  0.062 s    [User: 13.501 s, System: 3.412 s]
-    Range (min … max):    8.691 s …  8.910 s    10 runs
+Benchmark #4: ../apache-maven-3.3.9/bin/mvn clean
+Time (mean ± σ):      8.794 s ±  0.062 s    [User: 13.501 s, System: 3.412 s]
+Range (min … max):    8.691 s …  8.910 s    10 runs
 
-    Benchmark #5: ../apache-maven-3.5.4/bin/mvn clean
-    Time (mean ± σ):      7.178 s ±  0.089 s    [User: 8.511 s, System: 1.878 s]
-    Range (min … max):    7.036 s …  7.331 s    10 runs
+Benchmark #5: ../apache-maven-3.5.4/bin/mvn clean
+Time (mean ± σ):      7.178 s ±  0.089 s    [User: 8.511 s, System: 1.878 s]
+Range (min … max):    7.036 s …  7.331 s    10 runs
 
-    Benchmark #6: ../apache-maven-3.6.3/bin/mvn clean
-    Time (mean ± σ):      6.033 s ±  0.115 s    [User: 7.274 s, System: 1.588 s]
-    Range (min … max):    5.791 s …  6.175 s    10 runs
+Benchmark #6: ../apache-maven-3.6.3/bin/mvn clean
+Time (mean ± σ):      6.033 s ±  0.115 s    [User: 7.274 s, System: 1.588 s]
+Range (min … max):    5.791 s …  6.175 s    10 runs
 
-    Benchmark #7: ../apache-maven-3.8.1/bin/mvn clean
-    Time (mean ± σ):      6.117 s ±  0.056 s    [User: 7.369 s, System: 1.811 s]
-    Range (min … max):    6.043 s …  6.235 s    10 runs
+Benchmark #7: ../apache-maven-3.8.1/bin/mvn clean
+Time (mean ± σ):      6.117 s ±  0.056 s    [User: 7.369 s, System: 1.811 s]
+Range (min … max):    6.043 s …  6.235 s    10 runs
 
-    Benchmark #8: ../apache-maven-3.8.2/bin/mvn clean
-    Time (mean ± σ):      5.704 s ±  0.106 s    [User: 7.090 s, System: 1.645 s]
-    Range (min … max):    5.510 s …  5.818 s    10 runs
+Benchmark #8: ../apache-maven-3.8.2/bin/mvn clean
+Time (mean ± σ):      5.704 s ±  0.106 s    [User: 7.090 s, System: 1.645 s]
+Range (min … max):    5.510 s …  5.818 s    10 runs
 
-    Benchmark #9: ../apache-maven-3.8.3/bin/mvn clean
-    Time (mean ± σ):      3.431 s ±  0.106 s    [User: 4.689 s, System: 0.899 s]
-    Range (min … max):    3.237 s …  3.600 s    10 runs
+Benchmark #9: ../apache-maven-3.8.3/bin/mvn clean
+Time (mean ± σ):      3.431 s ±  0.106 s    [User: 4.689 s, System: 0.899 s]
+Range (min … max):    3.237 s …  3.600 s    10 runs
 
-    Benchmark #10: ../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean
-    Time (mean ± σ):      5.114 s ±  0.078 s    [User: 7.429 s, System: 2.281 s]
-    Range (min … max):    4.924 s …  5.197 s    10 runs
+Benchmark #10: ../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean
+Time (mean ± σ):      5.114 s ±  0.078 s    [User: 7.429 s, System: 2.281 s]
+Range (min … max):    4.924 s …  5.197 s    10 runs
 
-    Summary
-    '../apache-maven-3.8.3/bin/mvn clean' ran
-    1.49 ± 0.05 times faster than '../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean'
-    1.49 ± 0.06 times faster than '../apache-maven-3.0.5/bin/mvn clean'
-    1.66 ± 0.06 times faster than '../apache-maven-3.8.2/bin/mvn clean'
-    1.76 ± 0.06 times faster than '../apache-maven-3.6.3/bin/mvn clean'
-    1.78 ± 0.06 times faster than '../apache-maven-3.8.1/bin/mvn clean'
-    2.09 ± 0.07 times faster than '../apache-maven-3.5.4/bin/mvn clean'
-    2.26 ± 0.07 times faster than '../apache-maven-3.1.1/bin/mvn clean'
-    2.35 ± 0.08 times faster than '../apache-maven-3.2.5/bin/mvn clean'
-    2.56 ± 0.08 times faster than '../apache-maven-3.3.9/bin/mvn clean'
+Summary
+'../apache-maven-3.8.3/bin/mvn clean' ran
+1.49 ± 0.05 times faster than '../apache-maven-4.0.0-alpha-1-SNAPSHOT/bin/mvn clean'
+1.49 ± 0.06 times faster than '../apache-maven-3.0.5/bin/mvn clean'
+1.66 ± 0.06 times faster than '../apache-maven-3.8.2/bin/mvn clean'
+1.76 ± 0.06 times faster than '../apache-maven-3.6.3/bin/mvn clean'
+1.78 ± 0.06 times faster than '../apache-maven-3.8.1/bin/mvn clean'
+2.09 ± 0.07 times faster than '../apache-maven-3.5.4/bin/mvn clean'
+2.26 ± 0.07 times faster than '../apache-maven-3.1.1/bin/mvn clean'
+2.35 ± 0.08 times faster than '../apache-maven-3.2.5/bin/mvn clean'
+2.56 ± 0.08 times faster than '../apache-maven-3.3.9/bin/mvn clean'
 ----
