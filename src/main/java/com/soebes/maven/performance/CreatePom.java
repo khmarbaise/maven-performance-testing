@@ -1,7 +1,9 @@
 package com.soebes.maven.performance;
 
 import org.apache.maven.model.Model;
+import org.apache.maven.model.Parent;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CreatePom {
@@ -45,15 +47,22 @@ public class CreatePom {
   }
 
   CreatePom parent(String gav) {
-    return new CreatePom(null);
+    String[] split = gav.split(":");
+    Parent parent = new Parent();
+    parent.setGroupId(split[0]);
+    parent.setArtifactId(split[1]);
+    parent.setVersion(split[2]);
+    this.model.setParent(parent);
+    return this;
   }
 
   CreatePom properties(Property... modules) {
     return new CreatePom(null);
   }
 
-  CreatePom modules(Module... modules) {
-    return new CreatePom(null);
+  CreatePom modules(String... modules) {
+    Arrays.stream(modules).forEach(s -> this.model.getModules().add(s));
+    return this;
   }
 
   static CreatePom of(String gav) {

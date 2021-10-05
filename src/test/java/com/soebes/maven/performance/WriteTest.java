@@ -1,6 +1,7 @@
 package com.soebes.maven.performance;
 
 import org.apache.maven.model.Model;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.Diff;
@@ -46,6 +47,24 @@ class WriteTest {
   }
 
   @Test
+  void third() throws IOException {
+    Model model = CreatePom.of("g:a:1.0")
+        .parent("p:a:2.0")
+        .modules("f1")
+        .toModel();
+    Path target = Path.of("target", "pom-third.xml");
+
+    Writer.to(model, target);
+
+    String content = Files.lines(target).collect(Collectors.joining());
+    String expected = Files.lines(Path.of("src", "test", "resources", "pom-third.xml")).collect(Collectors.joining());
+
+    Diff build = DiffBuilder.compare(content).ignoreComments().ignoreWhitespace().withTest(expected).build();
+    assertThat(build.getDifferences()).isEmpty();
+  }
+
+  @Test
+  @Disabled
   void finalxxx() {
     Model pomOne = CreatePom
         .of("g", "a", "1.0")
