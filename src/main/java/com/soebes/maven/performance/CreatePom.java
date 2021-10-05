@@ -44,15 +44,15 @@ public class CreatePom {
     return new CreatePom(null);
   }
 
-  static CreatePom parent(String gav) {
+  CreatePom parent(String gav) {
     return new CreatePom(null);
   }
 
-  static CreatePom properties(Property... modules) {
+  CreatePom properties(Property... modules) {
     return new CreatePom(null);
   }
 
-  static CreatePom modules(Module... modules) {
+  CreatePom modules(Module... modules) {
     return new CreatePom(null);
   }
 

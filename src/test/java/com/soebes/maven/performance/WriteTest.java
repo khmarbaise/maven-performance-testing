@@ -1,47 +1,52 @@
 package com.soebes.maven.performance;
 
 import org.apache.maven.model.Model;
-import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
 import org.junit.jupiter.api.Test;
 import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.diff.Diff;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class WriteTest {
-
-  void write(Model model) throws IOException {
-    model.setModelVersion("4.0.0");
-
-    MavenXpp3Writer mavenXpp3Writer = new MavenXpp3Writer();
-
-    Path target = Path.of("target", "pom.xml");
-    mavenXpp3Writer.write(new FileOutputStream(target.toFile()), model);
-  }
 
   @Test
   void first() throws IOException {
     Model model = CreatePom.of("g:a:1.0").toModel();
-    write(model);
+    Path target = Path.of("target", "pom-first.xml");
 
-    Stream<String> content = Files.lines(Path.of("target", "pom.xml"));
-    Stream<String> expected = Files.lines(Path.of("src", "test", "resources", "first.pom"));
+    Writer.to(model, target);
 
-    DiffBuilder.compare(content).ignoreComments().ignoreWhitespace().withTest(expected);
+    String content = Files.lines(target).collect(Collectors.joining());
+    String expected = Files.lines(Path.of("src", "test", "resources", "pom-first.xml")).collect(Collectors.joining());
+
+    Diff build = DiffBuilder.compare(content).ignoreComments().ignoreWhitespace().withTest(expected).build();
+    assertThat(build.getDifferences()).isEmpty();
   }
 
   @Test
-  void name() throws IOException {
-    Model model = new Model();
+  void second() throws IOException {
+    Model model = CreatePom.of("g:a:1.0")
+        .parent("p:a:2.0")
+        .toModel();
+    Path target = Path.of("target", "pom-second.xml");
 
-    model.setGroupId("com.soebes.maven.performance.first");
-    model.setArtifactId("mini");
-    model.setVersion("0.0.1-SNAPSHOT");
+    Writer.to(model, target);
 
+    String content = Files.lines(target).collect(Collectors.joining());
+    String expected = Files.lines(Path.of("src", "test", "resources", "pom-second.xml")).collect(Collectors.joining());
+
+    Diff build = DiffBuilder.compare(content).ignoreComments().ignoreWhitespace().withTest(expected).build();
+    assertThat(build.getDifferences()).isEmpty();
+  }
+
+  @Test
+  void finalxxx() {
     Model pomOne = CreatePom
         .of("g", "a", "1.0")
         .parent("g:a:2.0")
@@ -55,7 +60,9 @@ class WriteTest {
         .toModel();
 
 
-    write(model);
+    Path target = Path.of("target", "pom-second.xml");
+
+    Writer.to(pomOne, target);
   }
 
 }
