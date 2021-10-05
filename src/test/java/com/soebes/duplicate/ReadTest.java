@@ -5,7 +5,7 @@ import org.xmlbeam.XBProjector;
 
 import java.io.IOException;
 
-public class FirstTest {
+class ReadTest {
 
   @Test
   void name() throws IOException {
