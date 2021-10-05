@@ -16,51 +16,57 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class WriteTest {
 
-  @Test
-  void first() throws IOException {
-    Model model = CreatePom.of("g:a:1.0").toModel();
-    Path target = Path.of("target", "pom-first.xml");
+  void check(CreatePom createPom, String pomFile) throws IOException {
+    Path target = Path.of("target", pomFile);
 
-    Writer.to(model, target);
+    Writer.to(createPom.toModel(), target);
 
     String content = Files.lines(target).collect(Collectors.joining());
-    String expected = Files.lines(Path.of("src", "test", "resources", "pom-first.xml")).collect(Collectors.joining());
+    String expected = Files.lines(Path.of("src", "test", "resources", pomFile)).collect(Collectors.joining());
 
     Diff build = DiffBuilder.compare(content).ignoreComments().ignoreWhitespace().withTest(expected).build();
     assertThat(build.getDifferences()).isEmpty();
+  }
+
+  @Test
+  void first() throws IOException {
+    CreatePom createPom = CreatePom.of("g:a:1.0");
+    check(createPom, "pom-first.xml");
   }
 
   @Test
   void second() throws IOException {
-    Model model = CreatePom.of("g:a:1.0")
-        .parent("p:a:2.0")
-        .toModel();
+    CreatePom createPom = CreatePom.of("g:a:1.0")
+        .parent("p:a:2.0");
     Path target = Path.of("target", "pom-second.xml");
-
-    Writer.to(model, target);
-
-    String content = Files.lines(target).collect(Collectors.joining());
-    String expected = Files.lines(Path.of("src", "test", "resources", "pom-second.xml")).collect(Collectors.joining());
-
-    Diff build = DiffBuilder.compare(content).ignoreComments().ignoreWhitespace().withTest(expected).build();
-    assertThat(build.getDifferences()).isEmpty();
+    check(createPom, "pom-second.xml");
   }
 
   @Test
   void third() throws IOException {
-    Model model = CreatePom.of("g:a:1.0")
+    CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
-        .modules("f1")
-        .toModel();
-    Path target = Path.of("target", "pom-third.xml");
+        .modules("f1");
+    check(createPom, "pom-third.xml");
+  }
 
-    Writer.to(model, target);
+  @Test
+  void forth() throws IOException {
+    CreatePom createPom = CreatePom.of("g:a:1.0")
+        .parent("p:a:2.0")
+        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
+        .modules("f1");
+    check(createPom, "pom-forth.xml");
+  }
 
-    String content = Files.lines(target).collect(Collectors.joining());
-    String expected = Files.lines(Path.of("src", "test", "resources", "pom-third.xml")).collect(Collectors.joining());
-
-    Diff build = DiffBuilder.compare(content).ignoreComments().ignoreWhitespace().withTest(expected).build();
-    assertThat(build.getDifferences()).isEmpty();
+  @Test
+  void fifth() throws IOException {
+    CreatePom createPom = CreatePom.of("g:a:1.0")
+        .parent("p:a:2.0")
+        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
+        .dependencies(new Dependency("dg", "da", "dv"))
+        .modules("f1");
+    check(createPom, "pom-fifth.xml");
   }
 
   @Test

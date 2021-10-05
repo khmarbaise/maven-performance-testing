@@ -5,6 +5,7 @@ import org.apache.maven.model.Parent;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 public class CreatePom {
 
@@ -30,8 +31,19 @@ public class CreatePom {
     return new CreatePom(null);
   }
 
-  static CreatePom dependencies(Dependency... dependencies) {
-    return new CreatePom(null);
+  private Function<Dependency, org.apache.maven.model.Dependency> toDep() {
+    return s -> {
+      org.apache.maven.model.Dependency z = new org.apache.maven.model.Dependency();
+      z.setGroupId(s.getGroupId());
+      z.setArtifactId(s.getArtifactId());
+      z.setVersion(s.getVersion());
+      return z;
+    };
+  }
+
+  CreatePom dependencies(Dependency... dependencies) {
+    Arrays.stream(dependencies).map(toDep()).forEach(s -> this.model.getDependencies().add(s));
+    return this;
   }
 
   static CreatePom dependencies(List<Dependency> dependencies) {
@@ -56,8 +68,9 @@ public class CreatePom {
     return this;
   }
 
-  CreatePom properties(Property... modules) {
-    return new CreatePom(null);
+  CreatePom properties(Property... properties) {
+    Arrays.stream(properties).forEach(s -> this.model.getProperties().put(s.getKey(), s.getValue()));
+    return this;
   }
 
   CreatePom modules(String... modules) {
