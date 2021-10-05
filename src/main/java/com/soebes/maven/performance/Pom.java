@@ -1,4 +1,4 @@
-package com.soebes.duplicate;
+package com.soebes.maven.performance;
 
 import org.xmlbeam.annotation.XBRead;
 
