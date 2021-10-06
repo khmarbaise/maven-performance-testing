@@ -107,6 +107,20 @@ class WriteTest {
   }
 
   @Test
+  void ninth() throws IOException {
+    CreatePom createPom = CreatePom.of("g:a:1.0", "war")
+        .parent("p:a:2.0")
+        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
+        .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
+        .dependencies(new Dependency("dg", "da"))
+        .build()
+        .pluginManagement(MAVEN_COMPILER_PLUGIN)
+        .plugins(VERSION_MAVEN_PLUGIN)
+        .modules("f1");
+    verify(createPom, "pom-ninth.xml");
+  }
+
+  @Test
   void final_test() throws IOException {
     CreatePom pomOne = CreatePom
         .of("g", "a", "1.0")

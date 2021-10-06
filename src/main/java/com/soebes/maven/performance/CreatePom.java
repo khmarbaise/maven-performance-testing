@@ -102,11 +102,26 @@ public class CreatePom {
     return of(split[0], split[1], split[2]);
   }
 
+  static CreatePom of(String gav, String packaging) {
+    String[] split = gav.split(":");
+    return of(split[0], split[1], split[2], packaging);
+  }
+
   static CreatePom of(String g, String a, String v) {
     Model model = new Model();
     model.setModelVersion("4.0.0");
     model.setGroupId(g);
     model.setArtifactId(a);
+    model.setVersion(v);
+    return new CreatePom(model);
+  }
+
+  static CreatePom of(String g, String a, String v, String packaging) {
+    Model model = new Model();
+    model.setModelVersion("4.0.0");
+    model.setGroupId(g);
+    model.setArtifactId(a);
+    model.setPackaging(packaging);
     model.setVersion(v);
     return new CreatePom(model);
   }
