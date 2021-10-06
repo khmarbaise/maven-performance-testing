@@ -44,24 +44,14 @@
         <version>3.8.1</version>
       </dependency>
       <dependency>
-        <groupId>org.xmlbeam</groupId>
-        <artifactId>xmlprojector</artifactId>
-        <version>1.4.7</version>
-      </dependency>
-      <dependency>
         <groupId>org.xmlunit</groupId>
         <artifactId>xmlunit-core</artifactId>
         <version>2.8.2</version>
       </dependency>
       <dependency>
-        <groupId>jakarta.xml.bind</groupId>
-        <artifactId>jakarta.xml.bind-api</artifactId>
-        <version>3.0.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.glassfish.jaxb</groupId>
-        <artifactId>jaxb-runtime</artifactId>
-        <version>2.4.0-b180830.0438</version>
+        <groupId>com.beust</groupId>
+        <artifactId>jcommander</artifactId>
+        <version>1.81</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -92,22 +82,12 @@
       <artifactId>maven-model</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.xmlbeam</groupId>
-      <artifactId>xmlprojector</artifactId>
+      <groupId>com.beust</groupId>
+      <artifactId>jcommander</artifactId>
     </dependency>
     <dependency>
       <groupId>org.xmlunit</groupId>
       <artifactId>xmlunit-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.xml.bind</groupId>
-      <artifactId>jakarta.xml.bind-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jaxb</groupId>
-      <artifactId>jaxb-runtime</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -128,7 +108,7 @@
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <manifestEntries>
-                    <Main-Class>PomTestProjects</Main-Class>
+                    <Main-Class>com.soebes.maven.performance.PerformanceSetup</Main-Class>
                   </manifestEntries>
                 </transformer>
               </transformers>

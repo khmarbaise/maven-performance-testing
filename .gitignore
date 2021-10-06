@@ -4,3 +4,4 @@ apache-maven-*/
 lib/*
 .idea/*
 target
+dependency-reduced-pom.xml
