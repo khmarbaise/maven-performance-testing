@@ -7,7 +7,6 @@ import org.apache.maven.model.Parent;
 import org.apache.maven.model.PluginManagement;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.Function;
 
 public class CreatePom {
@@ -20,10 +19,6 @@ public class CreatePom {
 
   Model toModel() {
     return model;
-  }
-
-  static CreatePom plugins(List<Plugin> plugins) {
-    return new CreatePom(null);
   }
 
   private Function<Dependency, org.apache.maven.model.Dependency> toDep() {
@@ -49,6 +44,12 @@ public class CreatePom {
       return plugin;
     };
   }
+
+  CreatePom plugins(Plugin... plugins) {
+    Arrays.stream(plugins).map(toPlugin()).forEach(s -> this.model.getBuild().getPlugins().add(s));
+    return this;
+  }
+
 
   CreatePom pluginManagement(Plugin... pluginManagements) {
     PluginManagement pluginManagement = new PluginManagement();
@@ -98,16 +99,12 @@ public class CreatePom {
 
   static CreatePom of(String gav) {
     String[] split = gav.split(":");
-    Model model = new Model();
-    model.setModelVersion("4.0.0");
-    model.setGroupId(split[0]);
-    model.setArtifactId(split[1]);
-    model.setVersion(split[2]);
-    return new CreatePom(model);
+    return of(split[0], split[1], split[2]);
   }
 
   static CreatePom of(String g, String a, String v) {
     Model model = new Model();
+    model.setModelVersion("4.0.0");
     model.setGroupId(g);
     model.setArtifactId(a);
     model.setVersion(v);

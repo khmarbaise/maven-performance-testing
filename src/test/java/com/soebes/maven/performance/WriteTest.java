@@ -1,7 +1,5 @@
 package com.soebes.maven.performance;
 
-import org.apache.maven.model.Model;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.Diff;
@@ -9,12 +7,14 @@ import org.xmlunit.diff.Diff;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class WriteTest {
+
+  private static final Plugin MAVEN_COMPILER_PLUGIN = Plugin.of("org.apache.maven.plugins", "maven-compiler-plugin", "3.8.1");
+  private static final Plugin VERSION_MAVEN_PLUGIN = Plugin.of("org.mojohaus.mojo", "versions-maven-plugin", "2.8.1");
 
   void verify(CreatePom createPom, String pomFile) throws IOException {
     Path target = Path.of("target", pomFile);
@@ -87,30 +87,37 @@ class WriteTest {
         .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
         .dependencies(new Dependency("dg", "da"))
         .build()
-        .pluginManagement(Plugin.of("org.apache.maven.plugins", "maven-compiler-plugin", "3.8.1"))
+        .pluginManagement(MAVEN_COMPILER_PLUGIN)
         .modules("f1");
     verify(createPom, "pom-seventh.xml");
   }
 
   @Test
-  @Disabled
-  void finalxxx() {
-    Model pomOne = CreatePom
+  void eighth() throws IOException {
+    CreatePom createPom = CreatePom.of("g:a:1.0")
+        .parent("p:a:2.0")
+        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
+        .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
+        .dependencies(new Dependency("dg", "da"))
+        .build()
+        .pluginManagement(MAVEN_COMPILER_PLUGIN)
+        .plugins(VERSION_MAVEN_PLUGIN)
+        .modules("f1");
+    verify(createPom, "pom-eighth.xml");
+  }
+
+  @Test
+  void final_test() throws IOException {
+    CreatePom pomOne = CreatePom
         .of("g", "a", "1.0")
         .parent("g:a:2.0")
         .properties()
-        .dependencies()
-        .dependencyManagement()
+        .dependencies(new Dependency("junit", "junit", "4.12.3"))
         .build()
-        .pluginManagement(Plugin.of("org.apache.maven.plugins", "maven-compiler-plugin", "3.8.2"))
-        .plugins(List.of())
-        .modules()
-        .toModel();
+        .pluginManagement(MAVEN_COMPILER_PLUGIN)
+        .plugins();
 
-
-    Path target = Path.of("target", "pom-second.xml");
-
-    Writer.to(pomOne, target);
+    verify(pomOne, "pom-final.xml");
   }
 
 }
