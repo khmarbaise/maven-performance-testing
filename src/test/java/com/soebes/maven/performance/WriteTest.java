@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class WriteTest {
 
-  void check(CreatePom createPom, String pomFile) throws IOException {
+  void verify(CreatePom createPom, String pomFile) throws IOException {
     Path target = Path.of("target", pomFile);
 
     Writer.to(createPom.toModel(), target);
@@ -31,15 +31,14 @@ class WriteTest {
   @Test
   void first() throws IOException {
     CreatePom createPom = CreatePom.of("g:a:1.0");
-    check(createPom, "pom-first.xml");
+    verify(createPom, "pom-first.xml");
   }
 
   @Test
   void second() throws IOException {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0");
-    Path target = Path.of("target", "pom-second.xml");
-    check(createPom, "pom-second.xml");
+    verify(createPom, "pom-second.xml");
   }
 
   @Test
@@ -47,7 +46,7 @@ class WriteTest {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
         .modules("f1");
-    check(createPom, "pom-third.xml");
+    verify(createPom, "pom-third.xml");
   }
 
   @Test
@@ -56,7 +55,7 @@ class WriteTest {
         .parent("p:a:2.0")
         .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
         .modules("f1");
-    check(createPom, "pom-forth.xml");
+    verify(createPom, "pom-forth.xml");
   }
 
   @Test
@@ -66,7 +65,31 @@ class WriteTest {
         .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
         .dependencies(new Dependency("dg", "da", "dv"))
         .modules("f1");
-    check(createPom, "pom-fifth.xml");
+    verify(createPom, "pom-fifth.xml");
+  }
+
+  @Test
+  void sixth() throws IOException {
+    CreatePom createPom = CreatePom.of("g:a:1.0")
+        .parent("p:a:2.0")
+        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
+        .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
+        .dependencies(new Dependency("dg", "da"))
+        .modules("f1");
+    verify(createPom, "pom-sixth.xml");
+  }
+
+  @Test
+  void seventh() throws IOException {
+    CreatePom createPom = CreatePom.of("g:a:1.0")
+        .parent("p:a:2.0")
+        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
+        .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
+        .dependencies(new Dependency("dg", "da"))
+        .build()
+        .pluginManagement(Plugin.of("org.apache.maven.plugins", "maven-compiler-plugin", "3.8.1"))
+        .modules("f1");
+    verify(createPom, "pom-seventh.xml");
   }
 
   @Test
@@ -77,9 +100,9 @@ class WriteTest {
         .parent("g:a:2.0")
         .properties()
         .dependencies()
-        .dependencyManagement(List.of())
+        .dependencyManagement()
         .build()
-        .pluginManagement(List.of(Plugin.of("org.apache.maven.plugins", "maven-compiler-plugin", "3.8.2")))
+        .pluginManagement(Plugin.of("org.apache.maven.plugins", "maven-compiler-plugin", "3.8.2"))
         .plugins(List.of())
         .modules()
         .toModel();

@@ -1,7 +1,10 @@
 package com.soebes.maven.performance;
 
+import org.apache.maven.model.Build;
+import org.apache.maven.model.DependencyManagement;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Parent;
+import org.apache.maven.model.PluginManagement;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,14 +26,6 @@ public class CreatePom {
     return new CreatePom(null);
   }
 
-  static CreatePom pluginManagement(List<Plugin> pluginManagements) {
-    return new CreatePom(null);
-  }
-
-  static CreatePom dependencyManagement(List<Dependency> dependencies) {
-    return new CreatePom(null);
-  }
-
   private Function<Dependency, org.apache.maven.model.Dependency> toDep() {
     return s -> {
       org.apache.maven.model.Dependency z = new org.apache.maven.model.Dependency();
@@ -41,21 +36,44 @@ public class CreatePom {
     };
   }
 
+  private Function<Plugin, org.apache.maven.model.Plugin> toPlugin() {
+    return s -> {
+      org.apache.maven.model.Plugin plugin = new org.apache.maven.model.Plugin();
+      plugin.setGroupId(s.getGroupId());
+      plugin.setArtifactId(s.getArtifactId());
+      plugin.setVersion(s.getVersion());
+//      plugin.setGoals();
+//      plugin.setDependencies();
+//      plugin.setExecutions();
+//      plugin.setConfiguration();
+      return plugin;
+    };
+  }
+
+  CreatePom pluginManagement(Plugin... pluginManagements) {
+    PluginManagement pluginManagement = new PluginManagement();
+    Arrays.stream(pluginManagements).map(toPlugin()).forEach(s -> pluginManagement.getPlugins().add(s));
+    this.model.getBuild().setPluginManagement(pluginManagement);
+    return this;
+  }
+
+  CreatePom dependencyManagement(Dependency... dependencies) {
+    DependencyManagement dependencyManagement = new DependencyManagement();
+
+    Arrays.stream(dependencies).map(toDep()).forEach(s -> dependencyManagement.getDependencies().add(s));
+    this.model.setDependencyManagement(dependencyManagement);
+    return this;
+  }
+
   CreatePom dependencies(Dependency... dependencies) {
     Arrays.stream(dependencies).map(toDep()).forEach(s -> this.model.getDependencies().add(s));
     return this;
   }
 
-  static CreatePom dependencies(List<Dependency> dependencies) {
-    return new CreatePom(null);
-  }
-
-  static CreatePom dependencies() {
-    return new CreatePom(null);
-  }
-
-  static CreatePom build() {
-    return new CreatePom(null);
+  CreatePom build() {
+    Build build = new Build();
+    this.model.setBuild(build);
+    return this;
   }
 
   CreatePom parent(String gav) {
