@@ -108,12 +108,7 @@ public class CreatePom {
   }
 
   static CreatePom of(String g, String a, String v) {
-    Model model = new Model();
-    model.setModelVersion("4.0.0");
-    model.setGroupId(g);
-    model.setArtifactId(a);
-    model.setVersion(v);
-    return new CreatePom(model);
+    return of(g, a, v, null);
   }
 
   static CreatePom of(String g, String a, String v, String packaging) {
