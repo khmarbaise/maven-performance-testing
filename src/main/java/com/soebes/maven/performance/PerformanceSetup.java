@@ -19,9 +19,42 @@ package com.soebes.maven.performance;
  * under the License.
  */
 
+import com.beust.jcommander.JCommander;
+import com.soebes.maven.performance.commands.CommandMain;
+import com.soebes.maven.performance.commands.Scenario;
+import com.soebes.maven.performance.scenario.SetupMultiLevelScenario;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+
 class PerformanceSetup {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
+    CommandMain cmdMain = new CommandMain();
+    Scenario scenario = new Scenario();
+
+    JCommander jCommander = JCommander.newBuilder()
+        .addObject(cmdMain)
+        .addCommand("scenario", scenario, "sc")
+        .build();
+    jCommander.parse(args);
+
+    if (cmdMain.isHelp()) {
+      jCommander.usage();
+      return;
+    }
+
+    List<Integer> numberOfModules =
+        scenario.getNumberOfModules();
+
+    numberOfModules.stream().forEachOrdered(nofm -> {
+      Path rootLevel = Path.of("target", "scenarios", String.format("number-of-module-%04d", nofm));
+      System.out.println("Generating Scenario " + nofm);
+      new SetupMultiLevelScenario(nofm, rootLevel).setup();
+      //new SetupSingleLevelScenario(nofm, rootLevel).setup();
+    });
+
 
   }
 }

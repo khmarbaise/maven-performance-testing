@@ -1,0 +1,15 @@
+We should try to implement the POM structure based on builder patter to simplify the usage.
+
+[source]
+----
+CreatePom.of()
+.profiles()
+  .profile()
+  .profile()
+.build()
+  .defaultGoals()
+  .plugin()
+  .pluginManagement()
+
+----
+

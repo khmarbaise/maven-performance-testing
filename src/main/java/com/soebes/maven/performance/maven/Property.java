@@ -1,4 +1,4 @@
-package com.soebes.maven.performance;
+package com.soebes.maven.performance.maven;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
