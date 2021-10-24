@@ -27,6 +27,10 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class Writer {
+  private Writer() {
+    //intentionally empty.
+  }
+
   public static void to(Model model, Path path) {
     MavenXpp3Writer mavenXpp3Writer = new MavenXpp3Writer();
 
