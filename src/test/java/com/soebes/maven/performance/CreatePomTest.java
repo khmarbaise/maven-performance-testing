@@ -42,7 +42,7 @@ class CreatePomTest {
   private static final Plugin MAVEN_COMPILER_PLUGIN = Plugin.of("org.apache.maven.plugins", "maven-compiler-plugin", "3.8.1");
   private static final Plugin VERSION_MAVEN_PLUGIN = Plugin.of("org.mojohaus.mojo", "versions-maven-plugin", "2.8.1");
 
-  void verify(CreatePom createPom, String pomFile) throws IOException {
+  void verify(PomBuilder createPom, String pomFile) throws IOException {
     Path target = Path.of("target", pomFile);
 
     Writer.to(createPom.toModel(), target);
@@ -116,6 +116,7 @@ class CreatePomTest {
         .pluginManagement(MAVEN_COMPILER_PLUGIN)
         .modules("f1");
     verify(createPom, "pom-seventh.xml");
+
   }
 
   @Test
@@ -126,7 +127,7 @@ class CreatePomTest {
         .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
         .dependencies(new Dependency("dg", "da"))
         .build()
-        .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN))
+        .pluginManagement(MAVEN_COMPILER_PLUGIN)
         .modules("f1");
     verify(createPom, "pom-seventh_a.xml");
   }
@@ -139,7 +140,7 @@ class CreatePomTest {
         .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
         .dependencies(new Dependency("dg", "da"))
         .build()
-        .pluginManagement(MAVEN_COMPILER_PLUGIN)
+        .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN))
         .plugins(VERSION_MAVEN_PLUGIN)
         .modules("f1");
     verify(createPom, "pom-eighth.xml");
@@ -153,22 +154,20 @@ class CreatePomTest {
         .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
         .dependencies(new Dependency("dg", "da"))
         .build()
-        .pluginManagement(MAVEN_COMPILER_PLUGIN)
+        .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN))
         .plugins(VERSION_MAVEN_PLUGIN)
+
         .modules("f1");
     verify(createPom, "pom-ninth.xml");
   }
 
   @Test
   void final_test() throws IOException {
-    CreatePom pomOne = CreatePom
-        .of("g", "a", "1.0")
+    var pomOne = CreatePom.of("g", "a", "1.0")
         .parent("g:a:2.0")
-        .properties()
         .dependencies(new Dependency("junit", "junit", "4.12.3"))
         .build()
-        .pluginManagement(MAVEN_COMPILER_PLUGIN)
-        .plugins();
+        .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN));
 
     verify(pomOne, "pom-final.xml");
   }

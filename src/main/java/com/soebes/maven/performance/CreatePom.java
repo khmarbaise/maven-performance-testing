@@ -31,7 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-public class CreatePom {
+public class CreatePom implements PomBuilder {
 
   private final Model model;
 
@@ -53,7 +53,7 @@ public class CreatePom {
     };
   }
 
-  private Function<Plugin, org.apache.maven.model.Plugin> toPlugin() {
+  private static Function<Plugin, org.apache.maven.model.Plugin> toPlugin() {
     return s -> {
       org.apache.maven.model.Plugin plugin = new org.apache.maven.model.Plugin();
       plugin.setGroupId(s.getGroupId());
@@ -65,22 +65,6 @@ public class CreatePom {
 //      plugin.setConfiguration();
       return plugin;
     };
-  }
-
-  public CreatePom plugins(Plugin... plugins) {
-    Arrays.stream(plugins).map(toPlugin()).forEach(s -> this.model.getBuild().getPlugins().add(s));
-    return this;
-  }
-
-  public CreatePom pluginManagement(List<Plugin> pluginManagements) {
-    PluginManagement pluginManagement = new PluginManagement();
-    pluginManagements.stream().map(toPlugin()).forEach(s -> pluginManagement.getPlugins().add(s));
-    this.model.getBuild().setPluginManagement(pluginManagement);
-    return this;
-  }
-
-  public CreatePom pluginManagement(Plugin... pluginManagements) {
-    return pluginManagement(Arrays.asList(pluginManagements));
   }
 
   public CreatePom dependencyManagement(Dependency... dependencies) {
@@ -110,10 +94,46 @@ public class CreatePom {
    *
    * @return {@link CreatePom}
    */
-  public CreatePom build() {
+
+  public static class CreatePomBuild implements PomBuilder {
+    private final Model model;
+
+    private CreatePomBuild(Model model) {
+      this.model = model;
+    }
+
+    public CreatePomBuild plugins(Plugin... plugins) {
+      Arrays.stream(plugins).map(toPlugin()).forEach(s -> this.model.getBuild().getPlugins().add(s));
+      return this;
+    }
+
+    public CreatePomBuild pluginManagement(Plugin... pluginManagements) {
+      return pluginManagement(List.of(pluginManagements));
+    }
+
+    public CreatePomBuild pluginManagement(List<Plugin> pluginManagements) {
+      PluginManagement pluginManagement = new PluginManagement();
+      pluginManagements.stream().map(toPlugin()).forEach(s -> pluginManagement.getPlugins().add(s));
+      this.model.getBuild().setPluginManagement(pluginManagement);
+      return this;
+    }
+
+    public CreatePom modules(String... modules) {
+      //TODO: Check for the appropriate packaging type which must be {@code POM}
+      Arrays.stream(modules).forEach(s -> this.model.getModules().add(s));
+      return new CreatePom(this.model);
+    }
+
+    public Model toModel() {
+      return model;
+    }
+
+  }
+
+  public CreatePomBuild build() {
     Build build = new Build();
     this.model.setBuild(build);
-    return this;
+    return new CreatePomBuild(this.model);
   }
 
   public CreatePom parent(String gav) {
@@ -136,6 +156,7 @@ public class CreatePom {
   }
 
   public CreatePom modules(String... modules) {
+    //TODO: Check for the appropriate packaging type which must be {@code POM}
     Arrays.stream(modules).forEach(s -> this.model.getModules().add(s));
     return this;
   }
