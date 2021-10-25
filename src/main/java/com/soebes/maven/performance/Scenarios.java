@@ -22,6 +22,9 @@ package com.soebes.maven.performance;
 import com.soebes.maven.performance.scenario.SetupMultiLevelScenario;
 import com.soebes.maven.performance.scenario.SetupSingleLevelScenario;
 
+/**
+ * @author Karl Heinz Marbaise
+ */
 public enum Scenarios {
 
   SingleLevel(SetupSingleLevelScenario.class),

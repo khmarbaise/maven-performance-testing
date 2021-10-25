@@ -21,6 +21,9 @@ package com.soebes.maven.performance.commands;
 
 import com.beust.jcommander.Parameter;
 
+/**
+ * @author Karl Heinz Marbaise
+ */
 public class CommandMain {
   @Parameter(names = "--help", help = true)
   private boolean help;

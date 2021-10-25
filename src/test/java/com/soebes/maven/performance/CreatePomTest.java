@@ -19,6 +19,7 @@ package com.soebes.maven.performance;
  * under the License.
  */
 
+import com.soebes.maven.performance.maven.Dependency;
 import com.soebes.maven.performance.maven.Plugin;
 import com.soebes.maven.performance.maven.Property;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * TODO: Find a way to fail the tests in case of the throwing an Exception in verify method. And remove the usage of
  * the IOException from all test methods.
+ *
+ * @author Karl Heinz Marbaise
  */
 class CreatePomTest {
 

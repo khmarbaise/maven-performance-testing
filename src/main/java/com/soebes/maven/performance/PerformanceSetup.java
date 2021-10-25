@@ -28,6 +28,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * @author Karl Heinz Marbaise
+ */
 class PerformanceSetup {
 
   public static void main(String[] args) throws IOException {

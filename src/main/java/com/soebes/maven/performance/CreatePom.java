@@ -19,6 +19,7 @@ package com.soebes.maven.performance;
  * under the License.
  */
 
+import com.soebes.maven.performance.maven.Dependency;
 import com.soebes.maven.performance.maven.Plugin;
 import com.soebes.maven.performance.maven.Property;
 import org.apache.maven.model.Build;
@@ -31,6 +32,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+/**
+ * @author Karl Heinz Marbaise
+ */
 public class CreatePom implements PomBuilder {
 
   private final Model model;
@@ -41,16 +45,6 @@ public class CreatePom implements PomBuilder {
 
   public Model toModel() {
     return model;
-  }
-
-  private Function<Dependency, org.apache.maven.model.Dependency> toDep() {
-    return s -> {
-      org.apache.maven.model.Dependency z = new org.apache.maven.model.Dependency();
-      z.setGroupId(s.getGroupId());
-      z.setArtifactId(s.getArtifactId());
-      z.setVersion(s.getVersion());
-      return z;
-    };
   }
 
   private static Function<Plugin, org.apache.maven.model.Plugin> toPlugin() {
@@ -67,6 +61,23 @@ public class CreatePom implements PomBuilder {
     };
   }
 
+  private Function<Dependency, org.apache.maven.model.Dependency> toDep() {
+    return s -> {
+      org.apache.maven.model.Dependency z = new org.apache.maven.model.Dependency();
+      z.setGroupId(s.getGroupId());
+      z.setArtifactId(s.getArtifactId());
+      z.setVersion(s.getVersion());
+      z.setClassifier(s.getClassifier());
+//      z.setType();
+      if (!s.getScope().equals(Dependency.Scope.COMPILE)) {
+        z.setScope(s.getScope().toString().toLowerCase());
+      }
+//      z.setExclusions();
+//      z.setOptional();
+      return z;
+    };
+  }
+
   public CreatePom dependencyManagement(Dependency... dependencies) {
     DependencyManagement dependencyManagement = new DependencyManagement();
 
@@ -79,21 +90,6 @@ public class CreatePom implements PomBuilder {
     Arrays.stream(dependencies).map(toDep()).forEach(s -> this.model.getDependencies().add(s));
     return this;
   }
-
-  /**
-   * <pre>
-   * CreatePom.of()
-   *  .profiles()
-   *    .profile()
-   *    .profile()
-   *  .build()
-   *    .defaultGoals()
-   *    .plugin()
-   *    .pluginManagement()
-   * </pre>
-   *
-   * @return {@link CreatePom}
-   */
 
   public static class CreatePomBuild implements PomBuilder {
     private final Model model;

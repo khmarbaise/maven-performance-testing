@@ -1,4 +1,4 @@
-package com.soebes.maven.performance;
+package com.soebes.maven.performance.maven;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -20,24 +20,43 @@ package com.soebes.maven.performance;
  */
 
 public class Dependency {
-  private String groupId;
-  private String artifactId;
-  private String version;
-  private String classifier;
+  private final String groupId;
+  private final String artifactId;
+  private final String version;
+  private final String classifier;
+  private final Scope scope;
 
-  public Dependency(String groupId, String artifactId, String version, String classifier) {
+  public enum Scope {
+    COMPILE,
+    PROVIDED,
+    RUNTIME,
+    TEST,
+    // system => we do not support this because it's deprecated.
+    IMPORT
+  }
+
+  public Dependency(String groupId, String artifactId, String version, String classifier, Scope scope) {
     this.groupId = groupId;
     this.artifactId = artifactId;
     this.version = version;
     this.classifier = classifier;
+    this.scope = scope;
   }
 
   public Dependency(String groupId, String artifactId, String version) {
-    this(groupId, artifactId, version, null);
+    this(groupId, artifactId, version, null, Scope.COMPILE);
   }
 
   public Dependency(String groupId, String artifactId) {
-    this(groupId, artifactId, null, null);
+    this(groupId, artifactId, null, null, Scope.COMPILE);
+  }
+
+  public static Dependency of(String groupId, String artifactId, String version) {
+    return new Dependency(groupId, artifactId, version);
+  }
+
+  public static Dependency of(String groupId, String artifactId, Scope scope) {
+    return new Dependency(groupId, artifactId, null, null, scope);
   }
 
   public String getGroupId() {
@@ -54,5 +73,9 @@ public class Dependency {
 
   public String getClassifier() {
     return classifier;
+  }
+
+  public Scope getScope() {
+    return this.scope;
   }
 }

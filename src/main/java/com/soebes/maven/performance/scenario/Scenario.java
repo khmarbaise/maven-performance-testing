@@ -19,6 +19,9 @@ package com.soebes.maven.performance.scenario;
  * under the License.
  */
 
+/**
+ * @author Karl Heinz Marbaise
+ */
 public interface Scenario {
   void setup();
 }

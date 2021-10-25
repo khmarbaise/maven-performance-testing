@@ -19,6 +19,9 @@ package com.soebes.maven.performance.maven;
  * under the License.
  */
 
+/**
+ * @author Karl Heinz Marbaise
+ */
 public class Property {
 
   private String key;

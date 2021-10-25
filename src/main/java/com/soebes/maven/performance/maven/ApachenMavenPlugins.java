@@ -23,6 +23,8 @@ import java.util.List;
 
 /**
  * Define the usual list of Maven plugins which are used for a Maven build.
+ *
+ * @author Karl Heinz Marbaise
  */
 public final class ApachenMavenPlugins {
 

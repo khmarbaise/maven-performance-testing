@@ -21,6 +21,8 @@ package com.soebes.maven.performance.maven;
 
 /**
  * Defines the available Codehaus Maven Plugins.
+ *
+ * @author Karl Heinz Marbaise
  */
 public final class MojoHausMavenPlugins {
   private MojoHausMavenPlugins() {

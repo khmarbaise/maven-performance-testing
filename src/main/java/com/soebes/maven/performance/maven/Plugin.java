@@ -19,6 +19,9 @@ package com.soebes.maven.performance.maven;
  * under the License.
  */
 
+/**
+ * @author Karl Heinz Marbaise
+ */
 public class Plugin {
   private final String groupId;
   private final String artifactId;

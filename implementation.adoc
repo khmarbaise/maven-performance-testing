@@ -27,6 +27,8 @@ Karl Heinz Marbaise; {docdate}
 == Overview
 We should try to implement the POM structure based on builder patter to simplify the usage.
 
+=== First.
+
 The basic idea is to express the structure of a pom file via Java DSL which might look like the following:
 
 [source]
@@ -101,5 +103,24 @@ CreatePom.of("g:a:v")
    .plugins(p)
  .modules(..)
 
+----
+
+== Dependencies
+
+=== Usual Dependency
+
+[source,java]
+----
+var dependency = Dependency
+  .of("G:A:V");
+----
+
+Using a classifier:
+
+[source,java]
+----
+var dependency = Dependency
+  .of("G:A:V")
+  .classifier("war");
 ----
 

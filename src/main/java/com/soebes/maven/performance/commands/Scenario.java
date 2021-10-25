@@ -24,6 +24,9 @@ import com.beust.jcommander.Parameters;
 
 import java.util.List;
 
+/**
+ * @author Karl Heinz Marbaise
+ */
 @Parameters(commandDescription = "Record changes to the repository")
 public class Scenario {
 

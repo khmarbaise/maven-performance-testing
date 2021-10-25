@@ -26,6 +26,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * @author Karl Heinz Marbaise
+ */
 public class Writer {
   private Writer() {
     //intentionally empty.
