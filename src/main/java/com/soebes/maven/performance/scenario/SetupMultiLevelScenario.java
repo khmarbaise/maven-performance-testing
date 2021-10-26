@@ -20,20 +20,14 @@ package com.soebes.maven.performance.scenario;
  */
 
 import com.soebes.maven.performance.CreatePom;
-import com.soebes.maven.performance.Writer;
 import com.soebes.maven.performance.maven.ApachenMavenPlugins;
-import com.soebes.maven.performance.maven.Property;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.FileAttribute;
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.IntStream;
 
+import static com.soebes.maven.performance.helper.PomHelper.writePom;
+import static com.soebes.maven.performance.maven.BuildProperties.JAVA_7;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -47,18 +41,15 @@ public class SetupMultiLevelScenario implements Scenario {
   private static final String PARENT_POM_GAV = "org.test.performance:scenario-one-parent:" + PARENT_VERSION;
   private static final String MODULE_POM_GAV = "org.test.performance:scenario-one:" + PARENT_VERSION;
 
-  private static final List<Property> DEFAULT_PROPERTIES = List.of(
-      new Property("project.build.sourceEncoding", "UTF-8"),
-      new Property("maven.compiler.target", "1.7"),
-      new Property("maven.compiler.source", "1.7")
-  );
-
   private int numberOfModules;
+
+  private int numberOfLevels;
 
   private Path rootLevel;
 
-  public SetupMultiLevelScenario(int numberOfModules, Path rootLevel) {
+  public SetupMultiLevelScenario(int numberOfModules, int numberOfLevels, Path rootLevel) {
     this.numberOfModules = numberOfModules;
+    this.numberOfLevels = numberOfLevels;
     this.rootLevel = rootLevel;
   }
 
@@ -68,10 +59,11 @@ public class SetupMultiLevelScenario implements Scenario {
         .map(s -> String.format("mp-lev-1-%04d", s))
         .collect(toList());
     CreatePom rootPom = CreatePom.of(PARENT_POM_GAV, "pom")
-        .properties(DEFAULT_PROPERTIES)
+        .properties(JAVA_7)
         .build()
         .pluginManagement(ApachenMavenPlugins.DEFAULT_PLUGINS)
         .modules(modules.toArray(new String[0]));
+
 
     writePom(rootPom, rootLevel, "pom.xml");
 
@@ -111,20 +103,6 @@ public class SetupMultiLevelScenario implements Scenario {
       writePom(modulePom, dirModuleLeven, "pom.xml");
     });
 
-  }
-
-  private void writePom(CreatePom createPom, Path directory, String pomFile) {
-    Set<PosixFilePermission> perms =
-        PosixFilePermissions.fromString("rwxr-xr-x");
-    FileAttribute<Set<PosixFilePermission>> attr =
-        PosixFilePermissions.asFileAttribute(perms);
-    try {
-      Files.createDirectories(directory, attr);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-    Writer.to(createPom.toModel(), Path.of(directory.toString(), pomFile));
   }
 
 }
