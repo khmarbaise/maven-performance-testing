@@ -38,7 +38,7 @@ public class SetupMultiLevelScenario implements Scenario {
   private static final String PARENT_VERSION = "1.0-SNAPSHOT";
   private static final String PARENT_POM_G = "org.test.performance";
 
-  private static final String PARENT_POM_GAV = "org.test.performance:scenario-one-parent:" + PARENT_VERSION;
+  private static final String PARENT_POM_GAV = "org.test.performance.multi.level:scenario-one-parent:" + PARENT_VERSION;
   private static final String MODULE_POM_GAV = "org.test.performance:scenario-one:" + PARENT_VERSION;
 
   private int numberOfModules;
@@ -54,27 +54,31 @@ public class SetupMultiLevelScenario implements Scenario {
   }
 
   public void setup() {
-    List<String> modules = IntStream.range(0, this.numberOfModules)
+    List<String> rootModuleNames = IntStream.range(0, this.numberOfModules)
         .boxed()
         .map(s -> String.format("mp-lev-1-%04d", s))
         .collect(toList());
+    createRootLevel(rootModuleNames);
+  }
+
+  private void createRootLevel(List<String> rootModules) {
     CreatePom rootPom = CreatePom.of(PARENT_POM_GAV, "pom")
         .properties(JAVA_7)
         .build()
         .pluginManagement(ApachenMavenPlugins.DEFAULT_PLUGINS)
-        .modules(modules.toArray(new String[0]));
-
+        .modules(rootModules.toArray(new String[0]));
 
     writePom(rootPom, rootLevel, "pom.xml");
 
-    modules.stream().forEachOrdered(module -> {
+    rootModules.stream().forEachOrdered(module -> {
       Path dirModuleLevel = Path.of(rootLevel.toString(), module);
       CreatePom modulePom = CreatePom.of(PARENT_POM_G + ".1", "level-" + module, null, "pom")
           .parent(PARENT_POM_GAV)
-          .modules(modules.toArray(new String[0]));
+          .modules(rootModules.toArray(new String[0]));
       writePom(modulePom, dirModuleLevel, "pom-1.xml");
       writeLevel(dirModuleLevel);
     });
+
   }
 
   /*
