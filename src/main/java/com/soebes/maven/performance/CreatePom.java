@@ -143,6 +143,15 @@ public class CreatePom implements PomBuilder {
     return this;
   }
 
+  public CreatePom parent(GAV gav) {
+    Parent parent = new Parent();
+    parent.setGroupId(gav.getGroupId());
+    parent.setArtifactId(gav.getArtifactId());
+    parent.setVersion(gav.getVersion());
+    this.model.setParent(parent);
+    return this;
+  }
+
   public CreatePom properties(Property... properties) {
     return properties(Arrays.asList(properties));
   }
