@@ -54,7 +54,7 @@ public class SetupSingleLevelScenario implements Scenario {
     this.rootLevel = rootLevel;
   }
 
-  public void setup() {
+  public void create() {
     List<String> modules = IntStream.range(0, this.numberOfModules)
         .boxed()
         .map(s -> String.format("module-%04d", s))

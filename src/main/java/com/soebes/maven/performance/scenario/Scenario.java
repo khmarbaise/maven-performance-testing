@@ -23,5 +23,5 @@ package com.soebes.maven.performance.scenario;
  * @author Karl Heinz Marbaise
  */
 public interface Scenario {
-  void setup();
+  void create();
 }

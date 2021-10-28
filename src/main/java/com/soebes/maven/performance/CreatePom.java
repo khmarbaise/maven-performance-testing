@@ -20,6 +20,7 @@ package com.soebes.maven.performance;
  */
 
 import com.soebes.maven.performance.maven.Dependency;
+import com.soebes.maven.performance.maven.GAV;
 import com.soebes.maven.performance.maven.Plugin;
 import com.soebes.maven.performance.maven.Property;
 import org.apache.maven.model.Build;
@@ -165,6 +166,10 @@ public class CreatePom implements PomBuilder {
   public static CreatePom of(String gav, String packaging) {
     String[] split = gav.split(":");
     return of(split[0], split[1], split[2], packaging);
+  }
+
+  public static CreatePom of(GAV gav, String packaging) {
+    return of(gav.getGroupId(), gav.getArtifactId(), gav.getVersion(), packaging);
   }
 
   public static CreatePom of(String g, String a, String v) {
