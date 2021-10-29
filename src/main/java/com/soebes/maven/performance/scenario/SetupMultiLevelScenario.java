@@ -55,7 +55,7 @@ public class SetupMultiLevelScenario implements Scenario {
   public void create() {
     List<String> rootModuleNames = IntStream.range(0, this.numberOfModules)
         .boxed()
-        .map(s -> String.format("-> mp-lev-%02d-%05d", 1, s))
+        .map(s -> String.format("mp-lev-%02d-%05d", 1, s))
         .collect(toList());
 
     CreatePom rootPom = CreatePom.of(ROOT_PARENT_GAV, "pom")
@@ -72,7 +72,7 @@ public class SetupMultiLevelScenario implements Scenario {
   private void createSubLevel(GAV parentGAV, Path rootLevel, String module, int level) {
     List<String> subLevelModules = IntStream.range(0, this.numberOfModules)
         .boxed()
-        .map(s -> String.format("XXXXXmp-lev-%02d-%05d", level + 1, s))
+        .map(s -> String.format("mp-lev-%02d-%05d", level + 1, s))
         .collect(toList());
 
     Path dirModuleLevel = Path.of(rootLevel.toString(), module);

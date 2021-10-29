@@ -19,14 +19,18 @@ package com.soebes.maven.performance.scenario;
  * under the License.
  */
 
+import com.soebes.maven.performance.PomBuilder;
+import com.soebes.maven.performance.Writer;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.diff.Diff;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,11 +38,20 @@ import java.util.stream.Stream;
 import static java.nio.file.Files.walk;
 import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Karl Heinz Marbaise
  */
 class SetupMultiLevelScenarioTest {
+
+  void verify(Path givenPom, Path expectedPom) throws IOException {
+    String content = Files.lines(givenPom).collect(Collectors.joining());
+    String expected = Files.lines(expectedPom).collect(Collectors.joining());
+
+    Diff build = DiffBuilder.compare(content).ignoreComments().ignoreWhitespace().withTest(expected).build();
+    assertThat(build.getDifferences()).isEmpty();
+  }
 
   void deleteDirectoryRecursively(Path startPath) {
     if (Files.notExists(startPath)) {
@@ -65,8 +78,19 @@ class SetupMultiLevelScenarioTest {
   }
 
   @Test
-  void name() {
+  @DisplayName("This will check a single level structure with only a single child.")
+  void checkSingleLevelProjectStructure() {
     Path rootLevel = TEST_SCENARIOS.resolve(String.format("number-of-module-%04d", 1));
     new SetupMultiLevelScenario(1, 1, rootLevel).create();
+
+    assertThat(rootLevel).isDirectory().satisfies(level1 -> {
+      assertThat(level1.resolve("pom.xml")).isNotEmptyFile();
+      verify(level1.resolve("pom.xml"), Path.of("src", "test", "resources", "expected-number-of-module-0001", "pom.xml"));
+
+      assertThat(level1.resolve(Path.of("mp-lev-01-00000"))).isDirectory().satisfies(level2 -> {
+        verify(level2.resolve("pom.xml"), Path.of("src", "test", "resources", "expected-number-of-module-0001", "mp-lev-01-00000", "pom.xml"));
+        assertThat(level2.resolve("pom.xml")).isNotEmptyFile();
+      });
+    });
   }
 }
