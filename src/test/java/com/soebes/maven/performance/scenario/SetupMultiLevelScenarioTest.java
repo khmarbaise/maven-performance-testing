@@ -67,6 +67,6 @@ class SetupMultiLevelScenarioTest {
   @Test
   void name() {
     Path rootLevel = TEST_SCENARIOS.resolve(String.format("number-of-module-%04d", 1));
-    new SetupMultiLevelScenario(5, 4, rootLevel).create();
+    new SetupMultiLevelScenario(1, 1, rootLevel).create();
   }
 }
