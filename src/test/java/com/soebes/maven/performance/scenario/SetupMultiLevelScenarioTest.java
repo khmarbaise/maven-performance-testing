@@ -19,11 +19,11 @@ package com.soebes.maven.performance.scenario;
  * under the License.
  */
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.nio.file.Files.walk;
+import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -39,22 +40,33 @@ import static java.util.stream.Collectors.toList;
  */
 class SetupMultiLevelScenarioTest {
 
-  @Test
-  void test_delete_directory() throws IOException {
-//    Path rootLevel = Path.of("target", "test", "scenarios");
-    Path rootLevel = Path.of("target", "classes");
-
-    try (Stream<Path> streamOfPath = walk(rootLevel)) {
-      List<Path> collect = streamOfPath.filter(s -> Files.isDirectory(s)).sorted(Comparator.reverseOrder()).collect(toList());
-      collect.stream().forEachOrdered(s -> System.out.println("s = " + s));
-
+  void deleteDirectoryRecursively(Path startPath) {
+    if (Files.notExists(startPath)) {
+      return;
     }
+    try (Stream<Path> streamOfPath = walk(startPath)) {
+      List<File> collect = streamOfPath
+          .sorted(reverseOrder())
+          .map(Path::toFile)
+          .collect(toList());
+      collect
+          .stream()
+          .forEachOrdered(File::delete);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private static final Path TEST_SCENARIOS = Path.of("target", "test", "scenarios");
+
+  @BeforeEach
+  void beforeEach() {
+    deleteDirectoryRecursively(TEST_SCENARIOS);
   }
 
   @Test
   void name() {
-
-    Path rootLevel = Path.of("target", "test", "scenarios", String.format("number-of-module-%04d", 1));
+    Path rootLevel = TEST_SCENARIOS.resolve(String.format("number-of-module-%04d", 1));
     new SetupMultiLevelScenario(5, 4, rootLevel).create();
   }
 }
