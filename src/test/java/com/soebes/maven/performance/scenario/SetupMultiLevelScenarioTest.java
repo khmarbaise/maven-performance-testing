@@ -77,6 +77,8 @@ class SetupMultiLevelScenarioTest {
 
   private static final Path EXPECTED_BASE = Path.of("src", "test", "resources", "expected");
 
+  private static final Path EXPECTED_NR_001 = EXPECTED_BASE.resolve("expected-number-of-module-0001");
+
   @Test
   @DisplayName("This will check a single level structure with only a single child.")
   void checkSingleLevelProjectStructure() {
@@ -85,10 +87,10 @@ class SetupMultiLevelScenarioTest {
 
     assertThat(rootLevel).isDirectory().satisfies(level1 -> {
       assertThat(level1.resolve("pom.xml")).isNotEmptyFile();
-      verify(level1.resolve("pom.xml"), EXPECTED_BASE.resolve("expected-number-of-module-0001").resolve("pom.xml"));
+      verify(level1.resolve("pom.xml"), EXPECTED_NR_001.resolve("pom.xml"));
 
       assertThat(level1.resolve(Path.of("mp-lev-01-00000"))).isDirectory().satisfies(level2 -> {
-        verify(level2.resolve("pom.xml"), EXPECTED_BASE.resolve("expected-number-of-module-0001").resolve("mp-lev-01-00000").resolve("pom.xml"));
+        verify(level2.resolve("pom.xml"), EXPECTED_NR_001.resolve("mp-lev-01-00000").resolve("pom.xml"));
         assertThat(level2.resolve("pom.xml")).isNotEmptyFile();
       });
     });
