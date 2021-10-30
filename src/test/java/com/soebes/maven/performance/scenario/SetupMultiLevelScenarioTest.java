@@ -115,7 +115,7 @@ class SetupMultiLevelScenarioTest {
   }
 
   @Test
-  @DisplayName("This will check a two level structure with only a single child.")
+  @DisplayName("This will check a three level structure with only a single child.")
   void checkThreeLevelProjectStructure() {
     Path rootLevel = TEST_SCENARIOS.resolve("check_three_level_project_structure");
     new SetupMultiLevelScenario(2, 3, rootLevel).create();
