@@ -45,13 +45,15 @@ class CreatePomTest {
   private static final Plugin MAVEN_COMPILER_PLUGIN = Plugin.of("org.apache.maven.plugins", "maven-compiler-plugin", "3.8.1");
   private static final Plugin VERSION_MAVEN_PLUGIN = Plugin.of("org.mojohaus.mojo", "versions-maven-plugin", "2.8.1");
 
+  private static final Path EXPECTED_POMS = Path.of("src", "test", "resources", "expected", "poms");
+
   void verify(PomBuilder createPom, String pomFile) throws IOException {
     Path target = Path.of("target", pomFile);
 
     Writer.to(createPom.toModel(), target);
 
     String content = Files.lines(target).collect(Collectors.joining());
-    String expected = Files.lines(Path.of("src", "test", "resources", pomFile)).collect(Collectors.joining());
+    String expected = Files.lines(EXPECTED_POMS.resolve(pomFile)).collect(Collectors.joining());
 
     Diff build = DiffBuilder.compare(content).ignoreComments().ignoreWhitespace().withTest(expected).build();
     assertThat(build.getDifferences()).isEmpty();
@@ -173,6 +175,30 @@ class CreatePomTest {
         .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN));
 
     verify(pomOne, "pom-final.xml");
+  }
+
+  @Test
+  void packgingJar() throws IOException {
+    var pomOne = CreatePom.of("g", "a", "1.0")
+        .packaging(CreatePom.Packaging.jar)
+        .parent("g:a:2.0")
+        .dependencies(new Dependency("junit", "junit", "4.12.3"))
+        .build()
+        .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN));
+
+    verify(pomOne, "pom-packaging-jar.xml");
+  }
+
+  @Test
+  void packgingEAR() throws IOException {
+    var pomOne = CreatePom.of("g", "a", "1.0")
+        .packaging(CreatePom.Packaging.ear)
+        .parent("g:a:2.0")
+        .dependencies(new Dependency("junit", "junit", "4.12.3"))
+        .build()
+        .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN));
+
+    verify(pomOne, "pom-packaging-ear.xml");
   }
 
 }

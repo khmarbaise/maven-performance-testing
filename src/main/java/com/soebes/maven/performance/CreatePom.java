@@ -152,6 +152,17 @@ public class CreatePom implements PomBuilder {
     return this;
   }
 
+  public enum Packaging {
+    pom,
+    jar,
+    war,
+    ear
+  }
+  public CreatePom packaging(Packaging packaging) {
+    this.model.setPackaging(packaging.name());
+    return this;
+  }
+
   public CreatePom properties(Property... properties) {
     return properties(Arrays.asList(properties));
   }
@@ -190,8 +201,8 @@ public class CreatePom implements PomBuilder {
     model.setModelVersion("4.0.0");
     model.setGroupId(g);
     model.setArtifactId(a);
-    model.setPackaging(packaging);
     model.setVersion(v);
+    model.setPackaging(packaging);
     return new CreatePom(model);
   }
 }
