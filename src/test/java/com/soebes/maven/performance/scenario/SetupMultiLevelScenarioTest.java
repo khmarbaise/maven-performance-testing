@@ -77,12 +77,12 @@ class SetupMultiLevelScenarioTest {
 
   private static final Path EXPECTED_BASE = Path.of("src", "test", "resources", "expected");
 
-  private static final Path EXPECTED_NR_001 = EXPECTED_BASE.resolve("expected-number-of-module-0001");
+  private static final Path EXPECTED_NR_001 = EXPECTED_BASE.resolve("check_single_level_project_structure");
 
   @Test
   @DisplayName("This will check a single level structure with only a single child.")
   void checkSingleLevelProjectStructure() {
-    Path rootLevel = TEST_SCENARIOS.resolve(String.format("number-of-module-%04d", 1));
+    Path rootLevel = TEST_SCENARIOS.resolve("check_single_level_project_structure");
     new SetupMultiLevelScenario(1, 1, rootLevel).create();
 
     assertThat(rootLevel).isDirectory().satisfies(level1 -> {
