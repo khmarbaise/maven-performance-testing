@@ -180,7 +180,7 @@ class CreatePomTest {
   @Test
   void packgingJar() throws IOException {
     var pomOne = CreatePom.of("g", "a", "1.0")
-        .packaging(CreatePom.Packaging.jar)
+        .packaging(Packaging.jar)
         .parent("g:a:2.0")
         .dependencies(new Dependency("junit", "junit", "4.12.3"))
         .build()
@@ -192,7 +192,7 @@ class CreatePomTest {
   @Test
   void packgingEAR() throws IOException {
     var pomOne = CreatePom.of("g", "a", "1.0")
-        .packaging(CreatePom.Packaging.ear)
+        .packaging(Packaging.ear)
         .parent("g:a:2.0")
         .dependencies(new Dependency("junit", "junit", "4.12.3"))
         .build()

@@ -20,6 +20,7 @@ package com.soebes.maven.performance.scenario;
  */
 
 import com.soebes.maven.performance.CreatePom;
+import com.soebes.maven.performance.Packaging;
 import com.soebes.maven.performance.maven.ApachenMavenPlugins;
 import com.soebes.maven.performance.maven.GAV;
 
@@ -73,7 +74,7 @@ public class SetupMultiLevelScenario implements Scenario {
     Path dirModuleLevel = Path.of(rootLevel.toString(), module);
     GAV newPom = GAV.of(parentGAV.getGroupId() + String.format(".%02d", level), module, parentGAV.getVersion());
     CreatePom modulePom = CreatePom
-        .of(newPom, "pom")
+        .of(newPom)
         .parent(parentGAV);
 
     if (level < this.numberOfLevels) {
@@ -81,7 +82,9 @@ public class SetupMultiLevelScenario implements Scenario {
           .boxed()
           .map(s -> String.format("mp-lev-%02d-%05d", level + 1, s))
           .collect(toList());
-      modulePom.modules(subLevelModules.toArray(new String[0]));
+      modulePom
+          .packaging(Packaging.pom)
+          .modules(subLevelModules.toArray(new String[0]));
     }
 
     writePom(modulePom, dirModuleLevel, "pom.xml");

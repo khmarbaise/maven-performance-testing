@@ -152,12 +152,6 @@ public class CreatePom implements PomBuilder {
     return this;
   }
 
-  public enum Packaging {
-    pom,
-    jar,
-    war,
-    ear
-  }
   public CreatePom packaging(Packaging packaging) {
     this.model.setPackaging(packaging.name());
     return this;
@@ -190,6 +184,10 @@ public class CreatePom implements PomBuilder {
 
   public static CreatePom of(GAV gav, String packaging) {
     return of(gav.getGroupId(), gav.getArtifactId(), gav.getVersion(), packaging);
+  }
+
+  public static CreatePom of(GAV gav) {
+    return of(gav.getGroupId(), gav.getArtifactId(), gav.getVersion());
   }
 
   public static CreatePom of(String g, String a, String v) {

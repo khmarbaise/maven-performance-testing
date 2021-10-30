@@ -10,5 +10,4 @@
   <groupId>org.test.performance.multi.level.01</groupId>
   <artifactId>mp-lev-01-00000</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
 </project>
