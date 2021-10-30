@@ -70,26 +70,21 @@ public class SetupMultiLevelScenario implements Scenario {
   }
 
   private void createSubLevel(GAV parentGAV, Path rootLevel, String module, int level) {
-    List<String> subLevelModules = IntStream.range(0, this.numberOfModules)
-        .boxed()
-        .map(s -> String.format("mp-lev-%02d-%05d", level + 1, s))
-        .collect(toList());
-
     Path dirModuleLevel = Path.of(rootLevel.toString(), module);
-
     GAV newPom = GAV.of(parentGAV.getGroupId() + String.format(".%02d", level), module, parentGAV.getVersion());
-    CreatePom modulePom = CreatePom.of(newPom, "pom")
-        .parent(parentGAV)
-        .modules(subLevelModules.toArray(new String[0]));
-    writePom(modulePom, dirModuleLevel, "pom.xml");
+    CreatePom modulePom = CreatePom
+        .of(newPom, "pom")
+        .parent(parentGAV);
 
-//    if (level >= this.numberOfLevels) {
-//      subLevelModules.stream().forEachOrdered(s -> {
-//        createFinalLevel(newPom, Path.of(dirModuleLevel.toString(), s), module, level + 1);
-//      });
-//    } else {
-//      createSubLevel(newPom, Path.of(rootLevel.toString(), module), module, level + 1);
-//    }
+    if (level < this.numberOfLevels) {
+      List<String> subLevelModules = IntStream.range(0, this.numberOfModules)
+          .boxed()
+          .map(s -> String.format("mp-lev-%02d-%05d", level + 1, s))
+          .collect(toList());
+      modulePom.modules(subLevelModules.toArray(new String[0]));
+    }
+
+    writePom(modulePom, dirModuleLevel, "pom.xml");
 
   }
 
