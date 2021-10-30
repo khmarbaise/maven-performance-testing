@@ -19,8 +19,6 @@ package com.soebes.maven.performance.scenario;
  * under the License.
  */
 
-import com.soebes.maven.performance.PomBuilder;
-import com.soebes.maven.performance.Writer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -77,6 +75,8 @@ class SetupMultiLevelScenarioTest {
     deleteDirectoryRecursively(TEST_SCENARIOS);
   }
 
+  private static final Path EXPECTED_BASE = Path.of("src", "test", "resources", "expected");
+
   @Test
   @DisplayName("This will check a single level structure with only a single child.")
   void checkSingleLevelProjectStructure() {
@@ -85,10 +85,10 @@ class SetupMultiLevelScenarioTest {
 
     assertThat(rootLevel).isDirectory().satisfies(level1 -> {
       assertThat(level1.resolve("pom.xml")).isNotEmptyFile();
-      verify(level1.resolve("pom.xml"), Path.of("src", "test", "resources", "expected-number-of-module-0001", "pom.xml"));
+      verify(level1.resolve("pom.xml"), EXPECTED_BASE.resolve("expected-number-of-module-0001").resolve("pom.xml"));
 
       assertThat(level1.resolve(Path.of("mp-lev-01-00000"))).isDirectory().satisfies(level2 -> {
-        verify(level2.resolve("pom.xml"), Path.of("src", "test", "resources", "expected-number-of-module-0001", "mp-lev-01-00000", "pom.xml"));
+        verify(level2.resolve("pom.xml"), EXPECTED_BASE.resolve("expected-number-of-module-0001").resolve("mp-lev-01-00000").resolve("pom.xml"));
         assertThat(level2.resolve("pom.xml")).isNotEmptyFile();
       });
     });
