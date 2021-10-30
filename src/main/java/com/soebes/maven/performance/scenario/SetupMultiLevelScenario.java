@@ -89,6 +89,15 @@ public class SetupMultiLevelScenario implements Scenario {
 
     writePom(modulePom, dirModuleLevel, "pom.xml");
 
+    if (level < this.numberOfLevels) {
+      List<String> subLevelModules = IntStream.range(0, this.numberOfModules)
+          .boxed()
+          .map(s -> String.format("mp-lev-%02d-%05d", level + 1, s))
+          .collect(toList());
+
+      subLevelModules.stream().forEachOrdered(ml -> createSubLevel(newPom, dirModuleLevel, ml, level+1));
+    }
+
   }
 
   private void createFinalLevel(GAV parentGAV, Path rootLevel, String module, int level) {

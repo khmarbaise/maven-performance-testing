@@ -19,7 +19,7 @@ package com.soebes.maven.performance.scenario;
  * under the License.
  */
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.xmlunit.builder.DiffBuilder;
@@ -51,7 +51,7 @@ class SetupMultiLevelScenarioTest {
     assertThat(build.getDifferences()).isEmpty();
   }
 
-  void deleteDirectoryRecursively(Path startPath) {
+  static void deleteDirectoryRecursively(Path startPath) {
     if (Files.notExists(startPath)) {
       return;
     }
@@ -70,14 +70,16 @@ class SetupMultiLevelScenarioTest {
 
   private static final Path TEST_SCENARIOS = Path.of("target", "test", "scenarios");
 
-  @BeforeEach
-  void beforeEach() {
+  @BeforeAll
+  static void beforeEach() {
     deleteDirectoryRecursively(TEST_SCENARIOS);
   }
 
   private static final Path EXPECTED_BASE = Path.of("src", "test", "resources", "expected");
 
   private static final Path EXPECTED_NR_001 = EXPECTED_BASE.resolve("check_single_level_project_structure");
+
+  private static final Path EXPECTED_NR_002 = EXPECTED_BASE.resolve("check_two_level_project_structure");
 
   @Test
   @DisplayName("This will check a single level structure with only a single child.")
@@ -91,6 +93,39 @@ class SetupMultiLevelScenarioTest {
 
       assertThat(level1.resolve(Path.of("mp-lev-01-00000"))).isDirectory().satisfies(level2 -> {
         verify(level2.resolve("pom.xml"), EXPECTED_NR_001.resolve("mp-lev-01-00000").resolve("pom.xml"));
+      });
+    });
+  }
+
+  @Test
+  @DisplayName("This will check a two level structure with only a single child.")
+  void checkTwoLevelProjectStructure() {
+    Path rootLevel = TEST_SCENARIOS.resolve("check_two_level_project_structure");
+    new SetupMultiLevelScenario(1, 2, rootLevel).create();
+
+    assertThat(rootLevel).isDirectory().satisfies(level1 -> {
+      assertThat(level1.resolve("pom.xml")).isNotEmptyFile();
+      verify(level1.resolve("pom.xml"), EXPECTED_NR_002.resolve("pom.xml"));
+
+      assertThat(level1.resolve(Path.of("mp-lev-01-00000"))).isDirectory().satisfies(level2 -> {
+        verify(level2.resolve("pom.xml"), EXPECTED_NR_002.resolve("mp-lev-01-00000").resolve("pom.xml"));
+        assertThat(level2.resolve("pom.xml")).isNotEmptyFile();
+      });
+    });
+  }
+
+  @Test
+  @DisplayName("This will check a two level structure with only a single child.")
+  void checkThreeLevelProjectStructure() {
+    Path rootLevel = TEST_SCENARIOS.resolve("check_three_level_project_structure");
+    new SetupMultiLevelScenario(2, 3, rootLevel).create();
+
+    assertThat(rootLevel).isDirectory().satisfies(level1 -> {
+      assertThat(level1.resolve("pom.xml")).isNotEmptyFile();
+      verify(level1.resolve("pom.xml"), EXPECTED_NR_002.resolve("pom.xml"));
+
+      assertThat(level1.resolve(Path.of("mp-lev-01-00000"))).isDirectory().satisfies(level2 -> {
+        verify(level2.resolve("pom.xml"), EXPECTED_NR_002.resolve("mp-lev-01-00000").resolve("pom.xml"));
         assertThat(level2.resolve("pom.xml")).isNotEmptyFile();
       });
     });
