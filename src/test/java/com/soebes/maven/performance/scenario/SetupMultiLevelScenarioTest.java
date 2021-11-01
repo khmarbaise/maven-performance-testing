@@ -29,13 +29,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.nio.file.Files.walk;
-import static java.util.Comparator.reverseOrder;
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -55,13 +52,10 @@ class SetupMultiLevelScenarioTest {
     if (Files.notExists(startPath)) {
       return;
     }
-    try (Stream<Path> streamOfPath = walk(startPath)) {
-      List<File> collect = streamOfPath
-          .sorted(reverseOrder())
+    try (Stream<Path> streamOfPath = Files.walk(startPath)) {
+      streamOfPath
+          .sorted(Comparator.reverseOrder())
           .map(Path::toFile)
-          .collect(toList());
-      collect
-          .stream()
           .forEachOrdered(File::delete);
     } catch (IOException e) {
       throw new RuntimeException(e);
