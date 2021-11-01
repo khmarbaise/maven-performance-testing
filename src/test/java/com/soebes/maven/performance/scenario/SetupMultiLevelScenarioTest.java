@@ -81,6 +81,8 @@ class SetupMultiLevelScenarioTest {
 
   private static final Path EXPECTED_NR_002 = EXPECTED_BASE.resolve("check_two_level_project_structure");
 
+  private static final Path EXPECTED_NR_003 = EXPECTED_BASE.resolve("check_three_level_project_structure");
+
   @Test
   @DisplayName("This will check a single level structure with only a single child.")
   void checkSingleLevelProjectStructure() {
@@ -118,15 +120,19 @@ class SetupMultiLevelScenarioTest {
   @DisplayName("This will check a three level structure with only a single child.")
   void checkThreeLevelProjectStructure() {
     Path rootLevel = TEST_SCENARIOS.resolve("check_three_level_project_structure");
-    new SetupMultiLevelScenario(2, 3, rootLevel).create();
+    new SetupMultiLevelScenario(1, 3, rootLevel).create();
 
-    assertThat(rootLevel).isDirectory().satisfies(level1 -> {
-      assertThat(level1.resolve("pom.xml")).isNotEmptyFile();
-      verify(level1.resolve("pom.xml"), EXPECTED_NR_002.resolve("pom.xml"));
+    assertThat(rootLevel).isDirectory().satisfies(level0 -> {
+      verify(level0.resolve("pom.xml"), EXPECTED_NR_003.resolve("pom.xml"));
 
-      assertThat(level1.resolve(Path.of("mp-lev-01-00000"))).isDirectory().satisfies(level2 -> {
-        verify(level2.resolve("pom.xml"), EXPECTED_NR_002.resolve("mp-lev-01-00000").resolve("pom.xml"));
-        assertThat(level2.resolve("pom.xml")).isNotEmptyFile();
+      assertThat(level0.resolve(Path.of("mp-lev-01-00000"))).isDirectory().satisfies(level1 -> {
+        verify(level1.resolve("pom.xml"), EXPECTED_NR_003.resolve("mp-lev-01-00000").resolve("pom.xml"));
+        assertThat(level1.resolve(Path.of("mp-lev-02-00000"))).isDirectory().satisfies(level2 -> {
+          verify(level2.resolve("pom.xml"), EXPECTED_NR_003.resolve("mp-lev-01-00000").resolve("mp-lev-02-00000").resolve("pom.xml"));
+          assertThat(level2.resolve(Path.of("mp-lev-03-00000"))).isDirectory().satisfies(level3 -> {
+            verify(level3.resolve("pom.xml"), EXPECTED_NR_003.resolve("mp-lev-01-00000").resolve("mp-lev-02-00000").resolve("mp-lev-03-00000").resolve("pom.xml"));
+          });
+        });
       });
     });
   }
