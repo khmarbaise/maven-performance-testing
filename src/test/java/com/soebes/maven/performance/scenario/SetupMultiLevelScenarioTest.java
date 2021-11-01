@@ -116,15 +116,16 @@ class SetupMultiLevelScenarioTest {
     Path rootLevel = TEST_SCENARIOS.resolve("check_three_level_project_structure");
     new SetupMultiLevelScenario(1, 3, rootLevel).create();
 
+    Path firstLevel = EXPECTED_NR_003.resolve("mp-lev-01-00000");
     assertThat(rootLevel).isDirectory().satisfies(level0 -> {
       verify(level0.resolve("pom.xml"), EXPECTED_NR_003.resolve("pom.xml"));
-
       assertThat(level0.resolve(Path.of("mp-lev-01-00000"))).isDirectory().satisfies(level1 -> {
-        verify(level1.resolve("pom.xml"), EXPECTED_NR_003.resolve("mp-lev-01-00000").resolve("pom.xml"));
+        verify(level1.resolve("pom.xml"), firstLevel.resolve("pom.xml"));
         assertThat(level1.resolve(Path.of("mp-lev-02-00000"))).isDirectory().satisfies(level2 -> {
-          verify(level2.resolve("pom.xml"), EXPECTED_NR_003.resolve("mp-lev-01-00000").resolve("mp-lev-02-00000").resolve("pom.xml"));
+          Path secondLevel = firstLevel.resolve("mp-lev-02-00000");
+          verify(level2.resolve("pom.xml"), secondLevel.resolve("pom.xml"));
           assertThat(level2.resolve(Path.of("mp-lev-03-00000"))).isDirectory().satisfies(level3 -> {
-            verify(level3.resolve("pom.xml"), EXPECTED_NR_003.resolve("mp-lev-01-00000").resolve("mp-lev-02-00000").resolve("mp-lev-03-00000").resolve("pom.xml"));
+            verify(level3.resolve("pom.xml"), secondLevel.resolve("mp-lev-03-00000").resolve("pom.xml"));
           });
         });
       });
