@@ -194,7 +194,7 @@ class CreatePomTest {
   @Test
   void packgingJar() {
     var pomOne = CreatePom.of("g", "a", "1.0")
-        .packaging(Packaging.jar)
+        .packaging(Packaging.JAR)
         .parent("g:a:2.0")
         .dependencies(new Dependency("junit", "junit", "4.12.3"))
         .build()
@@ -206,7 +206,7 @@ class CreatePomTest {
   @Test
   void packgingEAR() {
     var pomOne = CreatePom.of("g", "a", "1.0")
-        .packaging(Packaging.ear)
+        .packaging(Packaging.EAR)
         .parent("g:a:2.0")
         .dependencies(new Dependency("junit", "junit", "4.12.3"))
         .build()

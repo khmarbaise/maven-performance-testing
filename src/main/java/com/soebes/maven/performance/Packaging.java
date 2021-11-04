@@ -23,8 +23,8 @@ package com.soebes.maven.performance;
  * @author Karl Heinz Marbaise
  */
 public enum Packaging {
-  pom,
-  jar,
-  war,
-  ear
+  POM,
+  JAR,
+  WAR,
+  EAR
 }

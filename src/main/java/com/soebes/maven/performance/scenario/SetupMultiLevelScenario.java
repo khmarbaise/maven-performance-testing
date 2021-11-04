@@ -83,7 +83,7 @@ public class SetupMultiLevelScenario implements Scenario {
           .map(s -> String.format("mp-lev-%02d-%05d", level + 1, s))
           .collect(toList());
       modulePom
-          .packaging(Packaging.pom)
+          .packaging(Packaging.POM)
           .modules(subLevelModules.toArray(new String[0]));
     }
 
@@ -98,14 +98,6 @@ public class SetupMultiLevelScenario implements Scenario {
       subLevelModules.stream().forEachOrdered(ml -> createSubLevel(newPom, dirModuleLevel, ml, level+1));
     }
 
-  }
-
-  private void createFinalLevel(GAV parentGAV, Path rootLevel, String module, int level) {
-    Path dirModuleLeven = Path.of(rootLevel.toString(), module);
-    GAV newPom = GAV.of(parentGAV.getGroupId() + String.format(".%02d", level), module, parentGAV.getVersion());
-    CreatePom modulePom = CreatePom.of(newPom, "pom")
-        .parent(parentGAV);
-    writePom(modulePom, dirModuleLeven, "pom.xml");
   }
 
 }
