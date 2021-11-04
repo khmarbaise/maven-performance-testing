@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
+ * Builder Setup to programmatically generate a {@code pom.xml} file.
+ *
  * @author Karl Heinz Marbaise
  */
 public class CreatePom implements PomBuilder {
