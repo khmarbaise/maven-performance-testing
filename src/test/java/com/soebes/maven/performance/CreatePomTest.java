@@ -31,6 +31,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,33 +48,46 @@ class CreatePomTest {
 
   private static final Path EXPECTED_POMS = Path.of("src", "test", "resources", "expected", "poms");
 
-  void verify(PomBuilder createPom, String pomFile) throws IOException {
+  /**
+   * @param target the path where to load the given file from.
+   * @return A stream of lines.
+   * @throws RuntimeException in case of errors.
+   */
+  Stream<String> readContent(Path target) {
+    try {
+      return Files.lines(target);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  void verify(PomBuilder createPom, String pomFile) {
     Path target = Path.of("target", pomFile);
 
     Writer.to(createPom.toModel(), target);
 
-    String content = Files.lines(target).collect(Collectors.joining());
-    String expected = Files.lines(EXPECTED_POMS.resolve(pomFile)).collect(Collectors.joining());
+    String content = readContent(target).collect(Collectors.joining());
+    String expected = readContent(EXPECTED_POMS.resolve(pomFile)).collect(Collectors.joining());
 
     Diff build = DiffBuilder.compare(content).ignoreComments().ignoreWhitespace().withTest(expected).build();
     assertThat(build.getDifferences()).isEmpty();
   }
 
   @Test
-  void first() throws IOException {
+  void first() {
     CreatePom createPom = CreatePom.of("g:a:1.0");
     verify(createPom, "pom-first.xml");
   }
 
   @Test
-  void second() throws IOException {
+  void second() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0");
     verify(createPom, "pom-second.xml");
   }
 
   @Test
-  void third() throws IOException {
+  void third() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
         .modules("f1");
@@ -81,7 +95,7 @@ class CreatePomTest {
   }
 
   @Test
-  void forth() throws IOException {
+  void forth() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
         .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
@@ -90,7 +104,7 @@ class CreatePomTest {
   }
 
   @Test
-  void fifth() throws IOException {
+  void fifth() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
         .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
@@ -100,7 +114,7 @@ class CreatePomTest {
   }
 
   @Test
-  void sixth() throws IOException {
+  void sixth() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
         .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
@@ -111,7 +125,7 @@ class CreatePomTest {
   }
 
   @Test
-  void seventh() throws IOException {
+  void seventh() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
         .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
@@ -125,7 +139,7 @@ class CreatePomTest {
   }
 
   @Test
-  void seventh_one() throws IOException {
+  void seventh_one() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
         .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
@@ -138,7 +152,7 @@ class CreatePomTest {
   }
 
   @Test
-  void eighth() throws IOException {
+  void eighth() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
         .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
@@ -152,7 +166,7 @@ class CreatePomTest {
   }
 
   @Test
-  void ninth() throws IOException {
+  void ninth() {
     CreatePom createPom = CreatePom.of("g:a:1.0", "war")
         .parent("p:a:2.0")
         .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
@@ -167,7 +181,7 @@ class CreatePomTest {
   }
 
   @Test
-  void final_test() throws IOException {
+  void final_test() {
     var pomOne = CreatePom.of("g", "a", "1.0")
         .parent("g:a:2.0")
         .dependencies(new Dependency("junit", "junit", "4.12.3"))
@@ -178,7 +192,7 @@ class CreatePomTest {
   }
 
   @Test
-  void packgingJar() throws IOException {
+  void packgingJar() {
     var pomOne = CreatePom.of("g", "a", "1.0")
         .packaging(Packaging.jar)
         .parent("g:a:2.0")
@@ -190,7 +204,7 @@ class CreatePomTest {
   }
 
   @Test
-  void packgingEAR() throws IOException {
+  void packgingEAR() {
     var pomOne = CreatePom.of("g", "a", "1.0")
         .packaging(Packaging.ear)
         .parent("g:a:2.0")
