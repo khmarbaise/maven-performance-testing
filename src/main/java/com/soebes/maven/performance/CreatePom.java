@@ -155,7 +155,7 @@ public class CreatePom implements PomBuilder {
   }
 
   public CreatePom packaging(Packaging packaging) {
-    this.model.setPackaging(packaging.name());
+    this.model.setPackaging(packaging.name().toLowerCase());
     return this;
   }
 
