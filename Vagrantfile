@@ -56,8 +56,4 @@ Vagrant.configure(2) do |config|
     end
     setSSHkey (config)
   end
-  # Enable provisioning with Ansible.
-  # config.j2.vm.provision "ansible" do |ansible|
-  #   ansible.playbook = "schulung-installation.yml"
-  # end
 end
