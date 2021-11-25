@@ -1,0 +1,5 @@
+[maven]
+# maven
+192.168.10.240
+[local]
+localhost ansible_connection=local

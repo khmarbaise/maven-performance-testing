@@ -1,0 +1,64 @@
+---
+- name: Maven
+  hosts: maven
+
+  tasks:
+    - name: Add the user `tmpt`
+      become: true
+      ansible.builtin.user:
+        name: tmpt
+        comment: The Maven Performance Testing
+    - name: Installation zip tool
+      become: true
+      package:
+        name: zip
+        state: present
+    - name: Installation unzip tool
+      become: true
+      package:
+        name: unzip
+        state: present
+    - name: Installation Zeitsynchronisation
+      become: true
+      package:
+        name: chrony
+        state: present
+    - name: Download SDK Man
+      command: 'curl -s "https://get.sdkman.io" -o install.sh'
+    - name: Make install.sh exectuable
+      ansible.builtin.file:
+        path: install.sh
+        state: touch
+        mode: u+rwx,g+x,o+rx
+    - name: Install SDK Man
+      command: './install.sh'
+
+    - name: Configure SDK Man
+      ansible.builtin.template:
+        src: templates/config.j2
+        dest: .sdkman/etc/config
+
+    - name: Install JDK 8
+      ansible.builtin.shell: |
+        source ~/.bashrc
+        sdk install java 8.0.302-open
+      args:
+        executable: /bin/bash
+    - name: Install JDK 11
+      ansible.builtin.shell: |
+        source ~/.bashrc
+        sdk install java 11.0.12-open
+      args:
+        executable: /bin/bash
+    - name: Install JDK 17
+      ansible.builtin.shell: |
+        source ~/.bashrc
+        sdk install java 17.0.1-open
+      args:
+        executable: /bin/bash
+# TODO: yum update
+#    - name: "Download SDK Man"
+#      ansible.builtin.get_url:
+#        url: "http://192.168.3.12:8081/service/rest/v1/search/assets/download?sort=version&direction=desc&maven.groupId={{ groupId }}&maven.artifactId={{ artifactId }}&maven.classifier={{ classifier }}&maven.baseVersion={{ version }}&maven.extension={{ extension }}"
+#        dest: "downloads/{{ groupId }}-{{ artifactId }}-{{ classifier }}.{{ extension }}"
+#      when: classifier is defined

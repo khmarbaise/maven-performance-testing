@@ -94,6 +94,22 @@ class SetupMultiLevelScenarioTest {
   }
 
   @Test
+  @DisplayName("multiple number")
+  void multinumberLevel() {
+    Path rootLevel = TEST_SCENARIOS.resolve("check_single_level_project_structure");
+    new SetupMultiLevelScenario(2, 2, rootLevel).create();
+
+//    assertThat(rootLevel).isDirectory().satisfies(level1 -> {
+//      assertThat(level1.resolve("pom.xml")).isNotEmptyFile();
+//      verify(level1.resolve("pom.xml"), EXPECTED_NR_001.resolve("pom.xml"));
+//
+//      assertThat(level1.resolve(Path.of("mp-lev-01-00000"))).isDirectory().satisfies(level2 -> {
+//        verify(level2.resolve("pom.xml"), EXPECTED_NR_001.resolve("mp-lev-01-00000").resolve("pom.xml"));
+//      });
+//    });
+  }
+
+  @Test
   @DisplayName("This will check a two level structure with only a single child.")
   void checkTwoLevelProjectStructure() {
     Path rootLevel = TEST_SCENARIOS.resolve("check_two_level_project_structure");

@@ -56,7 +56,7 @@ public class SetupMultiLevelScenario implements Scenario {
   public void create() {
     List<String> rootModuleNames = IntStream.range(0, this.numberOfModules)
         .boxed()
-        .map(s -> String.format("mp-lev-%02d-%05d", 1, s))
+        .map(s -> String.format("mp-lev-%02d-%05d", 0, s))
         .collect(toList());
 
     CreatePom rootPom = CreatePom.of(ROOT_PARENT_GAV, "pom")

@@ -1,3 +1,4 @@
+.vagrant
 reactor
 *.tar.gz
 apache-maven-*/

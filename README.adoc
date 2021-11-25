@@ -31,16 +31,17 @@ need to reconsider.
 Scenarios:
 
 1. Multi Module Build setups
-10 modules
-20 modules
-50 modules
-100 modules
-200 modules
-500 modules
-1000 modules
-2000 modules
-5000 modules
-10000 modules
+
+ * 10 modules
+ * 20 modules
+ * 50 modules
+ * 100 modules
+ * 200 modules
+ * 500 modules
+ * 1000 modules
+ * 2000 modules
+ * 5000 modules
+ * 10000 modules
 
 Different
 
