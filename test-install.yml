@@ -47,6 +47,12 @@
         dest: /home/tmpt/.sdkman/etc/config
       become: true
       become_user: tmpt
+    - name: Create Maven Cache for user tmpt
+      become: true
+      # TODO: Verwendung Ansible Task
+      command: mkdir /home/tmpt/.m2/
+      become_user: tmpt
+
     - name: Configure Maven (settings.xml)
       ansible.builtin.template:
         src: templates/settings.xml.j2
