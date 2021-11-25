@@ -36,21 +36,19 @@ run on.
 
 === First.
 
-* OS: CentOS 7
+The current state is based on CentOS 7. Need to reconsider.
 
-The name `tmpt` is `(T)he (M)aven (P)erformance (T)esting`
 
 * ✅ Create a user `tmpt`
-  * `-m` Create the home directory.
-  * `useradd -c 'The Maven Performance Testing' -m tmpt`
+  ** The name `tmpt` is `(T)he (M)aven (P)erformance (T)esting`
 
 * ✅ Install `hypefine` on the target Machine?
-  * How ? Download via wget?
+  ** How ? Download via wget?
 
 * ✅ Install different JDK Versions on it?
-  * Should we improve `disco` tool to download JDK's?
-  * Should I use `sdk man
-  * Should I use tool?
+  ** Should we improve `disco` tool to download JDK's?
+  ** Should I use `sdk man`
+  ** Should I use tool?
 
 - ❌
 - ✅
