@@ -8,6 +8,11 @@
       ansible.builtin.user:
         name: tmpt
         comment: The Maven Performance Testing
+    - name: Installation git tool
+      become: true
+      package:
+        name: git
+        state: present
     - name: Installation zip tool
       become: true
       package:
@@ -24,38 +29,59 @@
         name: chrony
         state: present
     - name: Download SDK Man
-      command: 'curl -s "https://get.sdkman.io" -o install.sh'
+      become: true
+      command: 'curl -s "https://get.sdkman.io" -o /home/tmpt/install.sh'
     - name: Make install.sh exectuable
+      become: true
       ansible.builtin.file:
-        path: install.sh
+        path: /home/tmpt/install.sh
         state: touch
         mode: u+rwx,g+x,o+rx
     - name: Install SDK Man
-      command: './install.sh'
-
+      command: '/home/tmpt/install.sh'
+      become: true
+      become_user: tmpt
     - name: Configure SDK Man
       ansible.builtin.template:
         src: templates/config.j2
-        dest: .sdkman/etc/config
+        dest: /home/tmpt/.sdkman/etc/config
+      become: true
+      become_user: tmpt
 
     - name: Install JDK 8
+      become: true
       ansible.builtin.shell: |
-        source ~/.bashrc
+        source /home/tmpt/.bashrc
         sdk install java 8.0.302-open
       args:
         executable: /bin/bash
+      become_user: tmpt
     - name: Install JDK 11
+      become: true
       ansible.builtin.shell: |
-        source ~/.bashrc
+        source /home/tmpt/.bashrc
         sdk install java 11.0.12-open
       args:
         executable: /bin/bash
+      become_user: tmpt
     - name: Install JDK 17
+      become: true
       ansible.builtin.shell: |
-        source ~/.bashrc
+        source /home/tmpt/.bashrc
         sdk install java 17.0.1-open
       args:
         executable: /bin/bash
+      become_user: tmpt
+    # Temporary solution!
+    - name: Install Groovy
+      become: true
+      ansible.builtin.shell: |
+        source /home/tmpt/.bashrc
+        sdk install groovy 3.0.9
+      args:
+        executable: /bin/bash
+      become_user: tmpt
+
     # TODO: version etc. make variable with it for easier upgrade.
     - name: Download Hyperfine
       get_url:
@@ -76,3 +102,11 @@
         group: root
         mode: '0755'
         remote_src: yes
+    - name: Git Clone Testing Project
+      command: 'git clone https://github.com/khmarbaise/maven-performance-testing.git'
+      become: true
+      become_user: tmpt
+    - name: Create
+      command: 'git clone https://github.com/khmarbaise/maven-performance-testing.git'
+      become: true
+      become_user: tmpt
