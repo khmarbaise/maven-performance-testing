@@ -40,24 +40,23 @@ run on.
 
 The name `tmpt` is `(T)he (M)aven (P)erformance (T)esting`
 
-* Create a user `tmpt`
+* ✅ Create a user `tmpt`
   * `-m` Create the home directory.
   * `useradd -c 'The Maven Performance Testing' -m tmpt`
 
-* Install `hypefine` on the target Machine?
+* ✅ Install `hypefine` on the target Machine?
   * How ? Download via wget?
 
-* Install different JDK Versions on it?
+* ✅ Install different JDK Versions on it?
   * Should we improve `disco` tool to download JDK's?
   * Should I use `sdk man
   * Should I use tool?
 
-*
-
+- ❌
+- ✅
 
 === Maven Setup
 
 * Download the Maven Distros
 
 * Should I use the download approach of my `testing.sh` script?
-
