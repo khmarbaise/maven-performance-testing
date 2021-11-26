@@ -51,10 +51,14 @@
       become_user: tmpt
     - name: Create Maven Cache for user tmpt
       become: true
-      # TODO: Verwendung Ansible Task
-      command: mkdir /home/tmpt/.m2/
+      stat:
+        path: /home/tmpt/.m2/
+      register: etc_basisbz
       become_user: tmpt
-
+    - name: Create site directory
+      become: true
+      stat:
+        path: /var/www/soebes.team/site/
     - name: Configure Maven (settings.xml)
       ansible.builtin.template:
         src: templates/settings.xml.j2
