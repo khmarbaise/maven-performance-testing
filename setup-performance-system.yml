@@ -56,9 +56,9 @@
       become_user: tmpt
     - name: Create Maven Cache for user tmpt
       become: true
-      stat:
+      file::
         path: /home/tmpt/.m2/
-      register: etc_basisbz
+        state: directory
       become_user: tmpt
 #    - name: Create site directory
 #      become: true
