@@ -30,6 +30,11 @@
       package:
         name: chrony
         state: present
+    - name: Installation httpd
+      become: true
+      package:
+        name: httpd
+        state: present
     - name: Download SDK Man
       become: true
       command: 'curl -s "https://get.sdkman.io" -o /home/tmpt/install.sh'
