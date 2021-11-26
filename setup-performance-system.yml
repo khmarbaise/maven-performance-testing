@@ -132,3 +132,11 @@
       args:
         executable: /bin/bash
       become_user: tmpt
+    - name: Create src/site/markdown directory
+      become: true
+      ansible.builtin.shell: |
+        source /home/tmpt/.bashrc
+        mkdir -p /home/tmpt/maven-performance-testing/src/site/markdown
+      args:
+        executable: /bin/bash
+      become_user: tmpt
