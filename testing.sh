@@ -30,5 +30,5 @@ cd reactor
   ## ( IFS=, ; hyperfine -w 5 --export-markdown ../results-$jdk.md --parameter-list version "${VERSIONS[*]}" -n "$jdk-{version}" '../apache-maven-{version}/bin/mvn clean' )
 #hyperfine --warmup 1 --export-markdown ../results.md "${COMMAND[@]}"
 
-( IFS=, ; hyperfine -w 5 --export-markdown ../results-$jdk.md -L VERSION "${VERSIONS[*]}" -n "$jdk-apache-maven-{VERSION}" '../apache-maven-{VERSION}/bin/mvn clean' )
+( IFS=, ; hyperfine -w 5 --export-markdown ../results-$jdk.md -L VERSION "${VERSIONS[*]}" -n 'apache-maven-{VERSION}' '../apache-maven-{VERSION}/bin/mvn clean' )
 cd ..

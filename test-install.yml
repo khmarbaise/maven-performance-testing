@@ -1,6 +1,8 @@
 ---
 - name: Maven
   hosts: maven
+  vars:
+    hyperfine: hyperfine-v1.12.0-x86_64-unknown-linux-musl
 
   tasks:
     - name: Add the user `tmpt`
@@ -97,7 +99,7 @@
     # TODO: version etc. make variable with it for easier upgrade.
     - name: Download Hyperfine
       get_url:
-        url: https://github.com/sharkdp/hyperfine/releases/download/v1.12.0/hyperfine-v1.12.0-x86_64-unknown-linux-musl.tar.gz
+        url: 'https://github.com/sharkdp/hyperfine/releases/download/v1.12.0/{{ hyperfine }}.tar.gz'
         dest: /tmp/hyperfine.tar.gz
         checksum: sha256:b66e7a55fc1b7fd1f6443861f65bde87a4794c4721dee5e11dc0294f27116efc
     - name: Extract hyperfine.tar.gz into /tmp/
@@ -108,7 +110,7 @@
     - name: Install hyperfine into /usr/local/bin
       become: true
       ansible.builtin.copy:
-        src: /tmp/hyperfine-v1.12.0-x86_64-unknown-linux-musl/hyperfine
+        src: '/tmp/{{ hyperfine }}/hyperfine'
         dest: /usr/local/bin/hyperfine
         owner: root
         group: root
