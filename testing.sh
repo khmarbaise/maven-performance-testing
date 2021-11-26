@@ -23,5 +23,5 @@ done
 
 
 cd reactor
-( IFS=, ; hyperfine -w 5 --export-markdown ../src/site/markdown/results-JDK.md -L VERSION "${VERSIONS[*]}" -n '{VERSION}' '../apache-maven-{VERSION}/bin/mvn clean' )
+( IFS=, ; hyperfine -w 5 --export-markdown ../src/site/markdown/results-${JDK}.md -L VERSION "${VERSIONS[*]}" -n '{VERSION}' '../apache-maven-{VERSION}/bin/mvn clean' )
 cd ..

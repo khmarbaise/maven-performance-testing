@@ -12,13 +12,13 @@ fi
 if [ -d "apache-maven-${APACHE_MAVEN_VERSION}" ]; then
   echo "Directory apache-maven-${APACHE_MAVEN_VERSION} exists."
 else
-  tar -zxf $APACHE_MAVEN.tar.gz
+  tar -zxf $APACHE_MAVEN
 fi
 
 source ~/.sdkman/bin/sdkman-init.sh
 
-mkdir -p src/site/markdown
-mkdir -p /var/www/soebes.team/site/
+#mkdir -p src/site/markdown
+#mkdir -p /var/www/soebes.team/site/
 
 sdk use java 8.0.302-open
 ./testing.sh JDK8

@@ -55,10 +55,12 @@
         path: /home/tmpt/.m2/
       register: etc_basisbz
       become_user: tmpt
-    - name: Create site directory
-      become: true
-      stat:
-        path: /var/www/soebes.team/site/
+#    - name: Create site directory
+#      become: true
+#      ansible.builtin.shell: |
+#        mkdir -p /var/www/soebes.team/site/
+#      args:
+#        executable: /bin/bash
     - name: Configure Maven (settings.xml)
       ansible.builtin.template:
         src: templates/settings.xml.j2
