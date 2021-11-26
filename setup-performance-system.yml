@@ -56,7 +56,7 @@
       become_user: tmpt
     - name: Create Maven Cache for user tmpt
       become: true
-      file::
+      file:
         path: /home/tmpt/.m2/
         state: directory
       become_user: tmpt
