@@ -1,7 +1,8 @@
 #!/bin/bash -e
 JDK=$1
 URL="https://repo1.maven.org/maven2/org/apache/maven/apache-maven"
-VERSIONS=('3.0.5' '3.1.1' '3.2.5' '3.3.9' '3.5.4' '3.6.3' '3.8.1' '3.8.2' '3.8.3' '3.8.4')
+VERSIONS=('3.0.5')
+#VERSIONS=('3.0.5' '3.1.1' '3.2.5' '3.3.9' '3.5.4' '3.6.3' '3.8.1' '3.8.2' '3.8.3' '3.8.4')
 #VERSIONS=('3.8.1' '3.8.2' '3.8.3' '3.8.4' '4.0.0-alpha-1-SNAPSHOT')
 
 for i in "${VERSIONS[@]}"; do
