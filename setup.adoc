@@ -58,3 +58,11 @@ The current state is based on CentOS 7. Need to reconsider.
 * Download the Maven Distros
 
 * Should I use the download approach of my `testing.sh` script?
+
+=== Show Case
+
+* Think about a graphical distribution?
+https://github.com/dandavison/chronologer
+
+
+sudo -H -S -n -u tmpt /bin/sh -c echo

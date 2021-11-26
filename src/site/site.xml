@@ -1,0 +1,11 @@
+<project xmlns="https://maven.apache.org/DECORATION/1.6.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
+  <body>
+    <menu name="Performance">
+      <item name="JDK8" href="result-jdk8.html"/>
+      <item name="JDK11" href="result-jdk11.html"/>
+      <item name="JDK17" href="result-jdk17.html"/>
+    </menu>
+  </body>
+</project>
