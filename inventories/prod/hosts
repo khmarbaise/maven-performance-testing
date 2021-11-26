@@ -1,0 +1,5 @@
+[maven]
+# maven
+h2758772.stratoserver.net
+[local]
+localhost ansible_connection=local
