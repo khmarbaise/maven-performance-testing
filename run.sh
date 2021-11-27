@@ -18,6 +18,7 @@ fi
 source ~/.sdkman/bin/sdkman-init.sh
 
 sdk use java 8.0.302-open
+mvn package -DskipTests
 # Generate different scenarios
 java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,30
 # Run real test.
