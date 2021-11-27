@@ -19,22 +19,12 @@ package com.soebes.maven.performance.commands;
  * under the License.
  */
 
-import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-
-import java.util.List;
 
 /**
  * @author Karl Heinz Marbaise
  */
-@Parameters(commandDescription = "Record changes to the repository")
-public class Scenario extends BaseCommand {
-
-  @Parameter(names = {"--nof", "--number"}, description = "Number of modules")
-  private List<Integer> numberOfModules;
-
-  public List<Integer> getNumberOfModules() {
-    return numberOfModules;
-  }
+@Parameters(commandDescription = "Execute tests with hyperfine.")
+public class Execute extends BaseCommand {
 
 }

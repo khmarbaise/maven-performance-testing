@@ -1,4 +1,4 @@
-package com.soebes.maven.performance.commands;
+package com.soebes.maven.performance.execution;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -19,22 +19,35 @@ package com.soebes.maven.performance.commands;
  * under the License.
  */
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-
-import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author Karl Heinz Marbaise
  */
-@Parameters(commandDescription = "Record changes to the repository")
-public class Scenario extends BaseCommand {
+public class ExecutionResult {
+  private final String stdOut;
+  private final String stdErr;
+  private final int returnCode;
 
-  @Parameter(names = {"--nof", "--number"}, description = "Number of modules")
-  private List<Integer> numberOfModules;
-
-  public List<Integer> getNumberOfModules() {
-    return numberOfModules;
+  public ExecutionResult(String stdOut, String stdErr, int returnCode) {
+    this.stdOut = stdOut;
+    this.stdErr = stdErr;
+    this.returnCode = returnCode;
   }
 
+  public String getStdOut() {
+    return stdOut;
+  }
+
+  public String getStdErr() {
+    return stdErr;
+  }
+
+  public int getReturnCode() {
+    return returnCode;
+  }
+
+  public Stream<String> lines() {
+    return this.stdOut.lines();
+  }
 }

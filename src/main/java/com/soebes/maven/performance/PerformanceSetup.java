@@ -20,13 +20,20 @@ package com.soebes.maven.performance;
  */
 
 import com.beust.jcommander.JCommander;
+import com.beust.jcommander.JCommander.Builder;
 import com.soebes.maven.performance.commands.CommandMain;
+import com.soebes.maven.performance.commands.Commands;
+import com.soebes.maven.performance.commands.Execute;
 import com.soebes.maven.performance.commands.Scenario;
+import com.soebes.maven.performance.execution.ExecuteHyperfine;
+import com.soebes.maven.performance.execution.ExecutionResult;
 import com.soebes.maven.performance.scenario.SetupMultiLevelScenario;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Karl Heinz Marbaise
@@ -35,29 +42,59 @@ class PerformanceSetup {
 
   public static void main(String[] args) throws IOException {
     CommandMain cmdMain = new CommandMain();
-    Scenario scenario = new Scenario();
 
-    JCommander jCommander = JCommander.newBuilder()
-        .addObject(cmdMain)
-        .addCommand("scenario", scenario, "sc")
-        .build();
+    Builder builder = JCommander.newBuilder()
+        .addObject(cmdMain);
+
+    Arrays.stream(Commands.values()).forEach(s -> builder.addCommand(s.command(), s.invoker(), s.aliases()));
+
+    JCommander jCommander = builder.build();
     jCommander.parse(args);
 
-    if (cmdMain.isHelp()) {
+    if (cmdMain.isHelp() || Objects.isNull(jCommander.getParsedCommand())) {
       jCommander.usage();
       return;
     }
 
-    List<Integer> numberOfModules =
-        scenario.getNumberOfModules();
+    Commands command = Commands.to(jCommander.getParsedCommand());
+    if (command.invoker().isHelp()) {
+      jCommander.usage();
+      return;
+    }
 
-    numberOfModules.stream().forEachOrdered(nofm -> {
+    switch (command) {
+      case EXECUTE -> cmdExecute((Execute)command.invoker());
+      case SCENARIO -> cmdScenario((Scenario) command.invoker());
+    }
+//    List<Integer> numberOfModules =
+//        scenario.getNumberOfModules();
+//
+//    numberOfModules.stream().forEachOrdered(nofm -> {
+//      Path rootLevel = Path.of("target", "scenarios", String.format("number-of-module-%04d", nofm));
+//      System.out.println("Generating Scenario " + nofm);
+//      new SetupMultiLevelScenario(nofm, 1, rootLevel).create();
+//      //new SetupSingleLevelScenario(nofm, rootLevel).setup();
+//    });
+//
+
+  }
+
+  private static void cmdScenario(Scenario invoker) {
+    System.out.println("PerformanceSetup.executeScenario");
+    invoker.getNumberOfModules().stream().forEachOrdered(nofm -> {
       Path rootLevel = Path.of("target", "scenarios", String.format("number-of-module-%04d", nofm));
       System.out.println("Generating Scenario " + nofm);
       new SetupMultiLevelScenario(nofm, 1, rootLevel).create();
       //new SetupSingleLevelScenario(nofm, rootLevel).setup();
     });
 
+  }
 
+  private static void cmdExecute(Execute invoker) {
+    System.out.println("PerformanceSetup.executeCmd");
+    ExecuteHyperfine executeHyperfine = new ExecuteHyperfine();
+    // -w 5 warmup round 5
+    ExecutionResult exec = executeHyperfine.exec(List.of("-w", "5"));
+    exec.getReturnCode();
   }
 }

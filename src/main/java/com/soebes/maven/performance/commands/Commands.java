@@ -19,22 +19,42 @@ package com.soebes.maven.performance.commands;
  * under the License.
  */
 
-import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
-
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author Karl Heinz Marbaise
  */
-@Parameters(commandDescription = "Record changes to the repository")
-public class Scenario extends BaseCommand {
+public enum Commands {
+  SCENARIO("scenario", List.of("sc"), new Scenario()),
+  EXECUTE("execute", List.of("exec"), new Execute());
 
-  @Parameter(names = {"--nof", "--number"}, description = "Number of modules")
-  private List<Integer> numberOfModules;
+  private final String command;
+  private final List<String> aliases;
+  private final BaseCommand invoker;
 
-  public List<Integer> getNumberOfModules() {
-    return numberOfModules;
+  Commands(String command, List<String> aliases, BaseCommand commandInvoker) {
+    this.command = command;
+    this.aliases = aliases;
+    this.invoker = commandInvoker;
   }
 
+  public String command() {
+    return command;
+  }
+
+  public String[] aliases() {
+    return aliases.toArray(new String[0]);
+  }
+
+  public BaseCommand invoker() {
+    return invoker;
+  }
+
+  public static Commands to(String cmd) {
+    return Arrays.stream(values())
+        .filter(s -> s.command.equals(cmd.toLowerCase()))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Unknown command given."));
+  }
 }
