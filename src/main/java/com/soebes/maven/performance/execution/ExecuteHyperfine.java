@@ -19,6 +19,7 @@ package com.soebes.maven.performance.execution;
  * under the License.
  */
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class ExecuteHyperfine {
     this.directory = Path.of("target");
   }
 
-  public ExecutionResult exec(List<String> startArguments) {
+  public ExecutionResult exec(File workingDirectory, List<String> startArguments) {
     var applicationArguments = List.of("hyperfine");
 
     ProcessBuilder pb = new ProcessBuilder();
@@ -44,6 +45,8 @@ public class ExecuteHyperfine {
     var args = new ArrayList<>(applicationArguments);
     args.addAll(startArguments);
     pb.command(args);
+    pb.directory(workingDirectory);
+    System.out.println("args = " + args);
     try {
       Process start = pb.start();
       int returnCode = start.waitFor();
