@@ -1,8 +1,7 @@
 # Performance Scenario 1
 
-This section will define a scenario which contains simple multi module
-builds. Those contain only a single level of depth. The basic structure
-is like the following:
+This scenario contains simple multi module builds. This contains only single
+level structures. The basic structure is like the following:
 
 ```
  +-- root
@@ -10,8 +9,10 @@ is like the following:
       +-- mod-2
       +-- mod-..
 ```
-The different setups only change the number of modules from 10 upto 10.000 
-modules.
+The above setup will be run with different number of modules from 10 upto 10.000.
+
+This scenario only executes a simple: `mvn clean` on each of the build
+to measure the initial project identification etc.
 
  * [JDK 8](./results-JDK8.html)
  * [JDK 11](./results-JDK11.html)
