@@ -2,9 +2,7 @@
 >
   <body>
     <menu name="Performance">
-      <item name="JDK8" href="results-JDK8.html"/>
-      <item name="JDK11" href="results-JDK11.html"/>
-      <item name="JDK17" href="results-JDK17.html"/>
+        <item name="Modules 20" href="modules-20.html"/>
     </menu>
   </body>
 </project>
