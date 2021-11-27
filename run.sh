@@ -29,5 +29,4 @@ sdk use java 11.0.12-open
 sdk use java 17.0.1-open
 ./testing.sh JDK17
 
-./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn clean site
-./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn site:stage -DstagingDirectory=/home/tmpt/public_html/
+./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn clean site site:stage -DstagingDirectory=/home/tmpt/public_html/
