@@ -31,13 +31,13 @@
         state: present
     - name: Download SDK Man
       command: 'curl -s "https://get.sdkman.io" -o /home/tmpt/install.sh'
+      become_user: tmpt
     - name: Make install.sh exectuable
-      ansible.builtin.file:
-        path: /home/tmpt/install.sh
-        state: touch
-        mode: u+rwx,g+x,o+rx
+      command: chmod +x /home/tmpt/install.sh
+    - name: Make install.sh owned by tmpt
+      command: chown tmpt:tmpt /home/tmpt/install.sh
     - name: Install SDK Man
-      command: '/home/tmpt/install.sh'
+      command: /home/tmpt/install.sh
       become_user: tmpt
     - name: Configure SDK Man
       ansible.builtin.template:
@@ -49,12 +49,6 @@
         path: /home/tmpt/.m2/
         state: directory
       become_user: tmpt
-#    - name: Create site directory
-#      become: true
-#      ansible.builtin.shell: |
-#        mkdir -p /var/www/soebes.team/site/
-#      args:
-#        executable: /bin/bash
     - name: Configure Maven (settings.xml)
       ansible.builtin.template:
         src: templates/settings.xml.j2
