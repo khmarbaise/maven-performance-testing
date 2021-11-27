@@ -88,11 +88,13 @@ class PerformanceSetup {
     // --export-markdown ../src/site/markdown/results-${JDK}.md -L VERSION "${VERSIONS[*]}" -n {VERSION} ../apache-maven-{VERSION}/bin/mvn clean )
     //String versions="3.0.5,3.1.1,3.2.5,3.3.9,3.5.4,3.6.3,3.8.1,3.8.2,3.8.3,3.8.4";
     String versions="3.8.4";
-    String result = String.format("result-%s-%s.md", invoker.jdk(), invoker.numberOfModules());
+    String result = String.format("results-%s-%s.md", invoker.jdk(), invoker.numberOfModules());
     String moduleDirectory = String.format("number-of-module-%04d", invoker.numberOfModules());
-    Path downloadsDirectory = FileSystems.getDefault().getPath("").toAbsolutePath().resolve("downloads");
+    Path rootTestDirectory = FileSystems.getDefault().getPath("").toAbsolutePath();
+    Path downloadsDirectory = rootTestDirectory.resolve("downloads");
+    Path markdownDirectory = rootTestDirectory.resolve("src").resolve("site").resolve("markdown");
     ExecutionResult exec = executeHyperfine.exec(Paths.get(basePath.toString(), moduleDirectory).toFile(),
-        List.of("-w", "5", "--export-markdown", result
+        List.of("-w", "5", "--export-markdown", markdownDirectory + "/" + result
         , "-L", "VERSION", versions, "-n", "{VERSION}", downloadsDirectory + "/apache-maven-{VERSION}/bin/mvn clean | tee mvn.log 2>mvn-error.log"));
     System.out.println(exec.getStdErr());
     System.out.println(exec.getStdOut());

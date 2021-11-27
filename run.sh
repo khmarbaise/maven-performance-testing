@@ -17,16 +17,22 @@ fi
 
 source ~/.sdkman/bin/sdkman-init.sh
 
-#mkdir -p src/site/markdown
-#mkdir -p /var/www/soebes.team/site/
-
 sdk use java 8.0.302-open
-./testing.sh JDK8
+# Generate different scenarios
+java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,30
+# Run real test.
+java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 10 --jdk JDK8
+java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 20 --jdk JDK8
+java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 30 --jdk JDK8
 
 sdk use java 11.0.12-open
-./testing.sh JDK11
+java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 10 --jdk JDK11
+java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 20 --jdk JDK11
+java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 30 --jdk JDK11
 
 sdk use java 17.0.1-open
-./testing.sh JDK17
+java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 10 --jdk JDK17
+java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 20 --jdk JDK17
+java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 30 --jdk JDK17
 
 ./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn clean site site:stage -DstagingDirectory=/home/tmpt/public_html/
