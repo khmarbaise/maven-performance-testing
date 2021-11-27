@@ -25,6 +25,10 @@
       package:
         name: chrony
         state: present
+    - name: Installation wget
+      package:
+        name: wget
+        state: present
     - name: Installation httpd
       package:
         name: httpd
@@ -37,49 +41,57 @@
     - name: Make install.sh owned by tmpt
       command: chown tmpt:tmpt /home/tmpt/install.sh
     - name: Install SDK Man
-      command: /home/tmpt/install.sh
-      become_user: tmpt
+      ansible.builtin.shell: |
+        su -l tmpt install.sh
+      args:
+        executable: /bin/bash
     - name: Configure SDK Man
       ansible.builtin.template:
         src: templates/config.j2
         dest: /home/tmpt/.sdkman/etc/config
       become_user: tmpt
     - name: Create Maven Cache for user tmpt
+      become: true
       file:
         path: /home/tmpt/.m2/
         state: directory
       become_user: tmpt
+    - name: Chown of /home/tmpt/.m2
+      command: chown -R tmpt:tmpt /home/tmpt/.m2
     - name: Configure Maven (settings.xml)
       ansible.builtin.template:
         src: templates/settings.xml.j2
         dest: /home/tmpt/.m2/settings.xml
       become_user: tmpt
-
     - name: Install JDK 8
+      become: true
       ansible.builtin.shell: |
-        source /home/tmpt/.bashrc
+        source /home/tmpt/.sdkman/bin/sdkman-init.sh
         sdk install java 8.0.302-open
       args:
         executable: /bin/bash
       become_user: tmpt
     - name: Install JDK 11
+      become: true
       ansible.builtin.shell: |
-        source /home/tmpt/.bashrc
+        source /home/tmpt/.sdkman/bin/sdkman-init.sh
         sdk install java 11.0.12-open
       args:
         executable: /bin/bash
       become_user: tmpt
     - name: Install JDK 17
+      become: true
       ansible.builtin.shell: |
-        source /home/tmpt/.bashrc
+        source /home/tmpt/.sdkman/bin/sdkman-init.sh
         sdk install java 17.0.1-open
       args:
         executable: /bin/bash
       become_user: tmpt
     # Temporary solution!
     - name: Install Groovy
+      become: true
       ansible.builtin.shell: |
-        source /home/tmpt/.bashrc
+        source /home/tmpt/.sdkman/bin/sdkman-init.sh
         sdk install groovy 3.0.9
       args:
         executable: /bin/bash
@@ -105,22 +117,25 @@
         mode: '0755'
         remote_src: yes
     - name: Git clone Testing Project
+      become: true
       ansible.builtin.git:
         repo: 'https://github.com/khmarbaise/maven-performance-testing.git'
         dest: /home/tmpt/maven-performance-testing
         update: yes
       become_user: tmpt
     - name: Create Testing Project
+      become: true
       ansible.builtin.shell: |
-        source /home/tmpt/.bashrc
+        source /home/tmpt/.sdkman/bin/sdkman-init.sh
         cd /home/tmpt/maven-performance-testing
         ./generate.groovy
       args:
         executable: /bin/bash
       become_user: tmpt
     - name: Create src/site/markdown directory
+      become: true
       ansible.builtin.shell: |
-        source /home/tmpt/.bashrc
+        source /home/tmpt/.sdkman/bin/sdkman-init.sh
         mkdir -p /home/tmpt/maven-performance-testing/src/site/markdown
       args:
         executable: /bin/bash
