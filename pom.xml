@@ -35,7 +35,7 @@
   <groupId>com.soebes.maven.performance</groupId>
   <artifactId>performance</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Maven Performance</name>
+  <name>Maven Performance Testing</name>
 
   <properties>
     <maven.compiler.release>17</maven.compiler.release>

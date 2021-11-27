@@ -1,8 +1,9 @@
 <project xmlns="https://maven.apache.org/DECORATION/1.6.0"
 >
   <body>
-    <menu name="Performance">
-        <item name="Modules 20" href="modules-20.html"/>
+    <menu name="Scenarios">
+        <item name="Overview" href="overview.html"/>
+        <item name="Scenario 1" href="scenario-1.html"/>
     </menu>
   </body>
 </project>
