@@ -27,6 +27,7 @@ import com.soebes.maven.performance.commands.Execute;
 import com.soebes.maven.performance.commands.Scenario;
 import com.soebes.maven.performance.execution.ExecuteHyperfine;
 import com.soebes.maven.performance.execution.ExecutionResult;
+import com.soebes.maven.performance.execution.JavaHome;
 import com.soebes.maven.performance.scenario.SetupMultiLevelScenario;
 
 import java.io.IOException;
@@ -82,8 +83,9 @@ class PerformanceSetup {
   }
 
   private static void cmdExecute(Execute invoker) {
+
     Path basePath = Path.of("target", "scenarios");
-    ExecuteHyperfine executeHyperfine = new ExecuteHyperfine();
+
     // -w 5 warmup round 5
     // --export-markdown ../src/site/markdown/results-${JDK}.md -L VERSION "${VERSIONS[*]}" -n {VERSION} ../apache-maven-{VERSION}/bin/mvn clean )
     //String versions="3.0.5,3.1.1,3.2.5,3.3.9,3.5.4,3.6.3,3.8.1,3.8.2,3.8.3,3.8.4";
@@ -93,11 +95,18 @@ class PerformanceSetup {
     Path rootTestDirectory = FileSystems.getDefault().getPath("").toAbsolutePath();
     Path downloadsDirectory = rootTestDirectory.resolve("downloads");
     Path markdownDirectory = rootTestDirectory.resolve("src").resolve("site").resolve("markdown");
+
+    //Currently a bit tricky to get the correct JAVA_HOME for the Maven execution!
+    String prepareCommand = "JAVA_HOME=~/" + JavaHome.valueOf(invoker.jdk()).javaHome();
+    String commandToExecute = downloadsDirectory + "/apache-maven-{VERSION}/bin/mvn -V clean | tee mvn-{VERSION}-" + invoker.jdk() + ".log 2>mvn-{VERSION}-" + invoker.jdk() + "error.log";
+    ExecuteHyperfine executeHyperfine = new ExecuteHyperfine();
     ExecutionResult exec = executeHyperfine.exec(Paths.get(basePath.toString(), moduleDirectory).toFile(),
-        List.of("-w", "5", "--export-markdown", markdownDirectory + "/" + result
-        , "-L", "VERSION", versions, "-n", "{VERSION}", downloadsDirectory + "/apache-maven-{VERSION}/bin/mvn clean | tee mvn.log 2>mvn-error.log"));
+        List.of("-w", "5", "--export-markdown", markdownDirectory + "/" + result,
+            "--shell", "bash",
+//            "-p", prepareCommand,
+            "-L", "VERSION", versions, "-n", "{VERSION}", prepareCommand + ";" + commandToExecute));
     System.out.println(exec.getStdErr());
     System.out.println(exec.getStdOut());
-    exec.getReturnCode();
+    System.out.println("exec = " + exec.getReturnCode());
   }
 }

@@ -1,4 +1,4 @@
-package com.soebes.maven.performance.maven;
+package com.soebes.maven.performance.execution;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -20,23 +20,23 @@ package com.soebes.maven.performance.maven;
  */
 
 /**
+ * @implSpec Unfortunately currently hard coded. Need to be in sync with configuration in Ansible playbook
+ * {@code setup-performance-system.yml} Need to find a better way!
  * @author Karl Heinz Marbaise
  */
-public class Property {
+public enum JavaHome {
+  JDK8(".sdkman/candidates/java/8.0.302-open"),
+  //JDK11(".sdkman/candidates/java/11.0.12-tem"),
+  JDK11(".sdkman/candidates/java/11.0.12-open"),
+  JDK17(".sdkman/candidates/java/17.0.1-open");
 
-  private final String key;
-  private final String value;
+  private String javaHome;
 
-  public Property(String key, String value) {
-    this.key = key;
-    this.value = value;
+  JavaHome(String location) {
+    this.javaHome = location;
   }
 
-  public String getKey() {
-    return key;
-  }
-
-  public String getValue() {
-    return value;
+  public String javaHome() {
+    return javaHome;
   }
 }
