@@ -38,7 +38,9 @@ public class Writer {
     MavenXpp3Writer mavenXpp3Writer = new MavenXpp3Writer();
 
     try {
-      mavenXpp3Writer.write(new FileOutputStream(path.toFile()), model);
+      FileOutputStream fileOutputStream = new FileOutputStream(path.toFile());
+      mavenXpp3Writer.write(fileOutputStream, model);
+      fileOutputStream.close();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
