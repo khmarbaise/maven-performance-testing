@@ -31,9 +31,9 @@ java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,50,100,200,500,1000
 #
 # Run real test.
 # TODO: Find a better to keep in sync
-NUMBER=10 20 50 100 200 500 1000 2000 5000 10000
+NUMBER="10 20 50 100 200 500 1000 2000 5000 10000"
 # TODO: Find a better way to keep in sync with installation?
-JDKS=JDK8 JDK11 JDK17
+JDKS="JDK8 JDK11 JDK17"
 #
 for jdk in $JDKS; do
   for num in $NUMBER; do
