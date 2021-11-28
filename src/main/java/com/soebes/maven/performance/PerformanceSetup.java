@@ -106,7 +106,7 @@ class PerformanceSetup {
     //Heap setting for all tests the same!
     //FIXME: Running with 10.000 module you need more than 1 GiB Heap!
     String javaOpts = "export JAVA_OPTS=-Xmx2G";
-    Files.writeString(Path.of(Path.of("~").toAbsolutePath().toString(), ".mavenrc"), javaOpts, StandardOpenOption.CREATE);
+    Files.writeString(Path.of("~").resolve(".mavenrc"), javaOpts, StandardOpenOption.CREATE);
 
     String commandToExecute = downloadsDirectory + "/apache-maven-{VERSION}/bin/mvn -V clean | tee mvn-{VERSION}-" + invoker.jdk() + ".log 2>mvn-{VERSION}-" + invoker.jdk() + "error.log";
     ExecuteHyperfine executeHyperfine = new ExecuteHyperfine();
