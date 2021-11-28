@@ -88,8 +88,8 @@ class PerformanceSetup {
 
     // -w 5 warmup round 5
     // --export-markdown ../src/site/markdown/results-${JDK}.md -L VERSION "${VERSIONS[*]}" -n {VERSION} ../apache-maven-{VERSION}/bin/mvn clean )
-    //String versions="3.0.5,3.1.1,3.2.5,3.3.9,3.5.4,3.6.3,3.8.1,3.8.2,3.8.3,3.8.4";
-    String versions="3.8.4";
+    String versions="3.0.5,3.1.1,3.2.5,3.3.9,3.5.4,3.6.3,3.8.1,3.8.2,3.8.3,3.8.4";
+    //String versions="3.8.4";
     String result = String.format("results-%s-%s.md", invoker.jdk(), invoker.numberOfModules());
     String moduleDirectory = String.format("number-of-module-%04d", invoker.numberOfModules());
     Path rootTestDirectory = FileSystems.getDefault().getPath("").toAbsolutePath();
