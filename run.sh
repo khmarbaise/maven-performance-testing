@@ -26,19 +26,19 @@ sdk use java 17.0.1-open
 ./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn --no-transfer-progress -B clean package -DskipTests
 
 # Generate different scenarios
-java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,30
+# TODO: Find a better way to keep in sync
+java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,50,100,200,500,1000,2000,5000,10000
 #
 # Run real test.
-java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 10 --jdk JDK8
-java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 20 --jdk JDK8
-java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 30 --jdk JDK8
-
-java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 10 --jdk JDK11
-java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 20 --jdk JDK11
-java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 30 --jdk JDK11
-
-java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 10 --jdk JDK17
-java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 20 --jdk JDK17
-java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 30 --jdk JDK17
+# TODO: Find a better to keep in sync
+NUMBER=10 20 50 100 200 500 1000 2000 5000 10000
+# TODO: Find a better way to keep in sync with installation?
+JDKS=JDK8 JDK11 JDK17
+#
+for jdk in $JDKS; do
+  for num in $NUMBER; do
+    java -jar target/performance-1.0-SNAPSHOT.jar exec --nom ${num} --jdk ${jdk}
+  done
+done
 
 ./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn  --no-transfer-progress -B site site:stage -DstagingDirectory=/home/tmpt/public_html/
