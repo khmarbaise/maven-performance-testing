@@ -20,7 +20,11 @@ source ~/.sdkman/bin/sdkman-init.sh
 
 # TODO: Maybe we should precompile the tool via GraalVM?
 sdk use java 17.0.1-open
+# Download all Apache Versions into appropriate directory.
+./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn --no-transfer-progress -B -Pperformance initialize
+# build performance tool.
 ./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn --no-transfer-progress -B clean package -DskipTests
+
 # Generate different scenarios
 java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,30
 #
