@@ -32,6 +32,7 @@ import com.soebes.maven.performance.scenario.SetupMultiLevelScenario;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -82,7 +83,7 @@ class PerformanceSetup {
 
   }
 
-  private static void cmdExecute(Execute invoker) {
+  private static void cmdExecute(Execute invoker) throws IOException {
 
     Path basePath = Path.of("target", "scenarios");
 
@@ -98,8 +99,16 @@ class PerformanceSetup {
 
     //Currently a bit tricky to get the correct JAVA_HOME for the Maven execution!
     String prepareCommand = "JAVA_HOME=~/" + JavaHome.valueOf(invoker.jdk()).javaHome();
+
+    //Need to reconsider if using .mavenrc is a good idea?
+    //Heap setting for all tests the same!
+    //FIXME: Running with 10.000 module you need more than 1 GiB Heap!
+    String javaOpts = "export JAVA_OPTS=-Xmx2G";
+    Files.writeString(Path.of("~/.mavenrc"), javaOpts);
+
     String commandToExecute = downloadsDirectory + "/apache-maven-{VERSION}/bin/mvn -V clean | tee mvn-{VERSION}-" + invoker.jdk() + ".log 2>mvn-{VERSION}-" + invoker.jdk() + "error.log";
     ExecuteHyperfine executeHyperfine = new ExecuteHyperfine();
+
     ExecutionResult exec = executeHyperfine.exec(Paths.get(basePath.toString(), moduleDirectory).toFile(),
         List.of("-w", "5", "--export-markdown", markdownDirectory + "/" + result,
             "--shell", "bash",
