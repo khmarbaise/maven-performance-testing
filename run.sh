@@ -20,7 +20,7 @@ source ~/.sdkman/bin/sdkman-init.sh
 
 # TODO: Maybe we should precompile the tool via GraalVM?
 sdk use java 17.0.1-open
-./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn --no-transfer-progress -B package -DskipTests
+./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn --no-transfer-progress -B clean package -DskipTests
 # Generate different scenarios
 java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,30
 #
@@ -37,4 +37,4 @@ java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 10 --jdk JDK17
 java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 20 --jdk JDK17
 java -jar target/performance-1.0-SNAPSHOT.jar exec --nom 30 --jdk JDK17
 
-./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn  --no-transfer-progress -B clean site site:stage -DstagingDirectory=/home/tmpt/public_html/
+./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn  --no-transfer-progress -B site site:stage -DstagingDirectory=/home/tmpt/public_html/
