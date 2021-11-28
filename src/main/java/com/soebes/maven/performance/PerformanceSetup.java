@@ -35,6 +35,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -105,7 +106,7 @@ class PerformanceSetup {
     //Heap setting for all tests the same!
     //FIXME: Running with 10.000 module you need more than 1 GiB Heap!
     String javaOpts = "export JAVA_OPTS=-Xmx2G";
-    Files.writeString(Path.of("~/.mavenrc"), javaOpts);
+    Files.writeString(Path.of("~/.mavenrc"), javaOpts, StandardOpenOption.CREATE);
 
     String commandToExecute = downloadsDirectory + "/apache-maven-{VERSION}/bin/mvn -V clean | tee mvn-{VERSION}-" + invoker.jdk() + ".log 2>mvn-{VERSION}-" + invoker.jdk() + "error.log";
     ExecuteHyperfine executeHyperfine = new ExecuteHyperfine();
