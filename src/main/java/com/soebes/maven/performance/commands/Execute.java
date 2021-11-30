@@ -28,15 +28,8 @@ import com.beust.jcommander.Parameters;
 @Parameters(commandDescription = "Execute tests with hyperfine.")
 public class Execute extends BaseCommand {
 
-  @Parameter(required = true, names = {"--jdk"}, description = "JDK name.")
-  private String jdk;
-
   @Parameter(required = true, names = {"--nom"}, description = "Number of modules")
   private Integer numberOfModules;
-
-  public String jdk() {
-    return jdk;
-  }
 
   public Integer numberOfModules() {
     return numberOfModules;

@@ -8,6 +8,7 @@
     - name: Add the user `tmpt`
       ansible.builtin.user:
         name: tmpt
+        shell: /bin/bash
         comment: The Maven Performance Testing
     - name: Installation git tool
       package:
@@ -29,9 +30,9 @@
       package:
         name: wget
         state: present
-    - name: Installation httpd
+    - name: Installation apache2
       package:
-        name: httpd
+        name: apache2
         state: present
     - name: Download SDK Man
       command: 'curl -s "https://get.sdkman.io" -o /home/tmpt/install.sh'
@@ -51,7 +52,6 @@
         dest: /home/tmpt/.sdkman/etc/config
       become_user: tmpt
     - name: Create Maven Cache for user tmpt
-      become: true
       file:
         path: /home/tmpt/.m2/
         state: directory
@@ -64,7 +64,7 @@
         dest: /home/tmpt/.m2/settings.xml
       become_user: tmpt
     - name: Install JDK 8
-      become: true
+      become: yes
       ansible.builtin.shell: |
         source /home/tmpt/.sdkman/bin/sdkman-init.sh
         sdk install java 8.0.302-open
@@ -84,6 +84,14 @@
       ansible.builtin.shell: |
         source /home/tmpt/.sdkman/bin/sdkman-init.sh
         sdk install java 17.0.1-open
+      args:
+        executable: /bin/bash
+      become_user: tmpt
+    - name: Install JDK 8 - SEM
+      become: true
+      ansible.builtin.shell: |
+        source /home/tmpt/.sdkman/bin/sdkman-init.sh
+        sdk install java 8.0.302-sem
       args:
         executable: /bin/bash
       become_user: tmpt

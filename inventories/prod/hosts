@@ -1,5 +1,10 @@
-[maven]
-# maven
-h2758772.stratoserver.net
-[local]
-localhost ansible_connection=local
+---
+performance:
+  hosts:
+    maven:
+      ansible_become: yes
+      ansible_user: root
+      DOMAIN_FQDN:  maven.soebes.team
+      DADGUI_FQDN_UI: "https://{{ DOMAIN_FQDN }}"
+      CERTBOT_MAIL_ADDR: "cerbot-h2960648@soebes.de"
+      ansible_host: h2960648.stratoserver.net

@@ -21,28 +21,22 @@ package com.soebes.maven.performance.execution;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Karl Heinz Marbaise
  */
-public class ExecuteHyperfine {
+public class ExecuteCommand {
 
-  private final Path directory;
-
-  // ( IFS=, ; hyperfine -w 5 --export-markdown ../src/site/markdown/results-${JDK}.md -L VERSION "${VERSIONS[*]}" -n '{VERSION}' '../apache-maven-{VERSION}/bin/mvn clean' )
-  public ExecuteHyperfine() {
-    this.directory = Path.of("target");
+  public ExecuteCommand() {
   }
 
-  public ExecutionResult exec(File workingDirectory, List<String> startArguments) {
-    var applicationArguments = List.of("hyperfine");
+  public ExecutionResult exec(List<String> applications, List<String> startArguments, File workingDirectory) {
 
     ProcessBuilder pb = new ProcessBuilder();
 
-    var args = new ArrayList<>(applicationArguments);
+    var args = new ArrayList<>(applications);
     args.addAll(startArguments);
     pb.command(args);
     pb.directory(workingDirectory);
