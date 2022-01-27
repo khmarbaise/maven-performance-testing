@@ -65,3 +65,9 @@ Different Maven versions
 * Current creation of the scenarios should be replaced with Java implementation.
 * Find a way to produce a graphical view of the result?
 * Check if we can precompile the tool maybe via GraalVM?
+
+
+* Recording:
+
+
+https://github.com/glowroot/glowroot/wiki/Central-Collector-Installation
