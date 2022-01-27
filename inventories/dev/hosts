@@ -1,5 +1,10 @@
-[performance]
-# maven
-192.168.10.240
-[local]
-localhost ansible_connection=local
+---
+performance:
+  hosts:
+    maven:
+      ansible_become: yes
+      ansible_user: vagrant
+      DOMAIN_FQDN:  test.team
+      DADGUI_FQDN_UI: "https://{{ DOMAIN_FQDN }}"
+      CERTBOT_MAIL_ADDR: "cerbot-h2960648@soebes.de"
+      ansible_host: 192.168.10.240

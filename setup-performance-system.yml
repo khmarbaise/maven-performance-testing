@@ -1,6 +1,6 @@
 ---
 - name: Maven
-  hosts: maven
+  hosts: performance
   vars:
     hyperfine: hyperfine-v1.12.0-x86_64-unknown-linux-musl
 
@@ -10,31 +10,46 @@
         name: tmpt
         shell: /bin/bash
         comment: The Maven Performance Testing
+
+    - name: Updated apt packages.
+      become: yes
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 #One day
+
     - name: Installation git tool
+      become: yes
       package:
         name: git
         state: present
     - name: Installation zip tool
+      become: yes
       package:
         name: zip
         state: present
     - name: Installation unzip tool
+      become: yes
       package:
         name: unzip
         state: present
     - name: Installation Zeitsynchronisation
+      become: yes
       package:
         name: chrony
         state: present
     - name: Installation wget
+      become: yes
       package:
         name: wget
         state: present
     - name: Installation apache2
+      become: yes
       package:
         name: apache2
         state: present
     - name: Download SDK Man
+      become: yes
       command: 'curl -s "https://get.sdkman.io" -o /home/tmpt/install.sh'
       become_user: tmpt
     - name: Make install.sh exectuable
@@ -63,88 +78,73 @@
         src: templates/settings.xml.j2
         dest: /home/tmpt/.m2/settings.xml
       become_user: tmpt
-    - name: Install JDK 8
+
+    - name: Install JDK Versions
       become: yes
       ansible.builtin.shell: |
         source /home/tmpt/.sdkman/bin/sdkman-init.sh
-        sdk install java 8.0.302-open
+        sdk install java "{{ item }}"
       args:
         executable: /bin/bash
       become_user: tmpt
-    - name: Install JDK 11
-      become: true
-      ansible.builtin.shell: |
-        source /home/tmpt/.sdkman/bin/sdkman-init.sh
-        sdk install java 11.0.12-open
-      args:
-        executable: /bin/bash
-      become_user: tmpt
-    - name: Install JDK 17
-      become: true
-      ansible.builtin.shell: |
-        source /home/tmpt/.sdkman/bin/sdkman-init.sh
-        sdk install java 17.0.1-open
-      args:
-        executable: /bin/bash
-      become_user: tmpt
-    - name: Install JDK 8 - SEM
-      become: true
-      ansible.builtin.shell: |
-        source /home/tmpt/.sdkman/bin/sdkman-init.sh
-        sdk install java 8.0.302-sem
-      args:
-        executable: /bin/bash
-      become_user: tmpt
-    # Temporary solution!
-    - name: Install Groovy
-      become: true
-      ansible.builtin.shell: |
-        source /home/tmpt/.sdkman/bin/sdkman-init.sh
-        sdk install groovy 3.0.9
-      args:
-        executable: /bin/bash
-      become_user: tmpt
+      loop:
+        - 8.0.302-open
+        - 11.0.12-open
+        - 17.0.1-open
+        - 8.0.312-sem
+        - 11.0.13-sem
+        - 17.0.1-sem
 
-    # TODO: version etc. make variable with it for easier upgrade.
-    - name: Download Hyperfine
-      get_url:
-        url: 'https://github.com/sharkdp/hyperfine/releases/download/v1.12.0/{{ hyperfine }}.tar.gz'
-        dest: /tmp/hyperfine.tar.gz
-        checksum: sha256:b66e7a55fc1b7fd1f6443861f65bde87a4794c4721dee5e11dc0294f27116efc
-    - name: Extract hyperfine.tar.gz into /tmp/
-      ansible.builtin.unarchive:
-        src: /tmp/hyperfine.tar.gz
-        dest: /tmp
-        remote_src: true
-    - name: Install hyperfine into /usr/local/bin
-      ansible.builtin.copy:
-        src: '/tmp/{{ hyperfine }}/hyperfine'
-        dest: /usr/local/bin/hyperfine
-        owner: root
-        group: root
-        mode: '0755'
-        remote_src: yes
-    - name: Git clone Testing Project
-      become: true
-      ansible.builtin.git:
-        repo: 'https://github.com/khmarbaise/maven-performance-testing.git'
-        dest: /home/tmpt/maven-performance-testing
-        update: yes
-      become_user: tmpt
-    - name: Create Testing Project
-      become: true
-      ansible.builtin.shell: |
-        source /home/tmpt/.sdkman/bin/sdkman-init.sh
-        cd /home/tmpt/maven-performance-testing
-        ./generate.groovy
-      args:
-        executable: /bin/bash
-      become_user: tmpt
-    - name: Create src/site/markdown directory
-      become: true
-      ansible.builtin.shell: |
-        source /home/tmpt/.sdkman/bin/sdkman-init.sh
-        mkdir -p /home/tmpt/maven-performance-testing/src/site/markdown
-      args:
-        executable: /bin/bash
-      become_user: tmpt
+    # Temporary solution!
+#    - name: Install Groovy
+#      become: true
+#      ansible.builtin.shell: |
+#        source /home/tmpt/.sdkman/bin/sdkman-init.sh
+#        sdk install groovy 3.0.9
+#      args:
+#        executable: /bin/bash
+#      become_user: tmpt
+#
+#    # TODO: version etc. make variable with it for easier upgrade.
+#    - name: Download Hyperfine
+#      get_url:
+#        url: 'https://github.com/sharkdp/hyperfine/releases/download/v1.12.0/{{ hyperfine }}.tar.gz'
+#        dest: /tmp/hyperfine.tar.gz
+#        checksum: sha256:b66e7a55fc1b7fd1f6443861f65bde87a4794c4721dee5e11dc0294f27116efc
+#    - name: Extract hyperfine.tar.gz into /tmp/
+#      ansible.builtin.unarchive:
+#        src: /tmp/hyperfine.tar.gz
+#        dest: /tmp
+#        remote_src: true
+#    - name: Install hyperfine into /usr/local/bin
+#      ansible.builtin.copy:
+#        src: '/tmp/{{ hyperfine }}/hyperfine'
+#        dest: /usr/local/bin/hyperfine
+#        owner: root
+#        group: root
+#        mode: '0755'
+#        remote_src: yes
+#    - name: Git clone Testing Project
+#      become: true
+#      ansible.builtin.git:
+#        repo: 'https://github.com/khmarbaise/maven-performance-testing.git'
+#        dest: /home/tmpt/maven-performance-testing
+#        update: yes
+#      become_user: tmpt
+#    - name: Create Testing Project
+#      become: true
+#      ansible.builtin.shell: |
+#        source /home/tmpt/.sdkman/bin/sdkman-init.sh
+#        cd /home/tmpt/maven-performance-testing
+#        ./generate.groovy
+#      args:
+#        executable: /bin/bash
+#      become_user: tmpt
+#    - name: Create src/site/markdown directory
+#      become: true
+#      ansible.builtin.shell: |
+#        source /home/tmpt/.sdkman/bin/sdkman-init.sh
+#        mkdir -p /home/tmpt/maven-performance-testing/src/site/markdown
+#      args:
+#        executable: /bin/bash
+#      become_user: tmpt
