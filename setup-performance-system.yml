@@ -43,11 +43,6 @@
       package:
         name: wget
         state: present
-    - name: Installation apache2
-      become: yes
-      package:
-        name: apache2
-        state: present
     - name: Installation openssl
       become: yes
       package:
