@@ -38,19 +38,6 @@
   <version>1.0-SNAPSHOT</version>
   <name>Maven Performance Testing</name>
 
-  <repositories>
-    <repository>
-      <id>central</id>
-      <name>Apache SNAPSHOT Repository</name>
-      <url>https://repository.apache.org/content/groups/snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
   <properties>
     <smpp.component>maven-performance-testing</smpp.component>
     <maven.compiler.release>17</maven.compiler.release>
@@ -188,6 +175,19 @@
   <profiles>
     <profile>
       <id>performance</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <name>Apache SNAPSHOT Repository</name>
+          <url>https://repository.apache.org/content/groups/snapshots</url>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
       <build>
         <plugins>
           <plugin>
