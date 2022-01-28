@@ -24,7 +24,8 @@ server {
     ssl_dhparam /etc/nginx/dhparams.pem;
     ssl_prefer_server_ciphers on;
 
-    root /var/www/{{ domain_name }};
+    root /home/tmpt/public_html/performance
+#    root /var/www/{{ domain_name }};
     index index.html index.htm;
 
     location / {
