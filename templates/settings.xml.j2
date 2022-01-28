@@ -11,12 +11,9 @@
       <url>https://repo1.maven.org/maven2</url>
     </mirror>
   </mirrors>
--->
   <profiles>
     <profile>
       <id>nexus</id>
-      <!--Enable snapshots for the built in central repo to direct -->
-      <!--all requests to nexus via the mirror -->
       <repositories>
         <repository>
           <id>central</id>
@@ -48,8 +45,7 @@
     </profile>
   </profiles>
   <activeProfiles>
-    <!--make the profile active all the time -->
     <activeProfile>nexus</activeProfile>
   </activeProfiles>
-
+-->
 </settings>
