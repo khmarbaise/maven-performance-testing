@@ -30,6 +30,7 @@
     <groupId>com.soebes.smpp</groupId>
     <artifactId>smpp</artifactId>
     <version>5.3.5</version>
+    <relativePath/>
   </parent>
 
   <groupId>com.soebes.maven.performance</groupId>
