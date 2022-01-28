@@ -61,8 +61,7 @@ public class ExecuteMeasurement {
 
 
   void writeMavenRc() {
-    //FIXME: Running with 10.000 module you need more than 1 GiB Heap!
-    String javaOpts = "export JAVA_OPTS=-Xmx2G";
+    String javaOpts = "export JAVA_OPTS=-Xmx6G";
     //FIXME: Home directory hard coded.
     try {
       Files.writeString(Path.of("/home", "tmpt").resolve(".mavenrc"), javaOpts, StandardOpenOption.CREATE);
