@@ -177,7 +177,7 @@
       <id>performance</id>
       <repositories>
         <repository>
-          <id>central</id>
+          <id>apache-snapshots</id>
           <name>Apache SNAPSHOT Repository</name>
           <url>https://repository.apache.org/content/groups/snapshots</url>
           <releases>
