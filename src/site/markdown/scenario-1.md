@@ -14,12 +14,19 @@ The above setup will be run with different number of modules from 10 upto 10.000
 This scenario only executes a simple: `mvn clean` on each of the build
 to measure the initial project identification etc.
 
-Number of modules: 10
+Number of modules: 10 (SEM)
 
- * [JDK 8](./results-JDK8-10.html)
- * [JDK 11](./results-JDK11-10.html)
+ * [8.0.312-sem](./results-8.0.312-sem-10.html)
+ * [11.0.13-sem](./results-11.0.13-sem-10.html)
  * [JDK 17](./results-JDK17-10.html)
- 
+
+Number of modules: 10 (Open):
+
+* [8.0.302-open](./results-8.0.302-open-10.html)
+* [11.0.12-open](./results-11.0.12-open-10.html)
+* [JDK 17](./results-JDK17-10.html)
+
+
 Number of modules: 20
 
  * [JDK 8](./results-JDK8-20.html)
