@@ -132,6 +132,13 @@
         dest: /home/tmpt/maven-performance-testing
         update: yes
       become_user: tmpt
+    - name: Git clone Apache Maven Project
+      become: true
+      ansible.builtin.git:
+        repo: 'https://github.com/apache/maven.git
+        dest: /home/tmpt/maven
+        update: yes
+      become_user: tmpt
     - name: Create Testing Project
       become: true
       ansible.builtin.shell: |

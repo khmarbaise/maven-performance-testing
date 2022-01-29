@@ -20,6 +20,13 @@ source ~/.sdkman/bin/sdkman-init.sh
 
 # TODO: Maybe we should precompile the tool via GraalVM?
 sdk use java 17.0.1-open
+
+pushd ~
+cd maven
+# Build Apache current master
+./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn clean package -DdistributionTargetDir=/home/tmpt/maven-performance-testing/downloads/apache-maven-4.0.0-alpha-1/
+popd
+#
 # Download all Apache Versions into appropriate directory.
 ./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn --no-transfer-progress -B -Pperformance initialize
 # build performance tool.
