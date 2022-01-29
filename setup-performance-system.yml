@@ -135,7 +135,7 @@
     - name: Git clone Apache Maven Project
       become: true
       ansible.builtin.git:
-        repo: 'https://github.com/apache/maven.git
+        repo: 'https://github.com/apache/maven.git'
         dest: /home/tmpt/maven
         update: yes
       become_user: tmpt
