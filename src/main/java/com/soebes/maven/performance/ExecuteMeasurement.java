@@ -61,7 +61,7 @@ public class ExecuteMeasurement {
 
 
   void writeMavenRc() {
-    String javaOpts = "export JAVA_OPTS=-Xmx6G";
+    String javaOpts = "export JAVA_OPTS=-Xmx12G";
     //FIXME: Home directory hard coded.
     try {
       Files.writeString(Path.of("/home", "tmpt").resolve(".mavenrc"), javaOpts, StandardOpenOption.CREATE);
