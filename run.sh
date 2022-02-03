@@ -34,11 +34,11 @@ cd /home/tmpt/maven-performance-testing
 
 # Generate different scenarios
 # TODO: Find a better way to keep in sync
-java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,50,100,200,500,1000,2000,5000,10000
+java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,50,100,200,500,1000,2000,2200,2500,3000,4000,5000,10000
 #
 # Run real test.
 # TODO: Find a better to keep in sync
-NUMBER="10 20 50 100 200 500 1000 2000 5000 10000"
+NUMBER="10 20 50 100 200 500 1000 2000 2200 2500 3000 4000 5000 10000"
 #
 for num in $NUMBER; do
   java -jar target/performance-1.0-SNAPSHOT.jar exec --nom ${num}
