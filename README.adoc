@@ -35,7 +35,7 @@ need to reconsider.
 
 Scenarios:
 
-1. Multi Module Build setups
+1. Multi Module Build setups with the following number of children:
 
  * 10 modules
  * 20 modules
@@ -45,8 +45,13 @@ Scenarios:
  * 500 modules
  * 1000 modules
  * 2000 modules
+ * 2200 modules
+ * 2500 modules
+ * 3000 modules
+ * 4000 modules
  * 5000 modules
  * 10000 modules
+
 
 Different
 
