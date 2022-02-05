@@ -41,6 +41,7 @@
   <properties>
     <smpp.component>maven-performance-testing</smpp.component>
     <maven.compiler.release>17</maven.compiler.release>
+    <smpp.component>maven-performance-testing</smpp.component>
   </properties>
   <dependencyManagement>
     <dependencies>
