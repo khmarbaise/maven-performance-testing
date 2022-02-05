@@ -97,16 +97,6 @@
 #         - 11.0.13-sem
 #         - 17.0.1-sem
 
-    # Temporary solution!
-    - name: Install Groovy
-      become: true
-      ansible.builtin.shell: |
-        source /home/tmpt/.sdkman/bin/sdkman-init.sh
-        sdk install groovy 3.0.9
-      args:
-        executable: /bin/bash
-      become_user: tmpt
-
     # TODO: version etc. make variable with it for easier upgrade.
     - name: Download Hyperfine
       get_url:
@@ -139,15 +129,6 @@
         repo: 'https://github.com/apache/maven.git'
         dest: /home/tmpt/maven
         update: yes
-      become_user: tmpt
-    - name: Create Testing Project
-      become: true
-      ansible.builtin.shell: |
-        source /home/tmpt/.sdkman/bin/sdkman-init.sh
-        cd /home/tmpt/maven-performance-testing
-        ./generate.groovy
-      args:
-        executable: /bin/bash
       become_user: tmpt
     - name: Create src/site/markdown directory
       become: true
