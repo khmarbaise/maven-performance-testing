@@ -29,7 +29,7 @@
   <parent>
     <groupId>com.soebes.smpp</groupId>
     <artifactId>smpp</artifactId>
-    <version>5.3.7</version>
+    <version>5.3.8</version>
     <relativePath/>
   </parent>
 
@@ -282,6 +282,13 @@
                   <groupId>org.apache.maven</groupId>
                   <artifactId>apache-maven</artifactId>
                   <version>3.8.4</version>
+                  <type>tar.gz</type>
+                  <classifier>bin</classifier>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.maven</groupId>
+                  <artifactId>apache-maven</artifactId>
+                  <version>3.8.5</version>
                   <type>tar.gz</type>
                   <classifier>bin</classifier>
                 </artifactItem>
