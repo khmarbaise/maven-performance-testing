@@ -31,7 +31,7 @@ import static java.util.function.Predicate.not;
 
 /**
  * Find the locally installed JDKs which have been installed via
- * https://sdkman.io
+ * <a href="https://sdkman.io">https://sdkman.io</a>
  *
  * @author Karl Heinz Marbaise
  */
