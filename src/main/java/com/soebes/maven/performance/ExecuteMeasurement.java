@@ -27,7 +27,7 @@ public class ExecuteMeasurement {
 
   void cmdExecute(Integer numberOfModules, Path jdkVersion) {
 
-    System.out.println("Executing measurment for numberOfModules = " + numberOfModules + " with:" + jdkVersion.getFileName());
+    System.out.println("Executing measurement for numberOfModules = " + numberOfModules + " with:" + jdkVersion.getFileName());
 
     Path basePath = Path.of("target", "scenarios");
     // -w 5 warmup round 5
