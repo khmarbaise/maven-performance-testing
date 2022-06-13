@@ -19,7 +19,7 @@ fi
 source ~/.sdkman/bin/sdkman-init.sh
 
 # TODO: Maybe we should precompile the tool via GraalVM?
-sdk use java 17.0.1-open
+sdk use java 17.0.3-tem
 
 cd /home/tmpt/maven
 # Build Apache current master
