@@ -46,13 +46,13 @@ Vagrant.configure(2) do |config|
     vbox.vm.box = "bento/ubuntu-20.04"
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
-    vbox.vm.network "private_network", ip: "192.168.10.240"
+    vbox.vm.network "private_network", ip: "192.169.1.10"
     #
     # Configure memory
     config.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024"]
-    # vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    # vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     end
     setSSHkey (config)
   end

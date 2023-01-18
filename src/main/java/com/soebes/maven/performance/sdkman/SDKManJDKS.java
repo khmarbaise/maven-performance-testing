@@ -56,7 +56,7 @@ public class SDKManJDKS {
     try (Stream<Path> walk = Files.list(this.userHome.resolve(SDKMAN_ROOT).resolve("candidates").resolve("java"))) {
       return walk.filter(Files::isDirectory)
           .filter(IGNORE_CURRENT_JDK_LINK)
-          .collect(Collectors.toList());
+          .toList();
     } catch (IOException e) {
       //TODO: Need to reconsider.
       throw new RuntimeException("IOException happened", e);
