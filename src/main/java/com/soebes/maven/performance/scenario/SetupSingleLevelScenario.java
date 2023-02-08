@@ -28,7 +28,6 @@ import java.util.stream.IntStream;
 
 import static com.soebes.maven.performance.helper.PomHelper.writePom;
 import static com.soebes.maven.performance.maven.BuildProperties.JAVA_7;
-import static java.util.stream.Collectors.toList;
 
 /**
  * This scenario produces a multi-module build
@@ -58,7 +57,7 @@ public class SetupSingleLevelScenario implements Scenario {
     List<String> modules = IntStream.range(0, this.numberOfModules)
         .boxed()
         .map(s -> String.format("module-%04d", s))
-        .collect(toList());
+        .toList();
     CreatePom rootPom = CreatePom.of(PARENT_POM_GAV, "pom")
         .properties(JAVA_7)
         .build()
@@ -67,7 +66,7 @@ public class SetupSingleLevelScenario implements Scenario {
 
     writePom(rootPom, rootLevel, "pom.xml");
 
-    modules.stream().forEachOrdered(s -> {
+    modules.forEach(s -> {
       Path moduleLevel = Path.of(rootLevel.toString(), s);
       CreatePom modulePom = CreatePom.of(PARENT_POM_G, s, null)
           .parent(PARENT_POM_GAV);

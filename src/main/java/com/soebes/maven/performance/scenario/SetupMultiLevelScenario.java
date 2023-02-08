@@ -81,7 +81,7 @@ public class SetupMultiLevelScenario implements Scenario {
       List<String> subLevelModules = IntStream.range(0, this.numberOfModules)
           .boxed()
           .map(s -> String.format("mp-lev-%02d-%05d", level + 1, s))
-          .collect(toList());
+          .toList();
       modulePom
           .packaging(Packaging.POM)
           .modules(subLevelModules.toArray(new String[0]));
@@ -93,9 +93,9 @@ public class SetupMultiLevelScenario implements Scenario {
       List<String> subLevelModules = IntStream.range(0, this.numberOfModules)
           .boxed()
           .map(s -> String.format("mp-lev-%02d-%05d", level + 1, s))
-          .collect(toList());
+          .toList();
 
-      subLevelModules.stream().forEachOrdered(ml -> createSubLevel(newPom, dirModuleLevel, ml, level+1));
+      subLevelModules.forEach(ml -> createSubLevel(newPom, dirModuleLevel, ml, level + 1));
     }
 
   }
