@@ -53,9 +53,9 @@ public class CreatePom implements PomBuilder {
   private static Function<Plugin, org.apache.maven.model.Plugin> toPlugin() {
     return s -> {
       org.apache.maven.model.Plugin plugin = new org.apache.maven.model.Plugin();
-      plugin.setGroupId(s.getGroupId());
-      plugin.setArtifactId(s.getArtifactId());
-      plugin.setVersion(s.getVersion());
+      plugin.setGroupId(s.groupId());
+      plugin.setArtifactId(s.artifactId());
+      plugin.setVersion(s.version());
 //      plugin.setGoals();
 //      plugin.setDependencies();
 //      plugin.setExecutions();
