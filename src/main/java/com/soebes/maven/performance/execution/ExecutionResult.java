@@ -24,29 +24,7 @@ import java.util.stream.Stream;
 /**
  * @author Karl Heinz Marbaise
  */
-public class ExecutionResult {
-  private final String stdOut;
-  private final String stdErr;
-  private final int returnCode;
-
-  public ExecutionResult(String stdOut, String stdErr, int returnCode) {
-    this.stdOut = stdOut;
-    this.stdErr = stdErr;
-    this.returnCode = returnCode;
-  }
-
-  public String getStdOut() {
-    return stdOut;
-  }
-
-  public String getStdErr() {
-    return stdErr;
-  }
-
-  public int getReturnCode() {
-    return returnCode;
-  }
-
+public record ExecutionResult(String stdOut, String stdErr, int returnCode) {
   public Stream<String> lines() {
     return this.stdOut.lines();
   }

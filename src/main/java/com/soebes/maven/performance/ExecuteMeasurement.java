@@ -54,9 +54,9 @@ public class ExecuteMeasurement {
 //            "-p", prepareCommand,
             "-L", "VERSION", versions, "-n", "{VERSION}", prepareCommand + ";" + commandToExecute), Paths.get(basePath.toString(), moduleDirectory).toFile()
     );
-    System.out.println(exec.getStdErr());
-    System.out.println(exec.getStdOut());
-    System.out.println("exec = " + exec.getReturnCode());
+    System.out.println(exec.stdErr());
+    System.out.println(exec.stdOut());
+    System.out.println("exec = " + exec.returnCode());
   }
 
 

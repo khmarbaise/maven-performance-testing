@@ -20,7 +20,7 @@ package com.soebes.maven.performance.execution;
  */
 
 /**
- * @implSpec Unfortunately currently hard coded. Need to be in sync with configuration in Ansible playbook
+ * @implNote Unfortunately currently hard coded. Need to be in sync with configuration in Ansible playbook
  * {@code setup-performance-system.yml} Need to find a better way!
  * @author Karl Heinz Marbaise
  */

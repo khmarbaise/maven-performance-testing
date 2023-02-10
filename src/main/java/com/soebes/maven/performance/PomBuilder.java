@@ -22,6 +22,7 @@ package com.soebes.maven.performance;
 import org.apache.maven.model.Model;
 
 /**
+ *
  * @author Karl Heinz Marbaise
  */
 public interface PomBuilder {
