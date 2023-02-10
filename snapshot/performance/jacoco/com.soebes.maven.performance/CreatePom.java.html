@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreatePom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Performance Testing</a> &gt; <a href="index.source.html" class="el_package">com.soebes.maven.performance</a> &gt; <span class="el_source">CreatePom.java</span></div><h1>CreatePom.java</h1><pre class="source lang-java linenums">package com.soebes.maven.performance;
+
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+import com.soebes.maven.performance.maven.Dependency;
+import com.soebes.maven.performance.maven.GAV;
+import com.soebes.maven.performance.maven.Plugin;
+import com.soebes.maven.performance.maven.Property;
+import org.apache.maven.model.Build;
+import org.apache.maven.model.DependencyManagement;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.Parent;
+import org.apache.maven.model.PluginManagement;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+
+/**
+ * Builder Setup to programmatically generate a {@code pom.xml} file.
+ *
+ * @author Karl Heinz Marbaise
+ */
+public class CreatePom implements PomBuilder {
+
+  private final Model model;
+
+<span class="fc" id="L45">  private CreatePom(Model model) {</span>
+<span class="fc" id="L46">    this.model = model;</span>
+<span class="fc" id="L47">  }</span>
+
+  public Model toModel() {
+<span class="fc" id="L50">    return model;</span>
+  }
+
+  private static Function&lt;Plugin, org.apache.maven.model.Plugin&gt; toPlugin() {
+<span class="fc" id="L54">    return s -&gt; {</span>
+<span class="fc" id="L55">      org.apache.maven.model.Plugin plugin = new org.apache.maven.model.Plugin();</span>
+<span class="fc" id="L56">      plugin.setGroupId(s.getGroupId());</span>
+<span class="fc" id="L57">      plugin.setArtifactId(s.getArtifactId());</span>
+<span class="fc" id="L58">      plugin.setVersion(s.getVersion());</span>
+//      plugin.setGoals();
+//      plugin.setDependencies();
+//      plugin.setExecutions();
+//      plugin.setConfiguration();
+<span class="fc" id="L63">      return plugin;</span>
+    };
+  }
+
+  private Function&lt;Dependency, org.apache.maven.model.Dependency&gt; toDep() {
+<span class="fc" id="L68">    return s -&gt; {</span>
+<span class="fc" id="L69">      org.apache.maven.model.Dependency z = new org.apache.maven.model.Dependency();</span>
+<span class="fc" id="L70">      z.setGroupId(s.getGroupId());</span>
+<span class="fc" id="L71">      z.setArtifactId(s.getArtifactId());</span>
+<span class="fc" id="L72">      z.setVersion(s.getVersion());</span>
+<span class="fc" id="L73">      z.setClassifier(s.getClassifier());</span>
+//      z.setType();
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">      if (!s.getScope().equals(Dependency.Scope.COMPILE)) {</span>
+<span class="nc" id="L76">        z.setScope(s.getScope().toString().toLowerCase());</span>
+      }
+//      z.setExclusions();
+//      z.setOptional();
+<span class="fc" id="L80">      return z;</span>
+    };
+  }
+
+  public CreatePom dependencyManagement(Dependency... dependencies) {
+<span class="fc" id="L85">    DependencyManagement dependencyManagement = new DependencyManagement();</span>
+
+<span class="fc" id="L87">    Arrays.stream(dependencies).map(toDep()).forEach(s -&gt; dependencyManagement.getDependencies().add(s));</span>
+<span class="fc" id="L88">    this.model.setDependencyManagement(dependencyManagement);</span>
+<span class="fc" id="L89">    return this;</span>
+  }
+
+  public CreatePom dependencies(Dependency... dependencies) {
+<span class="fc" id="L93">    Arrays.stream(dependencies).map(toDep()).forEach(s -&gt; this.model.getDependencies().add(s));</span>
+<span class="fc" id="L94">    return this;</span>
+  }
+
+  public static class CreatePomBuild implements PomBuilder {
+    private final Model model;
+
+<span class="fc" id="L100">    private CreatePomBuild(Model model) {</span>
+<span class="fc" id="L101">      this.model = model;</span>
+<span class="fc" id="L102">    }</span>
+
+    public CreatePomBuild plugins(Plugin... plugins) {
+<span class="fc" id="L105">      Arrays.stream(plugins).map(toPlugin()).forEach(s -&gt; this.model.getBuild().getPlugins().add(s));</span>
+<span class="fc" id="L106">      return this;</span>
+    }
+
+    public CreatePomBuild pluginManagement(Plugin... pluginManagements) {
+<span class="fc" id="L110">      return pluginManagement(List.of(pluginManagements));</span>
+    }
+
+    public CreatePomBuild pluginManagement(List&lt;Plugin&gt; pluginManagements) {
+<span class="fc" id="L114">      PluginManagement pluginManagement = new PluginManagement();</span>
+<span class="fc" id="L115">      pluginManagements.stream().map(toPlugin()).forEach(s -&gt; pluginManagement.getPlugins().add(s));</span>
+<span class="fc" id="L116">      this.model.getBuild().setPluginManagement(pluginManagement);</span>
+<span class="fc" id="L117">      return this;</span>
+    }
+
+    public CreatePom modules(String... modules) {
+      //TODO: Check for the appropriate packaging type which must be {@code POM}
+<span class="fc" id="L122">      Arrays.stream(modules).forEach(s -&gt; this.model.getModules().add(s));</span>
+<span class="fc" id="L123">      return new CreatePom(this.model);</span>
+    }
+
+    public Model toModel() {
+<span class="fc" id="L127">      return model;</span>
+    }
+
+  }
+
+  public CreatePomBuild build() {
+<span class="fc" id="L133">    Build build = new Build();</span>
+<span class="fc" id="L134">    this.model.setBuild(build);</span>
+<span class="fc" id="L135">    return new CreatePomBuild(this.model);</span>
+  }
+
+  public CreatePom parent(String gav) {
+<span class="fc" id="L139">    String[] split = gav.split(&quot;:&quot;);</span>
+<span class="fc" id="L140">    Parent parent = new Parent();</span>
+<span class="fc" id="L141">    parent.setGroupId(split[0]);</span>
+<span class="fc" id="L142">    parent.setArtifactId(split[1]);</span>
+<span class="fc" id="L143">    parent.setVersion(split[2]);</span>
+<span class="fc" id="L144">    this.model.setParent(parent);</span>
+<span class="fc" id="L145">    return this;</span>
+  }
+
+  public CreatePom parent(GAV gav) {
+<span class="fc" id="L149">    Parent parent = new Parent();</span>
+<span class="fc" id="L150">    parent.setGroupId(gav.getGroupId());</span>
+<span class="fc" id="L151">    parent.setArtifactId(gav.getArtifactId());</span>
+<span class="fc" id="L152">    parent.setVersion(gav.getVersion());</span>
+<span class="fc" id="L153">    this.model.setParent(parent);</span>
+<span class="fc" id="L154">    return this;</span>
+  }
+
+  public CreatePom packaging(Packaging packaging) {
+<span class="fc" id="L158">    this.model.setPackaging(packaging.name().toLowerCase());</span>
+<span class="fc" id="L159">    return this;</span>
+  }
+
+  public CreatePom properties(Property... properties) {
+<span class="fc" id="L163">    return properties(Arrays.asList(properties));</span>
+  }
+
+  public CreatePom properties(List&lt;Property&gt; properties) {
+<span class="fc" id="L167">    properties.stream().forEach(s -&gt; this.model.getProperties().put(s.getKey(), s.getValue()));</span>
+<span class="fc" id="L168">    return this;</span>
+  }
+
+  public CreatePom modules(String... modules) {
+    //TODO: Check for the appropriate packaging type which must be {@code POM}
+<span class="fc" id="L173">    Arrays.stream(modules).forEach(s -&gt; this.model.getModules().add(s));</span>
+<span class="fc" id="L174">    return this;</span>
+  }
+
+  public static CreatePom of(String gav) {
+<span class="fc" id="L178">    String[] split = gav.split(&quot;:&quot;);</span>
+<span class="fc" id="L179">    return of(split[0], split[1], split[2]);</span>
+  }
+
+  public static CreatePom of(String gav, String packaging) {
+<span class="fc" id="L183">    String[] split = gav.split(&quot;:&quot;);</span>
+<span class="fc" id="L184">    return of(split[0], split[1], split[2], packaging);</span>
+  }
+
+  public static CreatePom of(GAV gav, String packaging) {
+<span class="fc" id="L188">    return of(gav.getGroupId(), gav.getArtifactId(), gav.getVersion(), packaging);</span>
+  }
+
+  public static CreatePom of(GAV gav) {
+<span class="fc" id="L192">    return of(gav.getGroupId(), gav.getArtifactId(), gav.getVersion());</span>
+  }
+
+  public static CreatePom of(String g, String a, String v) {
+<span class="fc" id="L196">    return of(g, a, v, null);</span>
+  }
+
+  public static CreatePom of(String g, String a, String v, String packaging) {
+<span class="fc" id="L200">    Model model = new Model();</span>
+<span class="fc" id="L201">    model.setModelVersion(&quot;4.0.0&quot;);</span>
+<span class="fc" id="L202">    model.setGroupId(g);</span>
+<span class="fc" id="L203">    model.setArtifactId(a);</span>
+<span class="fc" id="L204">    model.setVersion(v);</span>
+<span class="fc" id="L205">    model.setPackaging(packaging);</span>
+<span class="fc" id="L206">    return new CreatePom(model);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

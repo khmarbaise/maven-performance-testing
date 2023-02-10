@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SetupMultiLevelScenario.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Performance Testing</a> &gt; <a href="index.source.html" class="el_package">com.soebes.maven.performance.scenario</a> &gt; <span class="el_source">SetupMultiLevelScenario.java</span></div><h1>SetupMultiLevelScenario.java</h1><pre class="source lang-java linenums">package com.soebes.maven.performance.scenario;
+
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+import com.soebes.maven.performance.CreatePom;
+import com.soebes.maven.performance.Packaging;
+import com.soebes.maven.performance.maven.ApachenMavenPlugins;
+import com.soebes.maven.performance.maven.GAV;
+
+import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.IntStream;
+
+import static com.soebes.maven.performance.helper.PomHelper.writePom;
+import static com.soebes.maven.performance.maven.BuildProperties.JAVA_7;
+import static java.util.stream.Collectors.toList;
+
+/**
+ * @author Karl Heinz Marbaise
+ */
+public class SetupMultiLevelScenario implements Scenario {
+
+  private static final String PARENT_VERSION = &quot;1.0-SNAPSHOT&quot;;
+
+<span class="fc" id="L42">  private static final GAV ROOT_PARENT_GAV = GAV.of(&quot;org.test.performance.multi.level&quot;, &quot;scenario-one-parent&quot;, PARENT_VERSION);</span>
+
+  private int numberOfModules;
+
+  private int numberOfLevels;
+
+  private Path rootLevel;
+
+<span class="fc" id="L50">  public SetupMultiLevelScenario(int numberOfModules, int numberOfLevels, Path rootLevel) {</span>
+<span class="fc" id="L51">    this.numberOfModules = numberOfModules;</span>
+<span class="fc" id="L52">    this.numberOfLevels = numberOfLevels;</span>
+<span class="fc" id="L53">    this.rootLevel = rootLevel;</span>
+<span class="fc" id="L54">  }</span>
+
+  public void create() {
+<span class="fc" id="L57">    List&lt;String&gt; rootModuleNames = IntStream.range(0, this.numberOfModules)</span>
+<span class="fc" id="L58">        .boxed()</span>
+<span class="fc" id="L59">        .map(s -&gt; String.format(&quot;mp-lev-%02d-%05d&quot;, 0, s))</span>
+<span class="fc" id="L60">        .collect(toList());</span>
+
+<span class="fc" id="L62">    CreatePom rootPom = CreatePom.of(ROOT_PARENT_GAV, &quot;pom&quot;)</span>
+<span class="fc" id="L63">        .properties(JAVA_7)</span>
+<span class="fc" id="L64">        .build()</span>
+<span class="fc" id="L65">        .pluginManagement(ApachenMavenPlugins.DEFAULT_PLUGINS)</span>
+<span class="fc" id="L66">        .modules(rootModuleNames.toArray(new String[0]));</span>
+
+<span class="fc" id="L68">    writePom(rootPom, rootLevel, &quot;pom.xml&quot;);</span>
+<span class="fc" id="L69">    rootModuleNames.stream().forEachOrdered(module -&gt; createSubLevel(ROOT_PARENT_GAV, rootLevel, module, 1));</span>
+
+<span class="fc" id="L71">  }</span>
+
+  private void createSubLevel(GAV parentGAV, Path rootLevel, String module, int level) {
+<span class="fc" id="L74">    Path dirModuleLevel = Path.of(rootLevel.toString(), module);</span>
+<span class="fc" id="L75">    GAV newPom = GAV.of(parentGAV.getGroupId() + String.format(&quot;.%02d&quot;, level), module, parentGAV.getVersion());</span>
+<span class="fc" id="L76">    CreatePom modulePom = CreatePom</span>
+<span class="fc" id="L77">        .of(newPom)</span>
+<span class="fc" id="L78">        .parent(parentGAV);</span>
+
+<span class="fc bfc" id="L80" title="All 2 branches covered.">    if (level &lt; this.numberOfLevels) {</span>
+<span class="fc" id="L81">      List&lt;String&gt; subLevelModules = IntStream.range(0, this.numberOfModules)</span>
+<span class="fc" id="L82">          .boxed()</span>
+<span class="fc" id="L83">          .map(s -&gt; String.format(&quot;mp-lev-%02d-%05d&quot;, level + 1, s))</span>
+<span class="fc" id="L84">          .toList();</span>
+<span class="fc" id="L85">      modulePom</span>
+<span class="fc" id="L86">          .packaging(Packaging.POM)</span>
+<span class="fc" id="L87">          .modules(subLevelModules.toArray(new String[0]));</span>
+    }
+
+<span class="fc" id="L90">    writePom(modulePom, dirModuleLevel, &quot;pom.xml&quot;);</span>
+
+<span class="fc bfc" id="L92" title="All 2 branches covered.">    if (level &lt; this.numberOfLevels) {</span>
+<span class="fc" id="L93">      List&lt;String&gt; subLevelModules = IntStream.range(0, this.numberOfModules)</span>
+<span class="fc" id="L94">          .boxed()</span>
+<span class="fc" id="L95">          .map(s -&gt; String.format(&quot;mp-lev-%02d-%05d&quot;, level + 1, s))</span>
+<span class="fc" id="L96">          .toList();</span>
+
+<span class="fc" id="L98">      subLevelModules.forEach(ml -&gt; createSubLevel(newPom, dirModuleLevel, ml, level + 1));</span>
+    }
+
+<span class="fc" id="L101">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SetupSingleLevelScenario.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Maven Performance Testing</a> &gt; <a href="index.source.html" class="el_package">com.soebes.maven.performance.scenario</a> &gt; <span class="el_source">SetupSingleLevelScenario.java</span></div><h1>SetupSingleLevelScenario.java</h1><pre class="source lang-java linenums">package com.soebes.maven.performance.scenario;
+
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+import com.soebes.maven.performance.CreatePom;
+import com.soebes.maven.performance.maven.ApachenMavenPlugins;
+
+import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.IntStream;
+
+import static com.soebes.maven.performance.helper.PomHelper.writePom;
+import static com.soebes.maven.performance.maven.BuildProperties.JAVA_7;
+
+/**
+ * This scenario produces a multi-module build
+ * which consists of a given number of modules
+ * with one hierarchie level. That means in other
+ * words only a single level of modules.
+ *
+ * @author Karl Heinz Marbaise
+ */
+public class SetupSingleLevelScenario implements Scenario {
+
+  private static final String PARENT_POM_G = &quot;org.test.performance&quot;;
+
+  private static final String PARENT_POM_GAV = &quot;org.test.performance:scenario-one-parent:1.0-SNAPSHOT&quot;;
+  private static final String MODULE_POM_GAV = &quot;org.test.performance:scenario-one:1.0-SNAPSHOT&quot;;
+
+  private int numberOfModules;
+
+  private Path rootLevel;
+
+<span class="nc" id="L51">  public SetupSingleLevelScenario(int numberOfModules, Path rootLevel) {</span>
+<span class="nc" id="L52">    this.numberOfModules = numberOfModules;</span>
+<span class="nc" id="L53">    this.rootLevel = rootLevel;</span>
+<span class="nc" id="L54">  }</span>
+
+  public void create() {
+<span class="nc" id="L57">    List&lt;String&gt; modules = IntStream.range(0, this.numberOfModules)</span>
+<span class="nc" id="L58">        .boxed()</span>
+<span class="nc" id="L59">        .map(s -&gt; String.format(&quot;module-%04d&quot;, s))</span>
+<span class="nc" id="L60">        .toList();</span>
+<span class="nc" id="L61">    CreatePom rootPom = CreatePom.of(PARENT_POM_GAV, &quot;pom&quot;)</span>
+<span class="nc" id="L62">        .properties(JAVA_7)</span>
+<span class="nc" id="L63">        .build()</span>
+<span class="nc" id="L64">        .pluginManagement(ApachenMavenPlugins.DEFAULT_PLUGINS)</span>
+<span class="nc" id="L65">        .modules(modules.toArray(new String[0]));</span>
+
+<span class="nc" id="L67">    writePom(rootPom, rootLevel, &quot;pom.xml&quot;);</span>
+
+<span class="nc" id="L69">    modules.forEach(s -&gt; {</span>
+<span class="nc" id="L70">      Path moduleLevel = Path.of(rootLevel.toString(), s);</span>
+<span class="nc" id="L71">      CreatePom modulePom = CreatePom.of(PARENT_POM_G, s, null)</span>
+<span class="nc" id="L72">          .parent(PARENT_POM_GAV);</span>
+<span class="nc" id="L73">      writePom(modulePom, moduleLevel, &quot;pom.xml&quot;);</span>
+<span class="nc" id="L74">    });</span>
+
+<span class="nc" id="L76">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
