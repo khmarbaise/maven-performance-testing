@@ -44,9 +44,9 @@ public class SetupSingleLevelScenario implements Scenario {
   private static final String PARENT_POM_GAV = &quot;org.test.performance:scenario-one-parent:1.0-SNAPSHOT&quot;;
   private static final String MODULE_POM_GAV = &quot;org.test.performance:scenario-one:1.0-SNAPSHOT&quot;;
 
-  private int numberOfModules;
+  private final int numberOfModules;
 
-  private Path rootLevel;
+  private final Path rootLevel;
 
 <span class="nc" id="L51">  public SetupSingleLevelScenario(int numberOfModules, Path rootLevel) {</span>
 <span class="nc" id="L52">    this.numberOfModules = numberOfModules;</span>

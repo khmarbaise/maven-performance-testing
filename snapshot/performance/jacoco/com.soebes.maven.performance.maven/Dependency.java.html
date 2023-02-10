@@ -19,64 +19,32 @@
  * under the License.
  */
 
-public class Dependency {
-  private final String groupId;
-  private final String artifactId;
-  private final String version;
-  private final String classifier;
-  private final Scope scope;
+<span class="fc" id="L22">public record Dependency(String groupId, String artifactId, String version, String classifier, Scope scope) {</span>
 
-<span class="fc" id="L29">  public enum Scope {</span>
-<span class="fc" id="L30">    COMPILE,</span>
-<span class="fc" id="L31">    PROVIDED,</span>
-<span class="fc" id="L32">    RUNTIME,</span>
-<span class="fc" id="L33">    TEST,</span>
+<span class="fc" id="L24">  public enum Scope {</span>
+<span class="fc" id="L25">    COMPILE,</span>
+<span class="fc" id="L26">    PROVIDED,</span>
+<span class="fc" id="L27">    RUNTIME,</span>
+<span class="fc" id="L28">    TEST,</span>
     // system =&gt; we do not support this because it's deprecated.
-<span class="fc" id="L35">    IMPORT</span>
+<span class="fc" id="L30">    IMPORT</span>
   }
 
-<span class="fc" id="L38">  public Dependency(String groupId, String artifactId, String version, String classifier, Scope scope) {</span>
-<span class="fc" id="L39">    this.groupId = groupId;</span>
-<span class="fc" id="L40">    this.artifactId = artifactId;</span>
-<span class="fc" id="L41">    this.version = version;</span>
-<span class="fc" id="L42">    this.classifier = classifier;</span>
-<span class="fc" id="L43">    this.scope = scope;</span>
-<span class="fc" id="L44">  }</span>
-
   public Dependency(String groupId, String artifactId, String version) {
-<span class="fc" id="L47">    this(groupId, artifactId, version, null, Scope.COMPILE);</span>
-<span class="fc" id="L48">  }</span>
+<span class="fc" id="L34">    this(groupId, artifactId, version, null, Scope.COMPILE);</span>
+<span class="fc" id="L35">  }</span>
 
   public Dependency(String groupId, String artifactId) {
-<span class="fc" id="L51">    this(groupId, artifactId, null, null, Scope.COMPILE);</span>
-<span class="fc" id="L52">  }</span>
+<span class="fc" id="L38">    this(groupId, artifactId, null, null, Scope.COMPILE);</span>
+<span class="fc" id="L39">  }</span>
 
   public static Dependency of(String groupId, String artifactId, String version) {
-<span class="fc" id="L55">    return new Dependency(groupId, artifactId, version);</span>
+<span class="fc" id="L42">    return new Dependency(groupId, artifactId, version);</span>
   }
 
   public static Dependency of(String groupId, String artifactId, Scope scope) {
-<span class="nc" id="L59">    return new Dependency(groupId, artifactId, null, null, scope);</span>
+<span class="nc" id="L46">    return new Dependency(groupId, artifactId, null, null, scope);</span>
   }
 
-  public String getGroupId() {
-<span class="fc" id="L63">    return groupId;</span>
-  }
-
-  public String getArtifactId() {
-<span class="fc" id="L67">    return artifactId;</span>
-  }
-
-  public String getVersion() {
-<span class="fc" id="L71">    return version;</span>
-  }
-
-  public String getClassifier() {
-<span class="fc" id="L75">    return classifier;</span>
-  }
-
-  public Scope getScope() {
-<span class="fc" id="L79">    return this.scope;</span>
-  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

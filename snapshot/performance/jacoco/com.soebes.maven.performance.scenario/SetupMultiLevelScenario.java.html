@@ -30,7 +30,6 @@ import java.util.stream.IntStream;
 
 import static com.soebes.maven.performance.helper.PomHelper.writePom;
 import static com.soebes.maven.performance.maven.BuildProperties.JAVA_7;
-import static java.util.stream.Collectors.toList;
 
 /**
  * @author Karl Heinz Marbaise
@@ -39,66 +38,66 @@ public class SetupMultiLevelScenario implements Scenario {
 
   private static final String PARENT_VERSION = &quot;1.0-SNAPSHOT&quot;;
 
-<span class="fc" id="L42">  private static final GAV ROOT_PARENT_GAV = GAV.of(&quot;org.test.performance.multi.level&quot;, &quot;scenario-one-parent&quot;, PARENT_VERSION);</span>
+<span class="fc" id="L41">  private static final GAV ROOT_PARENT_GAV = GAV.of(&quot;org.test.performance.multi.level&quot;, &quot;scenario-one-parent&quot;, PARENT_VERSION);</span>
 
-  private int numberOfModules;
+  private final int numberOfModules;
 
-  private int numberOfLevels;
+  private final int numberOfLevels;
 
-  private Path rootLevel;
+  private final Path rootLevel;
 
-<span class="fc" id="L50">  public SetupMultiLevelScenario(int numberOfModules, int numberOfLevels, Path rootLevel) {</span>
-<span class="fc" id="L51">    this.numberOfModules = numberOfModules;</span>
-<span class="fc" id="L52">    this.numberOfLevels = numberOfLevels;</span>
-<span class="fc" id="L53">    this.rootLevel = rootLevel;</span>
-<span class="fc" id="L54">  }</span>
+<span class="fc" id="L49">  public SetupMultiLevelScenario(int numberOfModules, int numberOfLevels, Path rootLevel) {</span>
+<span class="fc" id="L50">    this.numberOfModules = numberOfModules;</span>
+<span class="fc" id="L51">    this.numberOfLevels = numberOfLevels;</span>
+<span class="fc" id="L52">    this.rootLevel = rootLevel;</span>
+<span class="fc" id="L53">  }</span>
 
   public void create() {
-<span class="fc" id="L57">    List&lt;String&gt; rootModuleNames = IntStream.range(0, this.numberOfModules)</span>
-<span class="fc" id="L58">        .boxed()</span>
-<span class="fc" id="L59">        .map(s -&gt; String.format(&quot;mp-lev-%02d-%05d&quot;, 0, s))</span>
-<span class="fc" id="L60">        .collect(toList());</span>
+<span class="fc" id="L56">    List&lt;String&gt; rootModuleNames = IntStream.range(0, this.numberOfModules)</span>
+<span class="fc" id="L57">        .boxed()</span>
+<span class="fc" id="L58">        .map(s -&gt; String.format(&quot;mp-lev-%02d-%05d&quot;, 0, s))</span>
+<span class="fc" id="L59">        .toList();</span>
 
-<span class="fc" id="L62">    CreatePom rootPom = CreatePom.of(ROOT_PARENT_GAV, &quot;pom&quot;)</span>
-<span class="fc" id="L63">        .properties(JAVA_7)</span>
-<span class="fc" id="L64">        .build()</span>
-<span class="fc" id="L65">        .pluginManagement(ApachenMavenPlugins.DEFAULT_PLUGINS)</span>
-<span class="fc" id="L66">        .modules(rootModuleNames.toArray(new String[0]));</span>
+<span class="fc" id="L61">    CreatePom rootPom = CreatePom.of(ROOT_PARENT_GAV, &quot;pom&quot;)</span>
+<span class="fc" id="L62">        .properties(JAVA_7)</span>
+<span class="fc" id="L63">        .build()</span>
+<span class="fc" id="L64">        .pluginManagement(ApachenMavenPlugins.DEFAULT_PLUGINS)</span>
+<span class="fc" id="L65">        .modules(rootModuleNames.toArray(new String[0]));</span>
 
-<span class="fc" id="L68">    writePom(rootPom, rootLevel, &quot;pom.xml&quot;);</span>
-<span class="fc" id="L69">    rootModuleNames.stream().forEachOrdered(module -&gt; createSubLevel(ROOT_PARENT_GAV, rootLevel, module, 1));</span>
+<span class="fc" id="L67">    writePom(rootPom, rootLevel, &quot;pom.xml&quot;);</span>
+<span class="fc" id="L68">    rootModuleNames.forEach(module -&gt; createSubLevel(ROOT_PARENT_GAV, rootLevel, module, 1));</span>
 
-<span class="fc" id="L71">  }</span>
+<span class="fc" id="L70">  }</span>
 
   private void createSubLevel(GAV parentGAV, Path rootLevel, String module, int level) {
-<span class="fc" id="L74">    Path dirModuleLevel = Path.of(rootLevel.toString(), module);</span>
-<span class="fc" id="L75">    GAV newPom = GAV.of(parentGAV.getGroupId() + String.format(&quot;.%02d&quot;, level), module, parentGAV.getVersion());</span>
-<span class="fc" id="L76">    CreatePom modulePom = CreatePom</span>
-<span class="fc" id="L77">        .of(newPom)</span>
-<span class="fc" id="L78">        .parent(parentGAV);</span>
+<span class="fc" id="L73">    Path dirModuleLevel = Path.of(rootLevel.toString(), module);</span>
+<span class="fc" id="L74">    GAV newPom = GAV.of(parentGAV.groupId() + String.format(&quot;.%02d&quot;, level), module, parentGAV.version());</span>
+<span class="fc" id="L75">    CreatePom modulePom = CreatePom</span>
+<span class="fc" id="L76">        .of(newPom)</span>
+<span class="fc" id="L77">        .parent(parentGAV);</span>
 
-<span class="fc bfc" id="L80" title="All 2 branches covered.">    if (level &lt; this.numberOfLevels) {</span>
-<span class="fc" id="L81">      List&lt;String&gt; subLevelModules = IntStream.range(0, this.numberOfModules)</span>
-<span class="fc" id="L82">          .boxed()</span>
-<span class="fc" id="L83">          .map(s -&gt; String.format(&quot;mp-lev-%02d-%05d&quot;, level + 1, s))</span>
-<span class="fc" id="L84">          .toList();</span>
-<span class="fc" id="L85">      modulePom</span>
-<span class="fc" id="L86">          .packaging(Packaging.POM)</span>
-<span class="fc" id="L87">          .modules(subLevelModules.toArray(new String[0]));</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">    if (level &lt; this.numberOfLevels) {</span>
+<span class="fc" id="L80">      List&lt;String&gt; subLevelModules = IntStream.range(0, this.numberOfModules)</span>
+<span class="fc" id="L81">          .boxed()</span>
+<span class="fc" id="L82">          .map(s -&gt; String.format(&quot;mp-lev-%02d-%05d&quot;, level + 1, s))</span>
+<span class="fc" id="L83">          .toList();</span>
+<span class="fc" id="L84">      modulePom</span>
+<span class="fc" id="L85">          .packaging(Packaging.POM)</span>
+<span class="fc" id="L86">          .modules(subLevelModules.toArray(new String[0]));</span>
     }
 
-<span class="fc" id="L90">    writePom(modulePom, dirModuleLevel, &quot;pom.xml&quot;);</span>
+<span class="fc" id="L89">    writePom(modulePom, dirModuleLevel, &quot;pom.xml&quot;);</span>
 
-<span class="fc bfc" id="L92" title="All 2 branches covered.">    if (level &lt; this.numberOfLevels) {</span>
-<span class="fc" id="L93">      List&lt;String&gt; subLevelModules = IntStream.range(0, this.numberOfModules)</span>
-<span class="fc" id="L94">          .boxed()</span>
-<span class="fc" id="L95">          .map(s -&gt; String.format(&quot;mp-lev-%02d-%05d&quot;, level + 1, s))</span>
-<span class="fc" id="L96">          .toList();</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">    if (level &lt; this.numberOfLevels) {</span>
+<span class="fc" id="L92">      List&lt;String&gt; subLevelModules = IntStream.range(0, this.numberOfModules)</span>
+<span class="fc" id="L93">          .boxed()</span>
+<span class="fc" id="L94">          .map(s -&gt; String.format(&quot;mp-lev-%02d-%05d&quot;, level + 1, s))</span>
+<span class="fc" id="L95">          .toList();</span>
 
-<span class="fc" id="L98">      subLevelModules.forEach(ml -&gt; createSubLevel(newPom, dirModuleLevel, ml, level + 1));</span>
+<span class="fc" id="L97">      subLevelModules.forEach(ml -&gt; createSubLevel(newPom, dirModuleLevel, ml, level + 1));</span>
     }
 
-<span class="fc" id="L101">  }</span>
+<span class="fc" id="L100">  }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

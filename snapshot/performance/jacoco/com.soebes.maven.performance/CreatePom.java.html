@@ -67,13 +67,13 @@ public class CreatePom implements PomBuilder {
   private Function&lt;Dependency, org.apache.maven.model.Dependency&gt; toDep() {
 <span class="fc" id="L68">    return s -&gt; {</span>
 <span class="fc" id="L69">      org.apache.maven.model.Dependency z = new org.apache.maven.model.Dependency();</span>
-<span class="fc" id="L70">      z.setGroupId(s.getGroupId());</span>
-<span class="fc" id="L71">      z.setArtifactId(s.getArtifactId());</span>
-<span class="fc" id="L72">      z.setVersion(s.getVersion());</span>
-<span class="fc" id="L73">      z.setClassifier(s.getClassifier());</span>
+<span class="fc" id="L70">      z.setGroupId(s.groupId());</span>
+<span class="fc" id="L71">      z.setArtifactId(s.artifactId());</span>
+<span class="fc" id="L72">      z.setVersion(s.version());</span>
+<span class="fc" id="L73">      z.setClassifier(s.classifier());</span>
 //      z.setType();
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">      if (!s.getScope().equals(Dependency.Scope.COMPILE)) {</span>
-<span class="nc" id="L76">        z.setScope(s.getScope().toString().toLowerCase());</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">      if (!s.scope().equals(Dependency.Scope.COMPILE)) {</span>
+<span class="nc" id="L76">        z.setScope(s.scope().toString().toLowerCase());</span>
       }
 //      z.setExclusions();
 //      z.setOptional();
@@ -147,9 +147,9 @@ public class CreatePom implements PomBuilder {
 
   public CreatePom parent(GAV gav) {
 <span class="fc" id="L149">    Parent parent = new Parent();</span>
-<span class="fc" id="L150">    parent.setGroupId(gav.getGroupId());</span>
-<span class="fc" id="L151">    parent.setArtifactId(gav.getArtifactId());</span>
-<span class="fc" id="L152">    parent.setVersion(gav.getVersion());</span>
+<span class="fc" id="L150">    parent.setGroupId(gav.groupId());</span>
+<span class="fc" id="L151">    parent.setArtifactId(gav.artifactId());</span>
+<span class="fc" id="L152">    parent.setVersion(gav.version());</span>
 <span class="fc" id="L153">    this.model.setParent(parent);</span>
 <span class="fc" id="L154">    return this;</span>
   }
@@ -185,11 +185,11 @@ public class CreatePom implements PomBuilder {
   }
 
   public static CreatePom of(GAV gav, String packaging) {
-<span class="fc" id="L188">    return of(gav.getGroupId(), gav.getArtifactId(), gav.getVersion(), packaging);</span>
+<span class="fc" id="L188">    return of(gav.groupId(), gav.artifactId(), gav.version(), packaging);</span>
   }
 
   public static CreatePom of(GAV gav) {
-<span class="fc" id="L192">    return of(gav.getGroupId(), gav.getArtifactId(), gav.getVersion());</span>
+<span class="fc" id="L192">    return of(gav.groupId(), gav.artifactId(), gav.version());</span>
   }
 
   public static CreatePom of(String g, String a, String v) {
