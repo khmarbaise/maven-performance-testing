@@ -67,13 +67,13 @@ public class CreatePom implements PomBuilder {
   private Function<Dependency, org.apache.maven.model.Dependency> toDep() {
     return s -> {
       org.apache.maven.model.Dependency z = new org.apache.maven.model.Dependency();
-      z.setGroupId(s.getGroupId());
-      z.setArtifactId(s.getArtifactId());
-      z.setVersion(s.getVersion());
-      z.setClassifier(s.getClassifier());
+      z.setGroupId(s.groupId());
+      z.setArtifactId(s.artifactId());
+      z.setVersion(s.version());
+      z.setClassifier(s.classifier());
 //      z.setType();
-      if (!s.getScope().equals(Dependency.Scope.COMPILE)) {
-        z.setScope(s.getScope().toString().toLowerCase());
+      if (!s.scope().equals(Dependency.Scope.COMPILE)) {
+        z.setScope(s.scope().toString().toLowerCase());
       }
 //      z.setExclusions();
 //      z.setOptional();
@@ -147,9 +147,9 @@ public class CreatePom implements PomBuilder {
 
   public CreatePom parent(GAV gav) {
     Parent parent = new Parent();
-    parent.setGroupId(gav.getGroupId());
-    parent.setArtifactId(gav.getArtifactId());
-    parent.setVersion(gav.getVersion());
+    parent.setGroupId(gav.groupId());
+    parent.setArtifactId(gav.artifactId());
+    parent.setVersion(gav.version());
     this.model.setParent(parent);
     return this;
   }
@@ -185,11 +185,11 @@ public class CreatePom implements PomBuilder {
   }
 
   public static CreatePom of(GAV gav, String packaging) {
-    return of(gav.getGroupId(), gav.getArtifactId(), gav.getVersion(), packaging);
+    return of(gav.groupId(), gav.artifactId(), gav.version(), packaging);
   }
 
   public static CreatePom of(GAV gav) {
-    return of(gav.getGroupId(), gav.getArtifactId(), gav.getVersion());
+    return of(gav.groupId(), gav.artifactId(), gav.version());
   }
 
   public static CreatePom of(String g, String a, String v) {

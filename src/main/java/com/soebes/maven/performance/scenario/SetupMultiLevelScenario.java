@@ -30,7 +30,6 @@ import java.util.stream.IntStream;
 
 import static com.soebes.maven.performance.helper.PomHelper.writePom;
 import static com.soebes.maven.performance.maven.BuildProperties.JAVA_7;
-import static java.util.stream.Collectors.toList;
 
 /**
  * @author Karl Heinz Marbaise
@@ -41,11 +40,11 @@ public class SetupMultiLevelScenario implements Scenario {
 
   private static final GAV ROOT_PARENT_GAV = GAV.of("org.test.performance.multi.level", "scenario-one-parent", PARENT_VERSION);
 
-  private int numberOfModules;
+  private final int numberOfModules;
 
-  private int numberOfLevels;
+  private final int numberOfLevels;
 
-  private Path rootLevel;
+  private final Path rootLevel;
 
   public SetupMultiLevelScenario(int numberOfModules, int numberOfLevels, Path rootLevel) {
     this.numberOfModules = numberOfModules;
@@ -57,7 +56,7 @@ public class SetupMultiLevelScenario implements Scenario {
     List<String> rootModuleNames = IntStream.range(0, this.numberOfModules)
         .boxed()
         .map(s -> String.format("mp-lev-%02d-%05d", 0, s))
-        .collect(toList());
+        .toList();
 
     CreatePom rootPom = CreatePom.of(ROOT_PARENT_GAV, "pom")
         .properties(JAVA_7)
@@ -66,13 +65,13 @@ public class SetupMultiLevelScenario implements Scenario {
         .modules(rootModuleNames.toArray(new String[0]));
 
     writePom(rootPom, rootLevel, "pom.xml");
-    rootModuleNames.stream().forEachOrdered(module -> createSubLevel(ROOT_PARENT_GAV, rootLevel, module, 1));
+    rootModuleNames.forEach(module -> createSubLevel(ROOT_PARENT_GAV, rootLevel, module, 1));
 
   }
 
   private void createSubLevel(GAV parentGAV, Path rootLevel, String module, int level) {
     Path dirModuleLevel = Path.of(rootLevel.toString(), module);
-    GAV newPom = GAV.of(parentGAV.getGroupId() + String.format(".%02d", level), module, parentGAV.getVersion());
+    GAV newPom = GAV.of(parentGAV.groupId() + String.format(".%02d", level), module, parentGAV.version());
     CreatePom modulePom = CreatePom
         .of(newPom)
         .parent(parentGAV);
