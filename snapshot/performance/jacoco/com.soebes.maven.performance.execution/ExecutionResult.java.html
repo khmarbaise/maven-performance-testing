@@ -24,31 +24,9 @@ import java.util.stream.Stream;
 /**
  * @author Karl Heinz Marbaise
  */
-public class ExecutionResult {
-  private final String stdOut;
-  private final String stdErr;
-  private final int returnCode;
-
-<span class="nc" id="L32">  public ExecutionResult(String stdOut, String stdErr, int returnCode) {</span>
-<span class="nc" id="L33">    this.stdOut = stdOut;</span>
-<span class="nc" id="L34">    this.stdErr = stdErr;</span>
-<span class="nc" id="L35">    this.returnCode = returnCode;</span>
-<span class="nc" id="L36">  }</span>
-
-  public String getStdOut() {
-<span class="nc" id="L39">    return stdOut;</span>
-  }
-
-  public String getStdErr() {
-<span class="nc" id="L43">    return stdErr;</span>
-  }
-
-  public int getReturnCode() {
-<span class="nc" id="L47">    return returnCode;</span>
-  }
-
+<span class="nc" id="L27">public record ExecutionResult(String stdOut, String stdErr, int returnCode) {</span>
   public Stream&lt;String&gt; lines() {
-<span class="nc" id="L51">    return this.stdOut.lines();</span>
+<span class="nc" id="L29">    return this.stdOut.lines();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -8,7 +8,7 @@ Maven Performance Testing,com.soebes.maven.performance.commands,BaseCommand,6,0,
 Maven Performance Testing,com.soebes.maven.performance.scenario,SetupSingleLevelScenario,75,0,0,0,21,0,4,0,4,0
 Maven Performance Testing,com.soebes.maven.performance.scenario,SetupMultiLevelScenario,0,200,0,4,0,39,0,11,0,9
 Maven Performance Testing,com.soebes.maven.performance.execution,JavaHome,35,0,0,0,8,0,3,0,3,0
-Maven Performance Testing,com.soebes.maven.performance.execution,ExecutionResult,25,0,0,0,9,0,5,0,5,0
+Maven Performance Testing,com.soebes.maven.performance.execution,ExecutionResult,25,0,0,0,2,0,5,0,5,0
 Maven Performance Testing,com.soebes.maven.performance.execution,ExecuteCommand,69,0,0,0,17,0,2,0,2,0
 Maven Performance Testing,com.soebes.maven.performance.sdkman,SDKManJDKS,0,41,0,0,0,10,0,4,0,4
 Maven Performance Testing,com.soebes.maven.performance.maven,MojoHausMavenPlugins,6,0,0,0,1,0,1,0,1,0
