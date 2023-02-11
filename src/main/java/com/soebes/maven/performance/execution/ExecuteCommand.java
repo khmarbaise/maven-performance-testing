@@ -47,9 +47,7 @@ public class ExecuteCommand {
       String result = new String(start.getInputStream().readAllBytes());
       String errorOut = new String(start.getErrorStream().readAllBytes());
       return new ExecutionResult(result, errorOut, returnCode);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    } catch (IOException e) {
+    } catch (InterruptedException | IOException e) {
       throw new RuntimeException(e);
     }
   }
