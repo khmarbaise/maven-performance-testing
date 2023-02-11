@@ -47,10 +47,8 @@ public class ExecuteCommand {
 <span class="nc" id="L47">      String result = new String(start.getInputStream().readAllBytes());</span>
 <span class="nc" id="L48">      String errorOut = new String(start.getErrorStream().readAllBytes());</span>
 <span class="nc" id="L49">      return new ExecutionResult(result, errorOut, returnCode);</span>
-<span class="nc" id="L50">    } catch (InterruptedException e) {</span>
+<span class="nc" id="L50">    } catch (InterruptedException | IOException e) {</span>
 <span class="nc" id="L51">      throw new RuntimeException(e);</span>
-<span class="nc" id="L52">    } catch (IOException e) {</span>
-<span class="nc" id="L53">      throw new RuntimeException(e);</span>
     }
   }
 
