@@ -164,7 +164,7 @@ public class CreatePom implements PomBuilder {
   }
 
   public CreatePom properties(List<Property> properties) {
-    properties.stream().forEach(s -> this.model.getProperties().put(s.getKey(), s.getValue()));
+    properties.stream().forEach(s -> this.model.getProperties().put(s.key(), s.value()));
     return this;
   }
 
