@@ -34,9 +34,9 @@ public class ExecuteMeasurement {
     Path basePath = Path.of("target", "scenarios");
     // -w 5 warmup round 5
     // --export-markdown ../src/site/markdown/results-${JDK}.md -L VERSION "${VERSIONS[*]}" -n {VERSION} ../apache-maven-{VERSION}/bin/mvn clean )
-    String result = String.format("results-%s-%s.md", jdkVersion.getFileName(), numberOfModules);
-    String resultJson = String.format("results-%s-%s.json", jdkVersion.getFileName(), numberOfModules);
-    String moduleDirectory = String.format("number-of-module-%04d", numberOfModules);
+    String result = "results-%s-%s.md".formatted(jdkVersion.getFileName(), numberOfModules);
+    String resultJson = "results-%s-%s.json".formatted(jdkVersion.getFileName(), numberOfModules);
+    String moduleDirectory = "number-of-module-%04d".formatted(numberOfModules);
     Path rootTestDirectory = FileSystems.getDefault().getPath("").toAbsolutePath();
     Path downloadsDirectory = rootTestDirectory.resolve("downloads");
     Path markdownDirectory = rootTestDirectory.resolve("src").resolve("site").resolve("markdown");
