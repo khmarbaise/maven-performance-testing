@@ -25,9 +25,11 @@ import com.soebes.maven.performance.commands.CommandMain;
 import com.soebes.maven.performance.commands.Commands;
 import com.soebes.maven.performance.commands.Execute;
 import com.soebes.maven.performance.commands.Scenario;
+import com.soebes.maven.performance.mvnversions.MavenVersions;
 import com.soebes.maven.performance.scenario.SetupMultiLevelScenario;
 import com.soebes.maven.performance.sdkman.SDKManJDKS;
 
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
@@ -64,14 +66,22 @@ class PerformanceSetup {
     List<Path> listOfJDKS = sdkManJDKS.listOfJdks();
     listOfJDKS.forEach(s -> System.out.println("JDKS: " + s));
 
+    Path rootTestDirectory = FileSystems.getDefault().getPath("").toAbsolutePath();
+    Path downloadsDirectory = rootTestDirectory.resolve("downloads");
+
+    var mavenVersions = new MavenVersions(downloadsDirectory);
+    var paths = mavenVersions.listOfMavenVersions();
+    var versions = paths.stream().map(Path::getFileName).map(s -> s.toString().substring(13)).toList();
+
+    paths.forEach(s -> System.out.println("MVN = " + s.getFileName()));
     switch (command) {
-      case EXECUTE -> executeMeasurement(command, sdkManJDKS);
+      case EXECUTE -> executeMeasurement(command, sdkManJDKS, versions);
       case SCENARIO -> cmdScenario((Scenario) command.invoker());
     }
   }
 
-  private static void executeMeasurement(Commands command, SDKManJDKS sdkManJDKS) {
-    ExecuteMeasurement executeMeasurement = new ExecuteMeasurement(((Execute) command.invoker()).numberOfModules(), sdkManJDKS.listOfJdks());
+  private static void executeMeasurement(Commands command, SDKManJDKS sdkManJDKS, List<String> mavenVersions) {
+    ExecuteMeasurement executeMeasurement = new ExecuteMeasurement(((Execute) command.invoker()).numberOfModules(), sdkManJDKS.listOfJdks(), mavenVersions);
     executeMeasurement.measurement();
   }
 

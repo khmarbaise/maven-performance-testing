@@ -13,12 +13,14 @@ import java.util.List;
 
 public class ExecuteMeasurement {
 
-  private Integer numberOfModules;
-  private List<Path> jdkVersions;
+  private final Integer numberOfModules;
+  private final List<Path> jdkVersions;
+  private final List<String> mavenVersions;
 
-  public ExecuteMeasurement(Integer numberOfModules, List<Path> jdkVersions) {
+  public ExecuteMeasurement(Integer numberOfModules, List<Path> jdkVersions, List<String> mavenVersions) {
     this.numberOfModules = numberOfModules;
     this.jdkVersions = jdkVersions;
+    this.mavenVersions = mavenVersions;
   }
 
   public void measurement() {
@@ -32,7 +34,6 @@ public class ExecuteMeasurement {
     Path basePath = Path.of("target", "scenarios");
     // -w 5 warmup round 5
     // --export-markdown ../src/site/markdown/results-${JDK}.md -L VERSION "${VERSIONS[*]}" -n {VERSION} ../apache-maven-{VERSION}/bin/mvn clean )
-    String versions = "3.0.5,3.1.1,3.2.5,3.3.9,3.5.4,3.6.3,3.8.1,3.8.2,3.8.3,3.8.4,3.8.4,3.8.6,4.0.0-alpha-1";
     String result = String.format("results-%s-%s.md", jdkVersion.getFileName(), numberOfModules);
     String resultJson = String.format("results-%s-%s.json", jdkVersion.getFileName(), numberOfModules);
     String moduleDirectory = String.format("number-of-module-%04d", numberOfModules);
@@ -40,7 +41,7 @@ public class ExecuteMeasurement {
     Path downloadsDirectory = rootTestDirectory.resolve("downloads");
     Path markdownDirectory = rootTestDirectory.resolve("src").resolve("site").resolve("markdown");
 
-    String prepareCommand = "JAVA_HOME=" + jdkVersion.toString();
+    String prepareCommand = "JAVA_HOME=" + jdkVersion;
 
     //Need to reconsider if using .mavenrc is a good idea?
     //Heap setting for all tests the same!
@@ -52,7 +53,7 @@ public class ExecuteMeasurement {
             "--export-json", markdownDirectory + "/" + resultJson,
             "--shell", "bash",
 //            "-p", prepareCommand,
-            "-L", "VERSION", versions, "-n", "{VERSION}", prepareCommand + ";" + commandToExecute), Paths.get(basePath.toString(), moduleDirectory).toFile()
+            "-L", "VERSION", String.join(",", this.mavenVersions), "-n", "{VERSION}", prepareCommand + ";" + commandToExecute), Paths.get(basePath.toString(), moduleDirectory).toFile()
     );
     System.out.println(exec.stdErr());
     System.out.println(exec.stdOut());
