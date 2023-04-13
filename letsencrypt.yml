@@ -4,7 +4,7 @@
   become: true
   gather_facts: no
   vars:
-    letsencrypt_email: cerbot-h2960648@soebes.de
+    letsencrypt_email: maven-performance-testing@soebes.de
     domain_name: maven.soebes.team
 
   pre_tasks:
