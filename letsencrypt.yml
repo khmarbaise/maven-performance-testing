@@ -7,9 +7,6 @@
     letsencrypt_email: maven-performance-testing@soebes.de
     domain_name: maven.soebes.team
 
-  pre_tasks:
-    - raw: apt-get install -y python-simplejson
-
   tasks:
     - name: Upgrade system
       apt: upgrade=dist update_cache=yes
