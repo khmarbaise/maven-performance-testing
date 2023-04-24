@@ -65,11 +65,7 @@ public class ConvertMeasurementsIntoGraphics {
     Map<JDK, Map<MVN, Map<Integer, MR>>> collect = collect1.stream().collect(
         groupingBy(MR::jdk, groupingBy(MR::mvn, toMap(MR::numberOfModules, identity()))));
 
-    var mvnList = collect.get(JDK_CONST).keySet().stream().toList();
-
-    Map<Integer, MR> nomMR = collect.get(JDK_CONST).get(new MVN(new ComparableVersion("3.8.5")));
-
-    List<Map.Entry<Integer, MR>> sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();
+    var mvnList = collect.get(JDK_CONST).keySet().stream().sorted(Comparator.comparing(MVN::mvn)).toList();
 
     try (var bw = Files.newBufferedWriter(p)) {
       bw.write(HTML_START);
@@ -77,20 +73,25 @@ public class ConvertMeasurementsIntoGraphics {
 
       bw.write("  var data = [ "); bw.newLine();
 
-      bw.write("      {"); bw.newLine();
-      String lineNom = sortedNomList.stream().map(Map.Entry::getKey).map(Object::toString).collect(Collectors.joining(",", "x: [", "],"));
-      bw.write("         " + lineNom); bw.newLine();
-      String lineValues = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.mean())).collect(Collectors.joining(",", "y: [", "],"));
-      bw.write("         " + lineValues); bw.newLine();
-      bw.write("         error_y: {"); bw.newLine();
-      bw.write("           type: 'data',"); bw.newLine();
-      bw.write("                  symmetic: false,"); bw.newLine();
-      String errorList = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.stddev())).collect(Collectors.joining(",", "array: [", "],"));
-      bw.write("                  "+ errorList); bw.newLine();
-      bw.write("         },         "+ errorList); bw.newLine();
-      bw.write("         type: 'scatter',"); bw.newLine();
-      bw.write("         name: 'MVN 3.8.5'"); bw.newLine();
-      bw.write("      },"); bw.newLine();
+      for (MVN mvn : mvnList) {
+        Map<Integer, MR> nomMR = collect.get(JDK_CONST).get(mvn);
+        List<Map.Entry<Integer, MR>> sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();
+
+        bw.write("      {"); bw.newLine();
+        String lineNom = sortedNomList.stream().map(Map.Entry::getKey).map(Object::toString).collect(Collectors.joining(",", "x: [", "],"));
+        bw.write("         " + lineNom); bw.newLine();
+        String lineValues = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.mean())).collect(Collectors.joining(",", "y: [", "],"));
+        bw.write("         " + lineValues); bw.newLine();
+        bw.write("         error_y: {"); bw.newLine();
+        bw.write("           type: 'data',"); bw.newLine();
+        bw.write("                  symmetic: false,"); bw.newLine();
+        String errorList = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.stddev())).collect(Collectors.joining(",", "array: [", "],"));
+        bw.write("                  "+ errorList); bw.newLine();
+        bw.write("         },         "+ errorList); bw.newLine();
+        bw.write("         type: 'scatter',"); bw.newLine();
+        bw.write("         name: '%s'".formatted(mvn.mvn())); bw.newLine();
+        bw.write("      },"); bw.newLine();
+      }
 
       bw.write("  ];"); bw.newLine();
       bw.write("  var layout = {"); bw.newLine();
