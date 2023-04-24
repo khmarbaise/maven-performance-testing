@@ -1,7 +1,5 @@
 package com.soebes.maven.performance;
 
-import org.apache.maven.artifact.versioning.ComparableVersion;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -51,7 +49,7 @@ public class ConvertMeasurementsIntoGraphics {
         }).toList();
   }
 
-  private static final JDK JDK_CONST = new JDK("20-open");
+  private static final JDK JDK_CONST = new JDK("8.0.362-tem");
 
   public static void main(String[] args) throws IOException {
     var basePath = Path.of("json");
@@ -95,7 +93,7 @@ public class ConvertMeasurementsIntoGraphics {
 
       bw.write("  ];"); bw.newLine();
       bw.write("  var layout = {"); bw.newLine();
-      bw.write("      title: 'open JDK 20',"); bw.newLine();
+      bw.write("      title: '%s',".formatted(JDK_CONST.jdk())); bw.newLine();
       bw.write("      xaxis: {"); bw.newLine();
       bw.write("         title: 'Year',"); bw.newLine();
       bw.write("         showgrid: true,"); bw.newLine();

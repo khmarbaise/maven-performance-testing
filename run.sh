@@ -21,11 +21,7 @@ source ~/.sdkman/bin/sdkman-init.sh
 # TODO: Maybe we should precompile the tool via GraalVM?
 sdk use java 17.0.3-tem
 
-cd /home/tmpt/maven
-# Build Apache current master
-/home/tmpt/maven-performance-testing/apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn clean package -DdistributionTargetDir=/home/tmpt/maven-performance-testing/downloads/apache-maven-4.0.0-alpha-1/
 cd /home/tmpt/maven-performance-testing
-
 #
 # Download all Apache Versions into appropriate directory.
 ./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn --no-transfer-progress -B -Pperformance initialize
@@ -34,11 +30,11 @@ cd /home/tmpt/maven-performance-testing
 
 # Generate different scenarios
 # TODO: Find a better way to keep in sync
-java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,50,100,200,500,1000,2000,2200,2500,3000,4000,5000,10000
+java -jar target/performance-1.0-SNAPSHOT.jar sc --nof 10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,300,400,500,600,700,800,900,1000
 #
 # Run real test.
 # TODO: Find a better to keep in sync
-NUMBER="10 20 50 100 200 500 1000 2000 2200 2500 3000 4000 5000 10000"
+NUMBER="10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 300 400 500 600 700 800 900 1000"
 #
 for num in $NUMBER; do
   java -jar target/performance-1.0-SNAPSHOT.jar exec --nom ${num}
