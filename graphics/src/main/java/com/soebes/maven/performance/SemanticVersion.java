@@ -8,9 +8,9 @@ import static java.util.Objects.isNull;
 
 public class SemanticVersion implements Comparable<SemanticVersion> {
 
-  private static final Pattern PATTERN_VERSION = Pattern.compile("(\\d+(.\\d+(.\\d+)?)?)?(-(.*))?");
+  private static final Pattern PATTERN_VERSION = Pattern.compile("(\\d+(.[0-9a-zA-Z]+(.[0-9a-zA-Z]+)?)?)?(-(.*))?");
 
-  private final int[] semVer;
+  private final Object[] semVer;
   private final String distro;
 
   public SemanticVersion(String semVer) {
@@ -28,21 +28,19 @@ public class SemanticVersion implements Comparable<SemanticVersion> {
 
     var split = matcher.group(1).split("\\.");
 
-    if (Arrays.stream(split).allMatch(s -> s.matches("\\d+"))) {
-      this.semVer = Arrays.stream(split).mapToInt(Integer::valueOf).toArray();
-    } else {
-      String nonInt = Arrays.stream(split)
-          .filter(s -> !s.matches("\\d+"))
-          .findFirst()
-          .orElseThrow();
-      throw new IllegalArgumentException(nonInt + " is not a an int.");
+    this.semVer = new Object[3];
+    for (int i = 0; i < split.length; i++) {
+      if (split[i].matches("\\d+")) {
+        this.semVer[i] = Integer.valueOf(split[i]);
+      } else {
+        this.semVer[i] = split[i];
+      }
     }
   }
 
   @Override
   public String toString() {
     var collect = Arrays.stream(this.semVer)
-        .boxed()
         .map(Object::toString)
         .collect(Collectors.joining(","));
     return "SemanticVersion{" + collect + '}';
@@ -50,7 +48,8 @@ public class SemanticVersion implements Comparable<SemanticVersion> {
 
   @Override
   public int compareTo(SemanticVersion o) {
-    int result = Arrays.compare(this.semVer, o.semVer);
-    return result == 0 ? Integer.compare(this.distro.compareTo(o.distro), 0) : result;
+///    int result = Arrays.compare(this.semVer, o.semVer);
+//    return result == 0 ? Integer.compare(this.distro.compareTo(o.distro), 0) : result;
+    return 0;
   }
 }
