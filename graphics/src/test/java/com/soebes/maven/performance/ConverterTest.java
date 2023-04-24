@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.soebes.maven.performance.Converter.convertFromFileNameToJDKModuleInformation;
 import static com.soebes.maven.performance.Converter.convertToMR;
@@ -58,6 +59,8 @@ class ConverterTest {
     Map<JDK, Map<MVN, Map<Integer, MR>>> collect = collect1.stream().collect(
         groupingBy(MR::jdk, groupingBy(MR::mvn, toMap(MR::numberOfModules, identity()))));
 
+    var mvnList = collect.get(JDK_CONST).keySet().stream().toList();
+    System.out.println("mvnList = " + mvnList);
     Map<Integer, MR> nomMR = collect.get(JDK_CONST).get(new MVN(new ComparableVersion("3.8.5")));
 
     List<Map.Entry<Integer, MR>> sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();

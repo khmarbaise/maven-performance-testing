@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
 import static com.soebes.maven.performance.Converter.convertFromFileNameToJDKModuleInformation;
@@ -16,8 +15,6 @@ import static com.soebes.maven.performance.Converter.convertToMR;
 import static com.soebes.maven.performance.Converter.readMeasurementFile;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 public class ConvertMeasurementsIntoGraphics {
@@ -46,13 +43,12 @@ public class ConvertMeasurementsIntoGraphics {
 
 
   private static List<Result> x(Path basepath) throws IOException {
-    var result = Selector.selectJsonFilesOnly(basepath).stream()
+    return Selector.selectJsonFilesOnly(basepath).stream()
         .map(p -> {
           var mr = convertFromFileNameToJDKModuleInformation(p);
           var measurements  = readMeasurementFile(p);
           return new Result(mr.jdk(), mr.numberOfModules(), measurements);
         }).toList();
-    return result;
   }
 
   private static final JDK JDK_CONST = new JDK("20-open");
@@ -69,6 +65,8 @@ public class ConvertMeasurementsIntoGraphics {
     Map<JDK, Map<MVN, Map<Integer, MR>>> collect = collect1.stream().collect(
         groupingBy(MR::jdk, groupingBy(MR::mvn, toMap(MR::numberOfModules, identity()))));
 
+    var mvnList = collect.get(JDK_CONST).keySet().stream().toList();
+
     Map<Integer, MR> nomMR = collect.get(JDK_CONST).get(new MVN(new ComparableVersion("3.8.5")));
 
     List<Map.Entry<Integer, MR>> sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();
@@ -78,14 +76,12 @@ public class ConvertMeasurementsIntoGraphics {
       bw.newLine();
 
       bw.write("  var data = [ "); bw.newLine();
-      bw.write("      {"); bw.newLine();
 
+      bw.write("      {"); bw.newLine();
       String lineNom = sortedNomList.stream().map(Map.Entry::getKey).map(Object::toString).collect(Collectors.joining(",", "x: [", "],"));
       bw.write("         " + lineNom); bw.newLine();
-
       String lineValues = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.mean())).collect(Collectors.joining(",", "y: [", "],"));
       bw.write("         " + lineValues); bw.newLine();
-
       bw.write("         error_y: {"); bw.newLine();
       bw.write("           type: 'data',"); bw.newLine();
       bw.write("                  symmetic: false,"); bw.newLine();
@@ -95,6 +91,7 @@ public class ConvertMeasurementsIntoGraphics {
       bw.write("         type: 'scatter',"); bw.newLine();
       bw.write("         name: 'MVN 3.8.5'"); bw.newLine();
       bw.write("      },"); bw.newLine();
+
       bw.write("  ];"); bw.newLine();
       bw.write("  var layout = {"); bw.newLine();
       bw.write("      title: 'open JDK 20',"); bw.newLine();
