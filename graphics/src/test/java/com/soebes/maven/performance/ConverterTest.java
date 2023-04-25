@@ -59,19 +59,25 @@ class ConverterTest {
     Map<JDK, Map<MVN, Map<Integer, MR>>> collect = collect1.stream().collect(
         groupingBy(MR::jdk, groupingBy(MR::mvn, toMap(MR::numberOfModules, identity()))));
 
-    var mvnList = collect.get(JDK_CONST).keySet().stream().sorted(Comparator.comparing(MVN::mvn)).toList();
-    System.out.println("mvnList = " + mvnList);
-    for (MVN mvn : mvnList) {
-      System.out.println();
-      System.out.println("mvn = " + mvn);
-      Map<Integer, MR> nomMR = collect.get(JDK_CONST).get(mvn);
-      List<Map.Entry<Integer, MR>> sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();
-      for (Map.Entry<Integer, MR> entry : sortedNomList) {
-        System.out.println("entry = " + entry.getKey());
-        System.out.println("entry = " + entry.getValue().mean());
+    var jdkList = collect.keySet().stream().sorted(Comparator.comparing(jdk -> new ComparableVersion(jdk.jdk()))).toList();
+    for (JDK jdk : jdkList) {
+      System.out.println("jdk = " + jdk);
+      var mvnList = collect.get(jdk).keySet().stream().sorted(Comparator.comparing(MVN::mvn)).toList();
+      System.out.println("mvnList = " + mvnList);
+      for (MVN mvn : mvnList) {
+        System.out.println();
+        System.out.println("mvn = " + mvn);
+        Map<Integer, MR> nomMR = collect.get(jdk).get(mvn);
+        List<Map.Entry<Integer, MR>> sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();
+        for (Map.Entry<Integer, MR> entry : sortedNomList) {
+          System.out.println("entry = " + entry.getKey());
+          System.out.println("entry = " + entry.getValue().mean());
+        }
+
       }
 
     }
+
 //    var mrs = collect.get(JDK_CONST).get(new MVN(new ComparableVersion("3.8.5"))).get(10000);
 //    System.out.println("mrs = " + mrs);
 //
