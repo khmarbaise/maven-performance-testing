@@ -34,12 +34,12 @@ public final class BuildProperties {
   }
 
   /**
-   * Building for JDK 7 runtime.
+   * Building for JDK 8 runtime.
    */
-  public static final List<Property> JAVA_7 = List.of(
+  public static final List<Property> JAVA_8 = List.of(
       new Property("project.build.sourceEncoding", "UTF-8"),
-      new Property("maven.compiler.target", "1.7"),
-      new Property("maven.compiler.source", "1.7")
+      new Property("maven.compiler.target", "1.8"),
+      new Property("maven.compiler.source", "1.8")
   );
 
 }

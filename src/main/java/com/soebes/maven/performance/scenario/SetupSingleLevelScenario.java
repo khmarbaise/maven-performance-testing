@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.soebes.maven.performance.helper.PomHelper.writePom;
-import static com.soebes.maven.performance.maven.BuildProperties.JAVA_7;
+import static com.soebes.maven.performance.maven.BuildProperties.JAVA_8;
 
 /**
  * This scenario produces a multi-module build
@@ -59,7 +59,7 @@ public class SetupSingleLevelScenario implements Scenario {
         .map(s -> String.format("module-%04d", s))
         .toList();
     CreatePom rootPom = CreatePom.of(PARENT_POM_GAV, "pom")
-        .properties(JAVA_7)
+        .properties(JAVA_8)
         .build()
         .pluginManagement(ApachenMavenPlugins.DEFAULT_PLUGINS)
         .modules(modules.toArray(new String[0]));

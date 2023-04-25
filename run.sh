@@ -10,9 +10,9 @@ sdk use java 17.0.6-tem
 cd /home/tmpt/maven-performance-testing
 #
 # Download all Apache Versions into appropriate directory.
-mvn --no-transfer-progress -B -Pperformance initialize
+mvn --no-transfer-progress -B -Pperformance initialize -ntp
 # build performance tool.
-mvn --no-transfer-progress -B clean package -DskipTests
+mvn --no-transfer-progress -B clean package -DskipTests -ntp
 
 # Generate different scenarios
 # TODO: Find a better way to keep in sync
@@ -26,4 +26,4 @@ for num in $NUMBER; do
   java -jar target/performance-1.0-SNAPSHOT.jar exec --nom ${num}
 done
 
-./apache-maven-${APACHE_MAVEN_VERSION}/bin/mvn  --no-transfer-progress -B site site:stage -DstagingDirectory=/home/tmpt/public_html/
+mvn  --no-transfer-progress -B site site:stage -DstagingDirectory=/home/tmpt/public_html/
