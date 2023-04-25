@@ -22,20 +22,10 @@ public class ConvertMeasurementsIntoGraphics {
           <!-- Load plotly.js into the DOM -->
           <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="UTF-8"></script>
       </head>
-            
-            
       <body>
-      <h1>Testing</h1>
-      <p>This is an example of an graph:</p>
-      <div id="myDiv" style="width: 100%;height: 80%;max-width: 1200px;">
-          <!-- Plotly chart will be drawn inside this DIV -->
-      </div>
-      <p>More on things like this.</p>
-      <script>
       """;
 
   private static final String HTML_END = """
-      </script>
       </body>
       """;
 
@@ -66,12 +56,17 @@ public class ConvertMeasurementsIntoGraphics {
     var mvnList = collect.get(JDK_CONST).keySet().stream().sorted(Comparator.comparing(MVN::mvn)).toList();
 
     try (var bw = Files.newBufferedWriter(p)) {
-      bw.write(HTML_START);
-      bw.newLine();
+      bw.write(HTML_START);bw.newLine();
 
-      bw.write("  var data = [ "); bw.newLine();
 
       for (MVN mvn : mvnList) {
+        bw.write("<h3>Maven execution times for %s</h3>".formatted(JDK_CONST.jdk())); bw.newLine();
+        bw.write("<div id=\"" + JDK_CONST.jdk() + "\" style=\"width: 100%;height: 80%;max-width: 1200px;\">"); bw.newLine();
+        bw.write("</div>"); bw.newLine();
+        bw.write("<script>");
+
+        bw.write("  var data = [ "); bw.newLine();
+
         Map<Integer, MR> nomMR = collect.get(JDK_CONST).get(mvn);
         List<Map.Entry<Integer, MR>> sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();
 
@@ -104,7 +99,9 @@ public class ConvertMeasurementsIntoGraphics {
       bw.write("         showline: true"); bw.newLine();
       bw.write("      },"); bw.newLine();
       bw.write("  };"); bw.newLine();
-      bw.write("  Plotly.newPlot('myDiv', data, layout);"); bw.newLine();
+      bw.write("  Plotly.newPlot('" + JDK_CONST.jdk() + "', data, layout);"); bw.newLine();
+      bw.write("</script>"); bw.newLine();
+
       bw.write(HTML_END);
     }
   }
