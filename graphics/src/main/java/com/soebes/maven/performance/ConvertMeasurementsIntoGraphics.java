@@ -95,7 +95,7 @@ public class ConvertMeasurementsIntoGraphics {
       bw.write("  var layout = {"); bw.newLine();
       bw.write("      title: '%s',".formatted(JDK_CONST.jdk())); bw.newLine();
       bw.write("      xaxis: {"); bw.newLine();
-      bw.write("         title: 'Year',"); bw.newLine();
+      bw.write("         title: 'Number of Modules',"); bw.newLine();
       bw.write("         showgrid: true,"); bw.newLine();
       bw.write("         zeroline: true"); bw.newLine();
       bw.write("      },"); bw.newLine();

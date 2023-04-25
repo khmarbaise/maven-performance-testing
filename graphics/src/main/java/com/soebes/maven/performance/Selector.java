@@ -12,7 +12,7 @@ class Selector {
   private static final Predicate<Path> IS_VALID_FILE = IS_REGULAR_FILE.and(IS_READABLE);
 
   static List<Path> selectAllFiles(Path start) throws IOException {
-    try (var pathStream = Files.walk(start)) {
+    try (var pathStream = Files.walk(start, 1)) {
       return pathStream.filter(IS_VALID_FILE).toList();
     }
   }
