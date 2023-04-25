@@ -91,7 +91,6 @@ class PerformanceSetup {
       Path rootLevel = Path.of("target", "scenarios", String.format("number-of-module-%04d", nofm));
       System.out.println("Generating Scenario " + nofm);
       new SetupMultiLevelScenario(nofm, 1, rootLevel).create();
-      //new SetupSingleLevelScenario(nofm, rootLevel).setup();
     });
 
   }
