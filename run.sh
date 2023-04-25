@@ -26,4 +26,4 @@ for num in $NUMBER; do
   java -jar target/performance-1.0-SNAPSHOT.jar exec --nom ${num}
 done
 
-mvn  --no-transfer-progress -B site site:stage -DstagingDirectory=/home/tmpt/public_html/
+mvn  --no-transfer-progress -B site site:stage -DstagingDirectory=/var/www/maven.soebes.team/
