@@ -41,8 +41,6 @@ public class ConvertMeasurementsIntoGraphics {
         }).toList();
   }
 
-  private static final JDK JDK_CONST = new JDK("8.0.362-tem");
-
   public static void main(String[] args) throws IOException {
     var basePath = Path.of("json");
     Path p = Path.of("xindex.html");
