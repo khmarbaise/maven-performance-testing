@@ -192,7 +192,7 @@ class CreatePomTest {
   }
 
   @Test
-  void packgingJar() {
+  void packagingJar() {
     var pomOne = CreatePom.of("g", "a", "1.0")
         .packaging(Packaging.JAR)
         .parent("g:a:2.0")
@@ -204,7 +204,7 @@ class CreatePomTest {
   }
 
   @Test
-  void packgingEAR() {
+  void packagingEAR() {
     var pomOne = CreatePom.of("g", "a", "1.0")
         .packaging(Packaging.EAR)
         .parent("g:a:2.0")
