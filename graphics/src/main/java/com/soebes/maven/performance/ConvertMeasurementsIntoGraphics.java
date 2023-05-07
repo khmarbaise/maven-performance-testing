@@ -58,12 +58,15 @@ public class ConvertMeasurementsIntoGraphics {
 
       var jdkList = collect.keySet().stream().sorted(Comparator.comparing(jdk -> new ComparableVersion(jdk.jdk()))).toList();
       for (JDK jdk : jdkList) {
-        bw.write("<h3>Maven execution times for %s</h3>".formatted(jdk.jdk())); bw.newLine();
-        bw.write("<div id=\"" + jdk.jdk() + "\" style=\"width: 50%;height: 50%;max-width: 800px;\">"); bw.newLine();
-        bw.write("</div>"); bw.newLine();
-        bw.write("<script>");
+        bw.write("""
+            <h3>Maven execution times for %s</h3>
+            <div id="%s" style="width: 50%%;height: 50%%;max-width: 800px;">
+            </div>
+            <script>
+              var data = [
+            """.formatted(jdk.jdk(), jdk.jdk())
+        );
 
-        bw.write("  var data = [ "); bw.newLine();
         var mvnList = collect.get(jdk).keySet().stream().sorted(Comparator.comparing(MVN::mvn)).toList();
         for (MVN mvn : mvnList) {
           Map<Integer, MR> nomMR = collect.get(jdk).get(mvn);
