@@ -79,7 +79,7 @@ public class ConvertMeasurementsIntoGraphics {
           bw.write("         " + lineValues); bw.newLine();
           bw.write("         error_y: {"); bw.newLine();
           bw.write("           type: 'data',"); bw.newLine();
-          bw.write("                  symmetic: false,"); bw.newLine();
+          bw.write("                  symmetric: false,"); bw.newLine();
           String errorList = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.stddev())).collect(Collectors.joining(",", "array: [", "],"));
           bw.write("                  "+ errorList); bw.newLine();
           bw.write("         },         "+ errorList); bw.newLine();
@@ -89,20 +89,22 @@ public class ConvertMeasurementsIntoGraphics {
         }
 
         bw.write("  ];"); bw.newLine();
-        bw.write("  var layout = {"); bw.newLine();
-        bw.write("      title: '%s',".formatted(jdk.jdk())); bw.newLine();
-        bw.write("      xaxis: {"); bw.newLine();
-        bw.write("         title: 'Number of Modules',"); bw.newLine();
-        bw.write("         showgrid: true,"); bw.newLine();
-        bw.write("         zeroline: true"); bw.newLine();
-        bw.write("      },"); bw.newLine();
-        bw.write("      yaxis: {"); bw.newLine();
-        bw.write("         title: 'Time in seconds',"); bw.newLine();
-        bw.write("         showline: true"); bw.newLine();
-        bw.write("      },"); bw.newLine();
-        bw.write("  };"); bw.newLine();
-        bw.write("  Plotly.newPlot('" + jdk.jdk() + "', data, layout);"); bw.newLine();
-        bw.write("</script>"); bw.newLine();
+        bw.write("""
+              var layout = {
+                title: '%s',
+                xaxis: {
+                  title: 'Number of Modules',
+                  showgrid: true,
+                  zeroline: true
+                },
+                yaxis: {
+                  title: 'Time in seconds',
+                  showline: true
+                },
+              };
+              Plotly.newPlot('%s', data, layout);
+            </script>
+            """.formatted(jdk.jdk(), jdk.jdk()));
       }
 
       bw.write(HTML_END);
