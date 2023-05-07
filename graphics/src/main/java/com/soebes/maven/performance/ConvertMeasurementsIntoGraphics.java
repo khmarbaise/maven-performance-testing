@@ -72,24 +72,27 @@ public class ConvertMeasurementsIntoGraphics {
           Map<Integer, MR> nomMR = collect.get(jdk).get(mvn);
           List<Map.Entry<Integer, MR>> sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();
 
-          bw.write("      {"); bw.newLine();
           String lineNom = sortedNomList.stream().map(Map.Entry::getKey).map(Object::toString).collect(Collectors.joining(",", "x: [", "],"));
-          bw.write("         " + lineNom); bw.newLine();
           String lineValues = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.mean())).collect(Collectors.joining(",", "y: [", "],"));
-          bw.write("         " + lineValues); bw.newLine();
-          bw.write("         error_y: {"); bw.newLine();
-          bw.write("           type: 'data',"); bw.newLine();
-          bw.write("                  symmetric: false,"); bw.newLine();
           String errorList = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.stddev())).collect(Collectors.joining(",", "array: [", "],"));
-          bw.write("                  "+ errorList); bw.newLine();
-          bw.write("         },         "+ errorList); bw.newLine();
-          bw.write("         type: 'scatter',"); bw.newLine();
-          bw.write("         name: '%s'".formatted(mvn.mvn())); bw.newLine();
-          bw.write("      },"); bw.newLine();
+          bw.write("""
+                    {
+                      %s
+                      %s
+                      error_y: {
+                        type: 'data',
+                        symmetric:false,
+                        %s
+                      },
+                      %s
+                      type: 'scatter',
+                      name: '%s'                            
+                    },
+              """.formatted(lineNom, lineValues, errorList, errorList, mvn.mvn()));
         }
 
-        bw.write("  ];"); bw.newLine();
         bw.write("""
+              ];
               var layout = {
                 title: '%s',
                 xaxis: {
