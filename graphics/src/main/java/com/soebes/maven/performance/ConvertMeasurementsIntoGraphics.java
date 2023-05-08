@@ -36,7 +36,7 @@ public class ConvertMeasurementsIntoGraphics {
     return Selector.selectJsonFilesOnly(basepath).stream()
         .map(p -> {
           var mr = convertFromFileNameToJDKModuleInformation(p);
-          var measurements  = readMeasurementFile(p);
+          var measurements = readMeasurementFile(p);
           return new Result(mr.jdk(), mr.numberOfModules(), measurements);
         }).toList();
   }
@@ -50,11 +50,14 @@ public class ConvertMeasurementsIntoGraphics {
 
     // NoM (NumberOfModules)
     //  JDK         MVN   NoM,
-    Map<JDK, Map<MVN, Map<Integer, MR>>> collect = collect1.stream().collect(
-        groupingBy(MR::jdk, groupingBy(MR::mvn, toMap(MR::numberOfModules, identity()))));
+    Map<JDK, Map<MVN, Map<Integer, MR>>> collect = collect1.stream()
+        .collect(
+            groupingBy(MR::jdk, groupingBy(MR::mvn, toMap(MR::numberOfModules, identity())))
+        );
 
     try (var bw = Files.newBufferedWriter(p)) {
-      bw.write(HTML_START);bw.newLine();
+      bw.write(HTML_START);
+      bw.newLine();
 
       var jdkList = collect.keySet().stream().sorted(Comparator.comparing(jdk -> new ComparableVersion(jdk.jdk()))).toList();
       for (JDK jdk : jdkList) {
