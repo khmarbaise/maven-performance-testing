@@ -15,6 +15,7 @@ import static com.soebes.maven.performance.Converter.convertToMR;
 import static com.soebes.maven.performance.Converter.readMeasurementFile;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toMap;
 
 public class ConvertMeasurementsIntoGraphics {
@@ -72,12 +73,12 @@ public class ConvertMeasurementsIntoGraphics {
 
         var mvnList = collect.get(jdk).keySet().stream().sorted(Comparator.comparing(MVN::mvn)).toList();
         for (MVN mvn : mvnList) {
+
           Map<Integer, MR> nomMR = collect.get(jdk).get(mvn);
           List<Map.Entry<Integer, MR>> sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();
-
-          String lineNom = sortedNomList.stream().map(Map.Entry::getKey).map(Object::toString).collect(Collectors.joining(",", "x: [", "],"));
-          String lineValues = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.mean())).collect(Collectors.joining(",", "y: [", "],"));
-          String errorList = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.stddev())).collect(Collectors.joining(",", "array: [", "],"));
+          String lineNom = sortedNomList.stream().map(Map.Entry::getKey).map(Object::toString).collect(joining(",", "x: [", "],"));
+          String lineValues = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.mean())).collect(joining(",", "y: [", "],"));
+          String errorList = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.stddev())).collect(joining(",", "array: [", "],"));
           bw.write("""
                     {
                       %s
