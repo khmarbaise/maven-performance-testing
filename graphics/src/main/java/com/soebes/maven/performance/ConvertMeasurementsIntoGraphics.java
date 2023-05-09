@@ -89,7 +89,7 @@ public class ConvertMeasurementsIntoGraphics {
                       },
                       %s
                       type: 'scatter',
-                      name: '%s'                            
+                      name: '%s'
                     },
               """.formatted(lineNom, lineValues, errorList, errorList, mvn.mvn()));
         }
