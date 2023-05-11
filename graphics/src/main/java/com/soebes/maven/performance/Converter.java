@@ -11,6 +11,10 @@ import java.util.function.Function;
 
 class Converter {
 
+  private Converter() {
+    // Just ignore it.
+  }
+
   static MeasurementRecord convertFromFileNameToJDKModuleInformation(Path nameOfJson) {
     var fileOnly = nameOfJson.getName(nameOfJson.getNameCount() - 1);
     var fileString = fileOnly.toString();

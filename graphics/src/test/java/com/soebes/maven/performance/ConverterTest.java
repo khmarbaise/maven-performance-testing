@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.soebes.maven.performance.Converter.convertFromFileNameToJDKModuleInformation;
 import static com.soebes.maven.performance.Converter.convertToMR;
@@ -19,8 +18,6 @@ import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ConverterTest {
-
-  private static final JDK JDK_CONST = new JDK("20-open");
 
   @Test
   void jdkModule() {
