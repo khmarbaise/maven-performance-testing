@@ -74,7 +74,7 @@ public class ConvertMeasurementsIntoGraphics {
         for (MVN mvn : mvnList) {
 
           Map<Integer, MR> nomMR = collect.get(jdk).get(mvn);
-          List<Map.Entry<Integer, MR>> sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();
+          var sortedNomList = nomMR.entrySet().stream().sorted((Comparator.comparingInt(Map.Entry::getKey))).toList();
           var lineNom = sortedNomList.stream().map(Map.Entry::getKey).map(Object::toString).collect(joining(",", "x: [", "],"));
           var lineValues = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.mean())).collect(  joining(",", "y: [", "],"));
           var errorList = sortedNomList.stream().map(Map.Entry::getValue).map(s -> Double.toString(s.stddev())).collect(joining(",", "array: [", "],"));
