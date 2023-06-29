@@ -130,3 +130,15 @@
       args:
         executable: /bin/bash
       become_user: tmpt
+
+    - name: Create directory structure.
+      become: yes
+      ansible.builtin.file:
+        owner: root
+        group: tmpt
+        name: "{{item}}"
+        state: directory
+      loop:
+        - /var
+        - /var/www
+        - /var/www/maven.soebes.team
