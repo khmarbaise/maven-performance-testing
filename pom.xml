@@ -348,6 +348,13 @@
                 <artifactItem>
                   <groupId>org.apache.maven</groupId>
                   <artifactId>apache-maven</artifactId>
+                  <version>3.9.4</version>
+                  <type>tar.gz</type>
+                  <classifier>bin</classifier>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.maven</groupId>
+                  <artifactId>apache-maven</artifactId>
                   <version>4.0.0-alpha-7</version>
                   <type>tar.gz</type>
                   <classifier>bin</classifier>
