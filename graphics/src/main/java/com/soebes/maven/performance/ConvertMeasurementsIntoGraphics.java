@@ -63,7 +63,7 @@ public class ConvertMeasurementsIntoGraphics {
       for (JDK jdk : jdkList) {
         bw.write("""
             <h3>Maven execution times for %s</h3>
-            <div id="%s" style="width: 80%%;height: 80%%;max-width: 1200px;">
+            <div id="%s" style="width: 100%%;height: 100%%;max-width: 1200px;">
             </div>
             <script>
               var data = [
