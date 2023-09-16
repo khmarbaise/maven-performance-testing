@@ -19,6 +19,8 @@ package com.soebes.maven.performance.maven;
  * under the License.
  */
 
+import static com.soebes.maven.performance.maven.Dependency.Scope.COMPILE;
+
 public record Dependency(String groupId, String artifactId, String version, String classifier, Scope scope) {
 
   public enum Scope {
@@ -31,11 +33,15 @@ public record Dependency(String groupId, String artifactId, String version, Stri
   }
 
   public Dependency(String groupId, String artifactId, String version) {
-    this(groupId, artifactId, version, null, Scope.COMPILE);
+    this(groupId, artifactId, version, null, COMPILE);
   }
 
   public Dependency(String groupId, String artifactId) {
-    this(groupId, artifactId, null, null, Scope.COMPILE);
+    this(groupId, artifactId, null, null, COMPILE);
+  }
+
+  public static Dependency of(String groupId, String artifactId) {
+    return new Dependency(groupId, artifactId, null, null, COMPILE);
   }
 
   public static Dependency of(String groupId, String artifactId, String version) {

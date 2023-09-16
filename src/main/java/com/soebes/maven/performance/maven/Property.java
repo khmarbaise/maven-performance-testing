@@ -24,4 +24,8 @@ package com.soebes.maven.performance.maven;
  */
 public record Property(String key, String value) {
 
+  public static Property of(String key, String value) {
+    return new Property(key, value);
+  }
+
 }

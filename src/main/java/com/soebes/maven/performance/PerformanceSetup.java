@@ -62,7 +62,13 @@ class PerformanceSetup {
       return;
     }
 
-    SDKManJDKS sdkManJDKS = new SDKManJDKS(Path.of(System.getProperty("user.home")));
+    record JDKVersions(List<Path> listOfJDKS) {
+    }
+
+    record MavenVersionsX(List<Path> mavenVersions) {
+    }
+
+    SDKManJDKS sdkManJDKS =new SDKManJDKS(Path.of(System.getProperty("user.home")));
     List<Path> listOfJDKS = sdkManJDKS.listOfJdks();
     listOfJDKS.forEach(s -> System.out.println("JDKS: " + s));
 

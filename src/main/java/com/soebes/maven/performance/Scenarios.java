@@ -30,7 +30,7 @@ public enum Scenarios {
   SingleLevel(SetupSingleLevelScenario.class),
   MultiLevel(SetupMultiLevelScenario.class);
 
-  private Class<?> setup;
+  private final Class<?> setup;
 
   Scenarios(Class<?> setup) {
     this.setup = setup;

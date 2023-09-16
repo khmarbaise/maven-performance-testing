@@ -19,7 +19,6 @@ package com.soebes.maven.performance;
  * under the License.
  */
 
-import com.soebes.maven.performance.maven.Dependency;
 import com.soebes.maven.performance.maven.Plugin;
 import com.soebes.maven.performance.maven.Property;
 import org.junit.jupiter.api.Test;
@@ -33,6 +32,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.soebes.maven.performance.Packaging.EAR;
+import static com.soebes.maven.performance.Packaging.JAR;
+import static com.soebes.maven.performance.maven.Dependency.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -98,7 +100,7 @@ class CreatePomTest {
   void forth() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
-        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
+        .properties(Property.of("maven.compiler.source", "7"), Property.of("maven.compiler.target", "7"))
         .modules("f1");
     verify(createPom, "pom-forth.xml");
   }
@@ -107,8 +109,8 @@ class CreatePomTest {
   void fifth() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
-        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
-        .dependencies(new Dependency("dg", "da", "dv"))
+        .properties(Property.of("maven.compiler.source", "7"), Property.of("maven.compiler.target", "7"))
+        .dependencies(of("dg", "da", "dv"))
         .modules("f1");
     verify(createPom, "pom-fifth.xml");
   }
@@ -117,9 +119,9 @@ class CreatePomTest {
   void sixth() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
-        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
-        .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
-        .dependencies(new Dependency("dg", "da"))
+        .properties(Property.of("maven.compiler.source", "7"), Property.of("maven.compiler.target", "7"))
+        .dependencyManagement(of("dpm", "dpma", "dpmv"))
+        .dependencies(of("dg", "da"))
         .modules("f1");
     verify(createPom, "pom-sixth.xml");
   }
@@ -128,9 +130,9 @@ class CreatePomTest {
   void seventh() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
-        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
-        .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
-        .dependencies(new Dependency("dg", "da"))
+        .properties(Property.of("maven.compiler.source", "7"), Property.of("maven.compiler.target", "7"))
+        .dependencyManagement(of("dpm", "dpma", "dpmv"))
+        .dependencies(of("dg", "da"))
         .build()
         .pluginManagement(MAVEN_COMPILER_PLUGIN)
         .modules("f1");
@@ -142,9 +144,9 @@ class CreatePomTest {
   void seventh_one() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
-        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
-        .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
-        .dependencies(new Dependency("dg", "da"))
+        .properties(Property.of("maven.compiler.source", "7"), Property.of("maven.compiler.target", "7"))
+        .dependencyManagement(of("dpm", "dpma", "dpmv"))
+        .dependencies(of("dg", "da"))
         .build()
         .pluginManagement(MAVEN_COMPILER_PLUGIN)
         .modules("f1");
@@ -155,9 +157,9 @@ class CreatePomTest {
   void eighth() {
     CreatePom createPom = CreatePom.of("g:a:1.0")
         .parent("p:a:2.0")
-        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
-        .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
-        .dependencies(new Dependency("dg", "da"))
+        .properties(Property.of("maven.compiler.source", "7"), Property.of("maven.compiler.target", "7"))
+        .dependencyManagement(of("dpm", "dpma", "dpmv"))
+        .dependencies(of("dg", "da"))
         .build()
         .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN))
         .plugins(VERSION_MAVEN_PLUGIN)
@@ -169,9 +171,9 @@ class CreatePomTest {
   void ninth() {
     CreatePom createPom = CreatePom.of("g:a:1.0", "war")
         .parent("p:a:2.0")
-        .properties(new Property("maven.compiler.source", "7"), new Property("maven.compiler.target", "7"))
-        .dependencyManagement(new Dependency("dpm", "dpma", "dpmv"))
-        .dependencies(new Dependency("dg", "da"))
+        .properties(Property.of("maven.compiler.source", "7"), Property.of("maven.compiler.target", "7"))
+        .dependencyManagement(of("dpm", "dpma", "dpmv"))
+        .dependencies(of("dg", "da"))
         .build()
         .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN))
         .plugins(VERSION_MAVEN_PLUGIN)
@@ -184,7 +186,7 @@ class CreatePomTest {
   void final_test() {
     var pomOne = CreatePom.of("g", "a", "1.0")
         .parent("g:a:2.0")
-        .dependencies(new Dependency("junit", "junit", "4.12.3"))
+        .dependencies(of("junit", "junit", "4.12.3"))
         .build()
         .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN));
 
@@ -194,9 +196,9 @@ class CreatePomTest {
   @Test
   void packagingJar() {
     var pomOne = CreatePom.of("g", "a", "1.0")
-        .packaging(Packaging.JAR)
+        .packaging(JAR)
         .parent("g:a:2.0")
-        .dependencies(new Dependency("junit", "junit", "4.12.3"))
+        .dependencies(of("junit", "junit", "4.12.3"))
         .build()
         .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN));
 
@@ -206,9 +208,9 @@ class CreatePomTest {
   @Test
   void packagingEAR() {
     var pomOne = CreatePom.of("g", "a", "1.0")
-        .packaging(Packaging.EAR)
+        .packaging(EAR)
         .parent("g:a:2.0")
-        .dependencies(new Dependency("junit", "junit", "4.12.3"))
+        .dependencies(of("junit", "junit", "4.12.3"))
         .build()
         .pluginManagement(List.of(MAVEN_COMPILER_PLUGIN));
 
