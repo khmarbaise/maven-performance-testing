@@ -22,8 +22,9 @@ package com.soebes.maven.performance;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
@@ -38,9 +39,9 @@ public class Writer {
     MavenXpp3Writer mavenXpp3Writer = new MavenXpp3Writer();
 
     try {
-      FileOutputStream fileOutputStream = new FileOutputStream(path.toFile());
-      mavenXpp3Writer.write(fileOutputStream, model);
-      fileOutputStream.close();
+      try (OutputStream outputStream = Files.newOutputStream(path)) {
+        mavenXpp3Writer.write(outputStream, model);
+      }
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

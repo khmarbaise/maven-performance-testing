@@ -53,7 +53,7 @@ public enum Commands {
 
   public static Commands to(String cmd) {
     return Arrays.stream(values())
-        .filter(s -> s.command.equals(cmd.toLowerCase()))
+        .filter(s -> s.command.equalsIgnoreCase(cmd))
         .findFirst()
         .orElseThrow(() -> new IllegalArgumentException("Unknown command given."));
   }
