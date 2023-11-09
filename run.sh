@@ -1,8 +1,8 @@
 #!/bin/bash
-#source ~/.sdkman/bin/sdkman-init.sh
+source ~/.sdkman/bin/sdkman-init.sh
 
 # Install Maven version 3.8.8
-#sdk install maven 3.8.8
+sdk install maven 3.8.8
 
 # TODO: Maybe we should precompile the tool via GraalVM?
 sdk use java 17.0.9-tem
