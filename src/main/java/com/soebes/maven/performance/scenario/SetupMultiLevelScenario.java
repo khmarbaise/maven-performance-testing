@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.soebes.maven.performance.helper.PomHelper.writePom;
-import static com.soebes.maven.performance.maven.BuildProperties.JAVA_8;
+import static com.soebes.maven.performance.maven.BuildProperties.JAVA_8_PLUS;
 
 /**
  * @author Karl Heinz Marbaise
@@ -59,7 +59,7 @@ public class SetupMultiLevelScenario implements Scenario {
         .toList();
 
     CreatePom rootPom = CreatePom.of(ROOT_PARENT_GAV, "pom")
-        .properties(JAVA_8)
+        .properties(JAVA_8_PLUS)
         .build()
         .pluginManagement(ApachenMavenPlugins.DEFAULT_PLUGINS)
         .modules(rootModuleNames.toArray(new String[0]));

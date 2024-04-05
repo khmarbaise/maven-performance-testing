@@ -36,14 +36,14 @@ public final class ApachenMavenPlugins {
 
   private static final String APACHE_GROUPID = "org.apache.maven.plugins";
 
-  public static final Plugin MAVEN_CLEAN_PLUGIN = of(APACHE_GROUPID, "maven-clean-plugin", "3.1.0");
-  public static final Plugin MAVEN_COMPILER_PLUGIN = of(APACHE_GROUPID, "maven-compiler-plugin", "3.8.1");
-  public static final Plugin MAVEN_RESOURCES_PLUGIN = of(APACHE_GROUPID, "maven-resources-plugin", "3.1.0");
-  public static final Plugin MAVEN_JAR_PLUGIN = of(APACHE_GROUPID, "maven-jar-plugin", "3.2.0");
-  public static final Plugin MAVEN_INSTALL_PLUGIN = of(APACHE_GROUPID, "maven-install-plugin", "2.5.2");
-  public static final Plugin MAVEN_DEPLOY_PLUGIN = of(APACHE_GROUPID, "maven-deploy-plugin", "2.8.2");
-  public static final Plugin MAVEN_SUREFIRE_PLUGIN = of(APACHE_GROUPID, "maven-surefire-plugin", "2.22.2");
-  public static final Plugin MAVEN_FAILSAFE_PLUGIN = of(APACHE_GROUPID, "maven-failsafe-plugin", "2.22.2");
+  public static final Plugin MAVEN_CLEAN_PLUGIN = of(APACHE_GROUPID, "maven-clean-plugin", "3.3.2");
+  public static final Plugin MAVEN_COMPILER_PLUGIN = of(APACHE_GROUPID, "maven-compiler-plugin", "3.13.0");
+  public static final Plugin MAVEN_RESOURCES_PLUGIN = of(APACHE_GROUPID, "maven-resources-plugin", "3.3.1");
+  public static final Plugin MAVEN_JAR_PLUGIN = of(APACHE_GROUPID, "maven-jar-plugin", "3.3.0");
+  public static final Plugin MAVEN_INSTALL_PLUGIN = of(APACHE_GROUPID, "maven-install-plugin", "3.1.1");
+  public static final Plugin MAVEN_DEPLOY_PLUGIN = of(APACHE_GROUPID, "maven-deploy-plugin", "3.1.1");
+  public static final Plugin MAVEN_SUREFIRE_PLUGIN = of(APACHE_GROUPID, "maven-surefire-plugin", "3.2.5");
+  public static final Plugin MAVEN_FAILSAFE_PLUGIN = of(APACHE_GROUPID, "maven-failsafe-plugin", "3.2.5");
 
   public static final List<Plugin> DEFAULT_PLUGINS = List.of(
       MAVEN_CLEAN_PLUGIN,

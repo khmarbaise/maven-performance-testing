@@ -234,20 +234,6 @@
                 <artifactItem>
                   <groupId>org.apache.maven</groupId>
                   <artifactId>apache-maven</artifactId>
-                  <version>3.9.4</version>
-                  <type>tar.gz</type>
-                  <classifier>bin</classifier>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.apache.maven</groupId>
-                  <artifactId>apache-maven</artifactId>
-                  <version>3.9.5</version>
-                  <type>tar.gz</type>
-                  <classifier>bin</classifier>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.apache.maven</groupId>
-                  <artifactId>apache-maven</artifactId>
                   <version>3.9.6</version>
                   <type>tar.gz</type>
                   <classifier>bin</classifier>
@@ -255,7 +241,7 @@
                 <artifactItem>
                   <groupId>org.apache.maven</groupId>
                   <artifactId>apache-maven</artifactId>
-                  <version>4.0.0-alpha-12</version>
+                  <version>4.0.0-alpha-13</version>
                   <type>tar.gz</type>
                   <classifier>bin</classifier>
                 </artifactItem>

@@ -41,5 +41,12 @@ public final class BuildProperties {
       new Property("maven.compiler.target", "1.8"),
       new Property("maven.compiler.source", "1.8")
   );
+  /**
+   * Building for JDK 9+ runtime.
+   */
+  public static final List<Property> JAVA_8_PLUS = List.of(
+      new Property("project.build.sourceEncoding", "UTF-8"),
+      new Property("maven.compiler.release", "8")
+  );
 
 }
