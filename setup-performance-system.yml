@@ -2,7 +2,7 @@
 - name: Maven
   hosts: performance
   vars:
-    hyperfine: hyperfine-v1.18.0-x86_64-unknown-linux-musl.tar.gz
+    hyperfine: hyperfine-v1.18.0-x86_64-unknown-linux-musl
 
   tasks:
     - name: Add the user `tmpt`
