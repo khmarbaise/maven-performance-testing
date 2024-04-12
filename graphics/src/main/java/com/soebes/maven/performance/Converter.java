@@ -19,11 +19,19 @@ final class Converter {
     var fileOnly = nameOfJson.getName(nameOfJson.getNameCount() - 1);
     var fileString = fileOnly.toString();
 
+    // results-17.0.10-tem-20.json
+    // !                    !
+    // +--------------------+- 5 +
+    // Remove file extension (.json)
+    // "results-17.0.10-tem-20"
+    //  +-----+ +-----+ +-+ ++
+    //   !       !       !  !
+    //  [0]     [1]     [2] [3]
     var split = fileString.substring(0, fileString.length() - 5).split("-");
 
-    var jdk = split[1] + "-" + split[2];
+    var jdkName = split[1] + "-" + split[2];
     var numberOfModules = split[3];
-    return new MeasurementRecord(jdk, Integer.parseInt(numberOfModules));
+    return new MeasurementRecord(jdkName, Integer.parseInt(numberOfModules));
   }
 
   static JSONMeasurements readMeasurementFile(Path jsonFile) {
