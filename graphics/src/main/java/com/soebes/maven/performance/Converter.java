@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.function.Function;
 
-class Converter {
+final class Converter {
 
   private Converter() {
     // Just ignore it.
@@ -36,20 +36,20 @@ class Converter {
     }
   }
 
-  static Function<JSONSingleResult, MR> convertToMR(JDK jdk, Integer nof) {
-    return jsr -> new MR(
-        new MVN(new ComparableVersion(jsr.getParameters().get("VERSION"))),
+  static Function<JSONSingleResult, MR> convertToMR(JDK jdk, Integer numberOfModules) {
+    return jsonSingleResult -> new MR(
+        new MVN(new ComparableVersion(jsonSingleResult.parameters().get("VERSION"))),
         jdk,
-        nof,
-        jsr.getMean(),
-        jsr.getStddev(),
-        jsr.getMedian(),
-        jsr.getUser(),
-        jsr.getSystem(),
-        jsr.getMin(),
-        jsr.getMax(),
-        jsr.getTimes(),
-        jsr.getExit_codes());
+        numberOfModules,
+        jsonSingleResult.mean(),
+        jsonSingleResult.stddev(),
+        jsonSingleResult.median(),
+        jsonSingleResult.user(),
+        jsonSingleResult.system(),
+        jsonSingleResult.min(),
+        jsonSingleResult.max(),
+        jsonSingleResult.times(),
+        jsonSingleResult.exit_codes());
   }
 
 

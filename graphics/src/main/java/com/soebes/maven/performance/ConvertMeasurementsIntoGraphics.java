@@ -43,10 +43,10 @@ public class ConvertMeasurementsIntoGraphics {
 
   public static void main(String[] args) throws IOException {
     var basePath = Path.of("json");
-    Path p = Path.of("xindex.html");
+    Path xindexHtmlFile = Path.of("xindex.html");
 
     var resultList = x(basePath);
-    List<MR> collect1 = resultList.stream().flatMap(s -> s.JSONMeasurements().getResults().stream().map(convertToMR(new JDK(s.jdk()), s.numberOfModules()))).toList();
+    List<MR> collect1 = resultList.stream().flatMap(s -> s.JSONMeasurements().results().stream().map(convertToMR(new JDK(s.jdk()), s.numberOfModules()))).toList();
 
     // NoM (NumberOfModules)
     //  JDK         MVN   NoM,
@@ -55,7 +55,7 @@ public class ConvertMeasurementsIntoGraphics {
             groupingBy(MR::jdk, groupingBy(MR::mvn, toMap(MR::numberOfModules, identity())))
         );
 
-    try (var bw = Files.newBufferedWriter(p)) {
+    try (var bw = Files.newBufferedWriter(xindexHtmlFile)) {
       bw.write(HTML_START);
       bw.newLine();
 

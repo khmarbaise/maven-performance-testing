@@ -33,7 +33,7 @@ class ConverterTest {
     Path basePath = Path.of("json");
 
     var measurements = Converter.readMeasurementFile(basePath.resolve("results-20-open-10.json"));
-    measurements.getResults().forEach(m -> System.out.println("m = " + m.getCommand() + " " + m.getMean()));
+    measurements.results().forEach(m -> System.out.println("m = " + m.command() + " " + m.mean()));
   }
 
 
@@ -49,7 +49,7 @@ class ConverterTest {
         }).toList();
 
 
-    List<MR> collect1 = result.stream().flatMap(s -> s.JSONMeasurements().getResults().stream().map(convertToMR(new JDK(s.jdk()), s.numberOfModules()))).toList();
+    List<MR> collect1 = result.stream().flatMap(s -> s.JSONMeasurements().results().stream().map(convertToMR(new JDK(s.jdk()), s.numberOfModules()))).toList();
 
     // NoM (NumberOfModules)
     //  JDK         MVN   NoM,

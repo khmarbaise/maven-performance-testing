@@ -25,6 +25,6 @@ class XTest {
 
     var jdkList = result.stream().collect(Collectors.toMap(Result::jdk, identity()));
 
-    jdkList.forEach((k, v) -> System.out.println("k:" + k + " v:" + v.JSONMeasurements().getResults().get(0).getParameters().get("VERSION")));
+    jdkList.forEach((k, v) -> System.out.println("k:" + k + " v:" + v.JSONMeasurements().results().get(0).parameters().get("VERSION")));
   }
 }
