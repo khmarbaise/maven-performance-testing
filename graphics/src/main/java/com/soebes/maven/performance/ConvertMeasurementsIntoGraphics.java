@@ -22,7 +22,7 @@ public class ConvertMeasurementsIntoGraphics {
   private static final String HTML_START = """
       <head>
           <!-- Load plotly.js into the DOM -->
-          <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="UTF-8"></script>
+          <script src="https://cdn.plot.ly/plotly-2.31.0.min.js" charset="UTF-8"></script>
       </head>
       <body>
       """;
