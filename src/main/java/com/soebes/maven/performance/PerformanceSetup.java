@@ -93,7 +93,7 @@ class PerformanceSetup {
 
   private static void cmdScenario(Scenario invoker) {
     System.out.println("PerformanceSetup.executeScenario");
-    invoker.getNumberOfModules().stream().forEachOrdered(nofm -> {
+    invoker.getNumberOfModules().forEach(nofm -> {
       Path rootLevel = Path.of("target", "scenarios", String.format("number-of-module-%04d", nofm));
       System.out.println("Generating Scenario " + nofm);
       new SetupMultiLevelScenario(nofm, 1, rootLevel).create();
