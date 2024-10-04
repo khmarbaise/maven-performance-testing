@@ -234,14 +234,7 @@
                 <artifactItem>
                   <groupId>org.apache.maven</groupId>
                   <artifactId>apache-maven</artifactId>
-                  <version>3.9.6</version>
-                  <type>tar.gz</type>
-                  <classifier>bin</classifier>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.apache.maven</groupId>
-                  <artifactId>apache-maven</artifactId>
-                  <version>3.9.7</version>
+                  <version>3.9.9</version>
                   <type>tar.gz</type>
                   <classifier>bin</classifier>
                 </artifactItem>

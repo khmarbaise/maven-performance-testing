@@ -89,10 +89,10 @@
         executable: /bin/bash
       become_user: tmpt
       loop:
-        - 17.0.11-tem
+        - 17.0.12-tem
         - 21.0.3-tem
-        - 22-tem
-        - 23.ea.22-open
+        - 22.0.2-tem
+        - 23-open
 
     # TODO: version etc. make variable with it for easier upgrade.
     - name: Download Hyperfine
