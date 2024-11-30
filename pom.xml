@@ -262,7 +262,7 @@
                 <artifactItem>
                   <groupId>org.apache.maven</groupId>
                   <artifactId>apache-maven</artifactId>
-                  <version>4.0.0-rc1</version>
+                  <version>4.0.0-rc-1</version>
                   <type>tar.gz</type>
                   <classifier>bin</classifier>
                 </artifactItem>
