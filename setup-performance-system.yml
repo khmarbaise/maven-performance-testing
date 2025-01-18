@@ -93,7 +93,8 @@
         - 21.0.5-tem
         - 22.0.2-tem
         - 23.0.1-tem
-        - 24.ea.25-open
+        - 24.ea.31-open
+        - 25.ea.5-open
 
     # TODO: version etc. make variable with it for easier upgrade.
     - name: Download Hyperfine
