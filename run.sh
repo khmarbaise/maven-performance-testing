@@ -2,10 +2,10 @@
 source ~/.sdkman/bin/sdkman-init.sh
 
 # Install Maven version 3.8.8
-sdk install maven 3.9.10
+sdk install maven 3.9.11
 
 # TODO: Maybe we should precompile the tool via GraalVM?
-sdk use java 17.0.15-tem
+sdk use java 17.0.17-tem
 
 cd /home/tmpt/maven-performance-testing
 #
